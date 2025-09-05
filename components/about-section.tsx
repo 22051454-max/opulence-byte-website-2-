@@ -89,7 +89,7 @@ export default function AboutSection() {
                     </div>
                   </motion.div>
                   <h4 className="text-xl font-semibold text-white mb-2">Avinash Singh Munda</h4>
-                  <p className="text-[#d4af37] mb-4">Founder, CEO & CTO</p>
+                  <p className="text-[#d4af37] mb-4">Founder & CEO</p>
                   <p className="text-white/80 mb-6">
                     With over 5 years of experience in technology leadership, Avinash founded Opulence Byte with a
                     vision to create digital solutions that combine security, scalability, and innovation.
