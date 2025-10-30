@@ -93,22 +93,21 @@ export function Chatbot() {
 
   return (
     <>
-      {/* Chatbot Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-40 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-[#1B4965] to-[#00D0FF] text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center tech-cursor active:scale-95"
         aria-label="Open chatbot"
       >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        {isOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />}
       </button>
 
       {/* Chatbot Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-40 w-96 max-w-[calc(100vw-2rem)] bg-card border border-border rounded-2xl shadow-2xl flex flex-col h-96 md:h-[500px] animate-fade-in-up">
+        <div className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-40 w-[calc(100vw-2rem)] sm:w-96 bg-card border border-border rounded-2xl shadow-2xl flex flex-col h-96 sm:h-[500px] animate-fade-in-up">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-2xl">
-            <h3 className="font-bold text-lg">Opulence Byte Support</h3>
-            <p className="text-sm opacity-90">We typically reply instantly</p>
+          <div className="bg-gradient-to-r from-[#1B4965] to-[#00D0FF] text-white p-4 rounded-t-2xl">
+            <h3 className="font-bold text-base sm:text-lg">Opulence Byte Support</h3>
+            <p className="text-xs sm:text-sm opacity-90">We typically reply instantly</p>
           </div>
 
           {/* Messages */}
@@ -116,13 +115,13 @@ export function Chatbot() {
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-xs px-4 py-2 rounded-lg ${
+                  className={`max-w-xs px-4 py-2 rounded-lg text-sm ${
                     message.sender === "user"
-                      ? "bg-blue-600 text-white rounded-br-none"
+                      ? "bg-[#1B4965] text-white rounded-br-none"
                       : "bg-muted text-foreground rounded-bl-none"
                   }`}
                 >
-                  <p className="text-sm">{message.text}</p>
+                  <p>{message.text}</p>
                 </div>
               </div>
             ))}
@@ -137,7 +136,7 @@ export function Chatbot() {
                 <button
                   key={i}
                   onClick={() => handleSendMessage(faq.question)}
-                  className="text-xs px-2 py-1 bg-muted hover:bg-accent hover:text-accent-foreground rounded transition-colors"
+                  className="text-xs px-2 py-1 bg-muted hover:bg-accent hover:text-accent-foreground rounded transition-colors tech-cursor active:scale-95"
                 >
                   {faq.question.substring(0, 20)}...
                 </button>
@@ -157,7 +156,7 @@ export function Chatbot() {
             />
             <button
               onClick={() => handleSendMessage(input)}
-              className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-3 py-2 bg-[#1B4965] text-white rounded-lg hover:bg-[#1B4965]/80 transition-colors tech-cursor active:scale-95"
             >
               <Send className="w-4 h-4" />
             </button>
