@@ -1,38 +1,28 @@
 import type React from "react"
-import type { Metadata, Viewport } from "next"
-import { Inter } from "next/font/google"
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import { Toaster } from "@/components/ui/toaster"
 
-const inter = Inter({ subsets: ["latin"] })
+const _geist = Geist({ subsets: ["latin"] })
+const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Opulence Byte | Empowering Digital Evolution",
-  description: "Secure. Scalable. Future-Proof Solutions.",
-  keywords: "technology, cybersecurity, web development, cloud solutions, digital transformation",
-  icons: {
-    icon: "/favicon.ico",
-  },
-    generator: 'v0.dev'
-}
-
-export const viewport: Viewport = {
-  themeColor: "#020924",
+  title: "Opulence Byte - Tech Solutions",
+  description: "Professional tech company specializing in web development, cybersecurity, AI/ML, and cloud solutions",
+  generator: "v0.app",
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-[#020924] text-white antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          {children}
-          <Toaster />
-        </ThemeProvider>
+      <body className={`font-sans antialiased`}>
+        {children}
+        <Analytics />
       </body>
     </html>
   )

@@ -1,94 +1,131 @@
 "use client"
 
-import { motion } from "framer-motion"
-import Link from "next/link"
-import Image from "next/image"
-import { ArrowLeft } from "lucide-react"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { useState, useEffect } from "react"
 
 export default function TermsPage() {
+  const [isDark, setIsDark] = useState(true)
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme")
+    if (savedTheme) {
+      setIsDark(savedTheme === "dark")
+    }
+  }, [])
+
+  useEffect(() => {
+    const html = document.documentElement
+    if (isDark) {
+      html.classList.add("dark")
+      localStorage.setItem("theme", "dark")
+    } else {
+      html.classList.remove("dark")
+      localStorage.setItem("theme", "light")
+    }
+  }, [isDark])
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#020924] via-[#0f0f0f] to-[#020924] py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="flex items-center justify-between mb-8">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-[#d4af37] hover:text-[#f5d76e] transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </Link>
-            <Link href="/" className="flex items-center gap-2">
-              <div className="relative w-8 h-8">
-                <Image src="/images/logo.png" alt="Opulence Byte" fill className="object-contain" />
+    <div className={isDark ? "dark" : ""}>
+      <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+        <Header isDark={isDark} onThemeToggle={() => setIsDark(!isDark)} />
+
+        <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <h1 className="text-4xl font-bold mb-8 titanium-glow">Terms and Conditions</h1>
+
+          <div className="space-y-8 text-muted-foreground">
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">1. Agreement to Terms</h2>
+              <p>
+                By accessing and using the Opulence Byte website and services, you accept and agree to be bound by the
+                terms and provision of this agreement. If you do not agree to abide by the above, please do not use this
+                service.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">2. Use License</h2>
+              <p>
+                Permission is granted to temporarily download one copy of the materials (information or software) on
+                Opulence Byte's website for personal, non-commercial transitory viewing only. This is the grant of a
+                license, not a transfer of title, and under this license you may not:
+              </p>
+              <ul className="list-disc list-inside mt-4 space-y-2">
+                <li>Modifying or copying the materials</li>
+                <li>Using the materials for any commercial purpose or for any public display</li>
+                <li>Attempting to decompile or reverse engineer any software contained on the website</li>
+                <li>Removing any copyright or other proprietary notations from the materials</li>
+                <li>Transferring the materials to another person or "mirroring" the materials on any other server</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">3. Disclaimer</h2>
+              <p>
+                The materials on Opulence Byte's website are provided on an 'as is' basis. Opulence Byte makes no
+                warranties, expressed or implied, and hereby disclaims and negates all other warranties including,
+                without limitation, implied warranties or conditions of merchantability, fitness for a particular
+                purpose, or non-infringement of intellectual property or other violation of rights.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">4. Limitations</h2>
+              <p>
+                In no event shall Opulence Byte or its suppliers be liable for any damages (including, without
+                limitation, damages for loss of data or profit, or due to business interruption) arising out of the use
+                or inability to use the materials on Opulence Byte's website.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">5. Accuracy of Materials</h2>
+              <p>
+                The materials appearing on Opulence Byte's website could include technical, typographical, or
+                photographic errors. Opulence Byte does not warrant that any of the materials on its website are
+                accurate, complete, or current. Opulence Byte may make changes to the materials contained on its website
+                at any time without notice.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">6. Links</h2>
+              <p>
+                Opulence Byte has not reviewed all of the sites linked to its website and is not responsible for the
+                contents of any such linked site. The inclusion of any link does not imply endorsement by Opulence Byte
+                of the site. Use of any such linked website is at the user's own risk.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">7. Modifications</h2>
+              <p>
+                Opulence Byte may revise these terms of service for its website at any time without notice. By using
+                this website, you are agreeing to be bound by the then current version of these terms of service.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">8. Governing Law</h2>
+              <p>
+                These terms and conditions are governed by and construed in accordance with the laws of India, and you
+                irrevocably submit to the exclusive jurisdiction of the courts in that location.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-semibold mb-4 text-foreground">9. Contact Information</h2>
+              <p>If you have any questions about these Terms and Conditions, please contact us at:</p>
+              <div className="mt-4 space-y-2">
+                <p>Email: contact@opulencebyte.com</p>
+                <p>Phone: +91 9142441497</p>
+                <p>Address: Ranchi, Jharkhand, India</p>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-[#d4af37] to-[#f5d76e] bg-clip-text text-transparent">
-                Opulence Byte
-              </span>
-            </Link>
+            </section>
           </div>
+        </main>
 
-          <div className="glass bg-[#0f0f0f]/80 backdrop-blur-xl p-8 rounded-lg border border-[#d4af37]/20">
-            <h1 className="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-[#d4af37] to-[#f5d76e] bg-clip-text text-transparent">
-              Terms & Conditions
-            </h1>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#d4af37] to-[#f5d76e] mb-8"></div>
-
-            <div className="prose prose-invert max-w-none">
-              <p className="text-white/80 mb-6">Last updated: January 2025</p>
-
-              <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4 text-[#d4af37]">1. Acceptance of Terms</h2>
-                <p className="text-white/80 mb-4">
-                  By accessing and using Opulence Byte's services, you accept and agree to be bound by the terms and
-                  provision of this agreement.
-                </p>
-              </section>
-
-              <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4 text-[#d4af37]">2. Services</h2>
-                <p className="text-white/80 mb-4">
-                  Opulence Byte provides technology consulting, software development, cybersecurity, and digital
-                  transformation services. We reserve the right to modify or discontinue services at any time.
-                </p>
-              </section>
-
-              <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4 text-[#d4af37]">3. Intellectual Property</h2>
-                <p className="text-white/80 mb-4">
-                  All content, trademarks, and intellectual property on this website are owned by Opulence Byte unless
-                  otherwise stated. Unauthorized use is prohibited.
-                </p>
-              </section>
-
-              <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4 text-[#d4af37]">4. Privacy</h2>
-                <p className="text-white/80 mb-4">
-                  Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use,
-                  and protect your information.
-                </p>
-              </section>
-
-              <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4 text-[#d4af37]">5. Limitation of Liability</h2>
-                <p className="text-white/80 mb-4">
-                  Opulence Byte shall not be liable for any indirect, incidental, special, or consequential damages
-                  arising from the use of our services.
-                </p>
-              </section>
-
-              <section className="mb-8">
-                <h2 className="text-xl font-semibold mb-4 text-[#d4af37]">6. Contact Information</h2>
-                <p className="text-white/80 mb-4">
-                  For questions about these Terms & Conditions, please contact us at{" "}
-                  <a href="mailto:contact@opulencebyte.com" className="text-[#d4af37] hover:text-[#f5d76e]">
-                    contact@opulencebyte.com
-                  </a>
-                </p>
-              </section>
-            </div>
-          </div>
-        </motion.div>
+        <Footer />
       </div>
     </div>
   )

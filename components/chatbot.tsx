@@ -1,249 +1,169 @@
 "use client"
 
-import type React from "react"
+import { useState, useRef, useEffect } from "react"
+import { MessageCircle, X, Send } from "lucide-react"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { MessageCircle, X, Send, Mail, MessageSquare, Star } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useToast } from "@/hooks/use-toast"
+interface Message {
+  id: string
+  text: string
+  sender: "user" | "bot"
+  timestamp: Date
+}
 
-export default function ChatBot() {
+const faqs = [
+  {
+    question: "What services do you offer?",
+    answer:
+      "We offer web development, cybersecurity, AI/ML solutions, cloud & DevOps, UI/UX design, and app development services.",
+  },
+  {
+    question: "How can I contact you?",
+    answer: "You can reach us at contact@opulencebyte.com or call +91 9142441497. We're available 24/7 for support.",
+  },
+  {
+    question: "What is your pricing?",
+    answer: "Our pricing is customized based on your project requirements. Please contact us for a detailed quote.",
+  },
+  {
+    question: "Do you provide ongoing support?",
+    answer: "Yes, we provide 24/7 support and maintenance for all our projects.",
+  },
+  {
+    question: "How long does a typical project take?",
+    answer:
+      "Project timelines vary based on complexity. We typically provide estimates after understanding your requirements.",
+  },
+]
+
+export function Chatbot() {
   const [isOpen, setIsOpen] = useState(false)
-  const [activeTab, setActiveTab] = useState<"query" | "contact" | "feedback">("query")
-  const [isLoading, setIsLoading] = useState(false)
-  const { toast } = useToast()
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "1",
+      text: "Hello! How can I help you today?",
+      sender: "bot",
+      timestamp: new Date(),
+    },
+  ])
+  const [input, setInput] = useState("")
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const [formData, setFormData] = useState({
-    query: "",
-    name: "",
-    email: "",
-    contactMessage: "",
-    rating: 5,
-    feedbackMessage: "",
-  })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
-  const handleSubmit = async (type: "query" | "contact" | "feedback") => {
-    setIsLoading(true)
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
 
-    try {
-      const response = await fetch("/api/chatbot", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ type, data: formData }),
-      })
+  const handleSendMessage = (text: string) => {
+    if (!text.trim()) return
 
-      if (response.ok) {
-        toast({
-          title: "Message Sent!",
-          description: "Thank you for reaching out. We'll get back to you soon.",
-        })
-        // Reset form
-        setFormData({
-          query: "",
-          name: "",
-          email: "",
-          contactMessage: "",
-          rating: 5,
-          feedbackMessage: "",
-        })
-      } else {
-        throw new Error("Failed to send message")
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
-      })
-    } finally {
-      setIsLoading(false)
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      text,
+      sender: "user",
+      timestamp: new Date(),
     }
-  }
 
-  const tabs = [
-    { id: "query", label: "Query", icon: MessageSquare },
-    { id: "contact", label: "Contact", icon: Mail },
-    { id: "feedback", label: "Feedback", icon: Star },
-  ]
+    setMessages((prev) => [...prev, userMessage])
+    setInput("")
+
+    // Simulate bot response
+    setTimeout(() => {
+      let botResponse = "I'm not sure about that. Please contact us at contact@opulencebyte.com for more information."
+
+      const lowerText = text.toLowerCase()
+      const matchedFaq = faqs.find((faq) => lowerText.includes(faq.question.toLowerCase().split(" ")[0]))
+
+      if (matchedFaq) {
+        botResponse = matchedFaq.answer
+      }
+
+      const botMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: botResponse,
+        sender: "bot",
+        timestamp: new Date(),
+      }
+
+      setMessages((prev) => [...prev, botMessage])
+    }, 500)
+  }
 
   return (
     <>
-      <motion.button
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 bg-[#d4af37] text-[#020924] rounded-full flex items-center justify-center shadow-lg hover:bg-[#d4af37]/90 transition-colors"
+      {/* Chatbot Button */}
+      <button
         onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        animate={isOpen ? { rotate: 180 } : { rotate: 0 }}
-        transition={{ duration: 0.3 }}
+        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 flex items-center justify-center"
+        aria-label="Open chatbot"
       >
         {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-      </motion.button>
+      </button>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            className="fixed bottom-24 right-6 z-40 w-80 max-w-[calc(100vw-3rem)]"
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Card className="glass bg-[#0f0f0f]/95 backdrop-blur-xl border-[#d4af37]/20">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg text-white">How can we help?</CardTitle>
-                <div className="flex gap-1">
-                  {tabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id as any)}
-                      className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs transition-colors ${
-                        activeTab === tab.id
-                          ? "bg-[#d4af37] text-[#020924]"
-                          : "bg-[#d4af37]/10 text-[#d4af37] hover:bg-[#d4af37]/20"
-                      }`}
-                    >
-                      <tab.icon className="w-3 h-3" />
-                      {tab.label}
-                    </button>
-                  ))}
+      {/* Chatbot Window */}
+      {isOpen && (
+        <div className="fixed bottom-24 right-6 z-40 w-96 max-w-[calc(100vw-2rem)] bg-card border border-border rounded-2xl shadow-2xl flex flex-col h-96 md:h-[500px] animate-fade-in-up">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 rounded-t-2xl">
+            <h3 className="font-bold text-lg">Opulence Byte Support</h3>
+            <p className="text-sm opacity-90">We typically reply instantly</p>
+          </div>
+
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.map((message) => (
+              <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
+                <div
+                  className={`max-w-xs px-4 py-2 rounded-lg ${
+                    message.sender === "user"
+                      ? "bg-blue-600 text-white rounded-br-none"
+                      : "bg-muted text-foreground rounded-bl-none"
+                  }`}
+                >
+                  <p className="text-sm">{message.text}</p>
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {activeTab === "query" && (
-                  <div className="space-y-3">
-                    <Textarea
-                      name="query"
-                      value={formData.query}
-                      onChange={handleChange}
-                      placeholder="Ask us anything..."
-                      className="bg-[#020924]/50 border-[#d4af37]/20 focus:border-[#d4af37] focus:ring-[#d4af37]/20 min-h-[80px] text-sm"
-                    />
-                    <Button
-                      onClick={() => handleSubmit("query")}
-                      disabled={isLoading || !formData.query.trim()}
-                      className="w-full bg-[#d4af37] text-[#020924] hover:bg-[#d4af37]/90 text-sm"
-                    >
-                      {isLoading ? (
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 border-2 border-[#020924]/30 border-t-[#020924] rounded-full animate-spin"></div>
-                          Sending...
-                        </div>
-                      ) : (
-                        <>
-                          <Send className="w-3 h-3 mr-1" />
-                          Send Query
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                )}
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
 
-                {activeTab === "contact" && (
-                  <div className="space-y-3">
-                    <Input
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Your name"
-                      className="bg-[#020924]/50 border-[#d4af37]/20 focus:border-[#d4af37] focus:ring-[#d4af37]/20 text-sm"
-                    />
-                    <Input
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Your email"
-                      className="bg-[#020924]/50 border-[#d4af37]/20 focus:border-[#d4af37] focus:ring-[#d4af37]/20 text-sm"
-                    />
-                    <Textarea
-                      name="contactMessage"
-                      value={formData.contactMessage}
-                      onChange={handleChange}
-                      placeholder="Your message"
-                      className="bg-[#020924]/50 border-[#d4af37]/20 focus:border-[#d4af37] focus:ring-[#d4af37]/20 min-h-[60px] text-sm"
-                    />
-                    <Button
-                      onClick={() => handleSubmit("contact")}
-                      disabled={isLoading || !formData.name || !formData.email || !formData.contactMessage}
-                      className="w-full bg-[#d4af37] text-[#020924] hover:bg-[#d4af37]/90 text-sm"
-                    >
-                      {isLoading ? (
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 border-2 border-[#020924]/30 border-t-[#020924] rounded-full animate-spin"></div>
-                          Sending...
-                        </div>
-                      ) : (
-                        <>
-                          <Mail className="w-3 h-3 mr-1" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                )}
+          {/* Quick replies */}
+          <div className="px-4 py-2 border-t border-border max-h-24 overflow-y-auto">
+            <p className="text-xs text-muted-foreground mb-2">Quick replies:</p>
+            <div className="flex flex-wrap gap-2">
+              {faqs.slice(0, 3).map((faq, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleSendMessage(faq.question)}
+                  className="text-xs px-2 py-1 bg-muted hover:bg-accent hover:text-accent-foreground rounded transition-colors"
+                >
+                  {faq.question.substring(0, 20)}...
+                </button>
+              ))}
+            </div>
+          </div>
 
-                {activeTab === "feedback" && (
-                  <div className="space-y-3">
-                    <div>
-                      <label className="block text-sm font-medium mb-2 text-white">Rating</label>
-                      <div className="flex gap-1">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <button
-                            key={star}
-                            onClick={() => setFormData({ ...formData, rating: star })}
-                            className={`w-6 h-6 ${
-                              star <= formData.rating ? "text-[#d4af37]" : "text-white/30"
-                            } hover:text-[#d4af37] transition-colors`}
-                          >
-                            <Star className="w-4 h-4 fill-current" />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                    <Textarea
-                      name="feedbackMessage"
-                      value={formData.feedbackMessage}
-                      onChange={handleChange}
-                      placeholder="Share your feedback..."
-                      className="bg-[#020924]/50 border-[#d4af37]/20 focus:border-[#d4af37] focus:ring-[#d4af37]/20 min-h-[80px] text-sm"
-                    />
-                    <Button
-                      onClick={() => handleSubmit("feedback")}
-                      disabled={isLoading || !formData.feedbackMessage.trim()}
-                      className="w-full bg-[#d4af37] text-[#020924] hover:bg-[#d4af37]/90 text-sm"
-                    >
-                      {isLoading ? (
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 border-2 border-[#020924]/30 border-t-[#020924] rounded-full animate-spin"></div>
-                          Sending...
-                        </div>
-                      ) : (
-                        <>
-                          <Star className="w-3 h-3 mr-1" />
-                          Send Feedback
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          {/* Input */}
+          <div className="border-t border-border p-4 flex gap-2">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSendMessage(input)}
+              placeholder="Type your message..."
+              className="flex-1 px-3 py-2 bg-muted border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+            />
+            <button
+              onClick={() => handleSendMessage(input)}
+              className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </>
   )
 }
