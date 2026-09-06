@@ -4,8 +4,33 @@ import { useState } from 'react'
 
 declare global {
   interface Window {
-    Razorpay?: any
+    Razorpay?: {
+      (options: RazorpayOptions): RazorpayInstance
+    }
   }
+}
+
+interface RazorpayOptions {
+  key: string
+  amount: number
+  currency: string
+  name: string
+  description: string
+  order_id: string
+  theme: { color: string }
+  handler: (response: RazorpayResponse) => void
+  modal: { ondismiss: () => void }
+}
+
+interface RazorpayInstance {
+  open: () => void
+  on: (event: string, callback: (resp: any) => void) => void
+}
+
+interface RazorpayResponse {
+  razorpay_payment_id: string
+  razorpay_order_id: string
+  razorpay_signature: string
 }
 
 export default function DonateButton() {
@@ -57,7 +82,7 @@ export default function DonateButton() {
 
       // 2) load checkout
       await loadScript('https://checkout.razorpay.com/v1/checkout.js')
-      const options = {
+      const options: RazorpayOptions = {
         key: KEY,
         amount,
         currency: currency || 'INR',
@@ -65,7 +90,7 @@ export default function DonateButton() {
         description: 'Donation',
         order_id,
         theme: { color: '#1e5dbc' },
-        handler: async function (response: any) {
+        handler: async function (response: RazorpayResponse) {
           // response contains razorpay_payment_id, razorpay_order_id, razorpay_signature
           try {
             const verifyRes = await fetch('/api/verify-payment', {
@@ -102,15 +127,22 @@ export default function DonateButton() {
         },
       }
 
+      if (!window.Razorpay) {
+        alert('Razorpay SDK failed to load')
+        setLoading(false)
+        return
+      }
+
       const rzp = new window.Razorpay(options)
       rzp.on('payment.failed', function (resp: any) {
         console.error('payment.failed', resp)
         alert('Payment failed. Please try again.')
       })
       rzp.open()
-    } catch (err: any) {
+    } catch (err) {
+      const error = err as Error
       console.error(err)
-      alert('Error initiating payment: ' + (err?.message || err))
+      alert('Error initiating payment: ' + (error?.message || err))
     } finally {
       setLoading(false)
     }
