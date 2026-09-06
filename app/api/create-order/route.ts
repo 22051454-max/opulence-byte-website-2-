@@ -14,9 +14,14 @@ const instance = new Razorpay({
   key_secret,
 })
 
+interface OrderBody {
+  amount?: number
+  receipt?: string
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    const body: OrderBody = await req.json()
     const amount = Number(body?.amount)
     const receipt = body?.receipt || `rcpt_${Date.now()}`
 
@@ -42,8 +47,9 @@ export async function POST(req: NextRequest) {
       currency: order.currency,
       receipt: order.receipt,
     })
-  } catch (err: any) {
-    if (err?.statusCode === 401) {
+  } catch (err) {
+    const error = err as { statusCode?: number }
+    if (error?.statusCode === 401) {
       return NextResponse.json({ error: 'Razorpay authentication failed' }, { status: 401 })
     }
     console.error('create-order error', err)
