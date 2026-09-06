@@ -1,22 +1,16 @@
-import { Analytics } from '@vercel/analytics/next'
-import type { Metadata, Viewport } from 'next'
-import './globals.css'
-import HeaderDonateMount from './components/HeaderDonateMount'
+import type React from "react"
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import "./globals.css"
+
+const _geist = Geist({ subsets: ["latin"] })
+const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'Opulence Byte — Digital Craft With A Point Of View',
-  description: 'Opulence Byte designs and engineers digital experiences for companies ready to move with intention.',
-  generator: 'Opulence Byte',
-  icons: {
-    icon: '/OB.png',
-    apple: '/OB.png',
-  },
-}
-
-export const viewport: Viewport = {
-  colorScheme: 'dark light',
-  themeColor: '#080c12',
-  userScalable: false,
+  title: "Opulence Byte - Tech Solutions",
+  description: "Professional tech company specializing in web development, cybersecurity, AI/ML, and cloud solutions",
+  generator: "v0.app",
 }
 
 export default function RootLayout({
@@ -25,11 +19,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background">
-      <body className="antialiased">
+    <html lang="en" suppressHydrationWarning>
+      <body className={`font-sans antialiased`}>
         {children}
-        <HeaderDonateMount />
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <Analytics />
       </body>
     </html>
   )
