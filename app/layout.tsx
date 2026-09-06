@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import HeaderDonateMount from './components/HeaderDonateMount'
 
 export const metadata: Metadata = {
   title: 'Opulence Byte — Digital Craft With A Point Of View',
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en" className="bg-background">
       <body className="antialiased">
         {children}
+        <HeaderDonateMount />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
