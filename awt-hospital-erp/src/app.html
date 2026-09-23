@@ -1,0 +1,888 @@
+<title>AWT Hospital ERP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+:root{
+  --bg:#edf2f9; --surface:#ffffff; --surface-2:#f4f7fc; --text:#13213a; --muted:#5f6d86; --line:#e1e8f2;
+  --accent:#1d6ae5; --accent-2:#0f55c9; --accent-soft:#e6effe; --teal:#18a999; --teal-soft:#dff6f2;
+  --side:#0d2850; --side-2:#12386b; --side-text:#c3d2e9; --side-hi:#1d6ae5;
+  --good:#138a5c; --good-soft:#def5ea; --warn:#b86b00; --warn-soft:#fff1d9; --bad:#d32f4c; --bad-soft:#fde6ea;
+  --c-occ:#e5334b; --c-vac:#2fc2a8; --c-mnt:#9aa6bb; --c-blk:#f39a33;
+  --c-opd:#22b3aa; --c-ipd:#2f7ff0; --c-ph:#b08cf2; --c-inv:#7657ee; --c-oth:#c9b8f7;
+  --shadow:0 1px 2px rgba(16,40,80,.06),0 4px 14px rgba(16,40,80,.05);
+  --r:12px; color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a1322; --surface:#101c30; --surface-2:#15233a; --text:#e5ecf7; --muted:#95a4be; --line:#223352;
+  --accent:#4c8df6; --accent-2:#6ea3fa; --accent-soft:#16305a; --teal:#35c7b5; --teal-soft:#0f3431;
+  --side:#07172e; --side-2:#0e2748; --side-text:#b3c3dd;
+  --good:#3ccf8e; --good-soft:#0f3325; --warn:#f0a93a; --warn-soft:#3a2a0e; --bad:#ff6b83; --bad-soft:#3b1520;
+  --shadow:0 1px 2px rgba(0,0,0,.3); color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0a1322; --surface:#101c30; --surface-2:#15233a; --text:#e5ecf7; --muted:#95a4be; --line:#223352;
+  --accent:#4c8df6; --accent-2:#6ea3fa; --accent-soft:#16305a; --teal:#35c7b5; --teal-soft:#0f3431;
+  --side:#07172e; --side-2:#0e2748; --side-text:#b3c3dd;
+  --good:#3ccf8e; --good-soft:#0f3325; --warn:#f0a93a; --warn-soft:#3a2a0e; --bad:#ff6b83; --bad-soft:#3b1520;
+  --shadow:0 1px 2px rgba(0,0,0,.3); color-scheme:dark;}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font:14px/1.45 Figtree,"Segoe UI",system-ui,sans-serif;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+.num,td,.kpi b{font-variant-numeric:tabular-nums}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100%}
+/* sidebar */
+.side{background:linear-gradient(180deg,var(--side),var(--side-2));color:var(--side-text);padding:18px 12px;display:flex;flex-direction:column;gap:14px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{display:flex;gap:10px;align-items:center;padding:4px 8px 10px;color:#fff}
+.brand svg{flex:none}
+.brand b{display:block;font-size:19px;font-weight:800;letter-spacing:.02em;line-height:1.1}
+.brand small{font-size:11px;color:#9fc0ee}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav button{all:unset;display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:9px;cursor:pointer;font-weight:500;color:var(--side-text)}
+.nav button:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav button.on{background:var(--side-hi);color:#fff;box-shadow:0 4px 14px rgba(29,106,229,.35)}
+.nav button:focus-visible{outline:2px solid #8fb8ff}
+.nav svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav .cnt{margin-left:auto;font-size:11px;background:rgba(255,255,255,.12);padding:1px 7px;border-radius:10px}
+.side .motto{margin-top:auto;font-size:11px;color:#8ea6c9;padding:8px}
+/* main */
+.main{display:flex;flex-direction:column;min-width:0;padding-inline:20px;padding-block:14px 0;gap:16px}
+.top{display:flex;align-items:center;gap:12px;background:var(--surface);border-radius:var(--r);padding:8px 12px;box-shadow:var(--shadow);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.tbtn.burger{display:none}
+.search{flex:1;position:relative;min-width:0}
+.search input{width:100%;border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 70px 9px 36px;outline:none}
+.search input:focus{border-color:var(--accent);background:var(--surface)}
+.search .ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2}
+.search kbd{position:absolute;right:9px;top:50%;transform:translateY(-50%);font:11px Figtree,sans-serif;border:1px solid var(--line);border-radius:6px;padding:2px 6px;color:var(--muted);background:var(--surface)}
+.drop{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 12px 32px rgba(10,30,60,.18);padding:6px;max-height:60vh;overflow:auto;z-index:40}
+.drop button{all:unset;display:flex;gap:10px;align-items:center;width:100%;box-sizing:border-box;padding:8px;border-radius:8px;cursor:pointer}
+.drop button:hover,.drop button.hl{background:var(--accent-soft)}
+.tbtn{all:unset;display:inline-flex;align-items:center;gap:6px;padding:7px 9px;border-radius:9px;cursor:pointer;color:var(--muted);position:relative;font-weight:500}
+.tbtn:hover{background:var(--surface-2);color:var(--text)}
+.tbtn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8}
+.badge-dot{position:absolute;top:1px;right:1px;background:var(--bad);color:#fff;font-size:10px;font-weight:700;border-radius:9px;min-width:16px;height:16px;display:grid;place-items:center;padding:0 4px}
+.me{display:flex;align-items:center;gap:9px;padding-left:10px;border-left:1px solid var(--line)}
+.me small{display:block;color:var(--muted);font-size:11px}
+.av{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:12px;flex:none}
+/* page bits */
+.hello{display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between;background:linear-gradient(100deg,var(--surface) 40%,var(--accent-soft));border-radius:var(--r);padding:14px 18px;box-shadow:var(--shadow)}
+.hello h1{margin:0;font-size:22px;font-weight:800;text-wrap:balance}
+.hello p{margin:2px 0 0;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:6px 12px;font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--good);display:inline-block}
+.dot.off{background:var(--warn)}
+.ph{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.ph h1{font-size:21px;margin:0;font-weight:800}
+.ph p{margin:2px 0 0;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.grid{display:grid;gap:14px}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.kpi{background:var(--surface);border-radius:var(--r);padding:14px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start;border:0;text-align:left;cursor:pointer;width:100%}
+.kpi:hover{outline:1px solid var(--line)}
+.kpi .ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none}
+.kpi .ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9}
+.kpi span{color:var(--muted);font-size:12.5px;display:block}
+.kpi b{font-size:22px;font-weight:800;display:block;line-height:1.2;white-space:nowrap}
+.kpi em{font-style:normal;font-size:11.5px;color:var(--muted)}
+.up{color:var(--good)!important}.down{color:var(--bad)!important}
+.bar{height:6px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--c-blk);border-radius:4px}
+.card{background:var(--surface);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;min-width:0}
+.card h2{font-size:15.5px;margin:0 0 12px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.card h2 button.link{font-size:12.5px}
+.charts{grid-template-columns:1fr 1.5fr 1fr}
+.lists{grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,.95fr)}
+.donutwrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center}
+.legend{display:grid;gap:9px;font-size:13px;flex:1;min-width:150px}
+.legend div{display:flex;gap:8px;align-items:center}
+.legend i{width:11px;height:11px;border-radius:3px;flex:none}
+.legend b{margin-left:auto;font-weight:600}
+svg text{fill:var(--text)}
+svg .mut{fill:var(--muted)}
+svg .gl{stroke:var(--line)}
+.li{display:flex;gap:10px;align-items:center;padding:9px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.li:last-child{border-bottom:0}
+.li:hover{background:var(--surface-2)}
+.li .t{flex:1;min-width:0}
+.li .t b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li .t small,.li .r small{color:var(--muted);font-size:12px}
+.li .r{text-align:right;font-size:12.5px;max-width:48%}
+.empty{color:var(--muted);padding:18px 4px;text-align:center}
+.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.qa button{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;font-size:12px;color:var(--muted);padding:12px 4px;border-radius:10px;background:var(--surface-2)}
+.qa button:hover{background:var(--accent-soft);color:var(--text)}
+.qa button:focus-visible{outline:2px solid var(--accent)}
+.qa .ic{width:36px;height:36px;border-radius:50%;display:grid;place-items:center}
+.qa svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.9}
+.mods{grid-template-columns:repeat(8,minmax(0,1fr))}
+@media (max-width:1500px){.mods{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media (max-width:640px){.mods{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mod{all:unset;cursor:pointer;display:flex;gap:10px;align-items:center;background:var(--surface);border-radius:var(--r);padding:12px;box-shadow:var(--shadow)}
+.mod:hover{outline:1px solid var(--accent)}
+.mod .ic{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;flex:none}
+.mod svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.9}
+.mod b{display:block;font-size:13px}.mod small{color:var(--muted);font-size:11px}
+/* controls */
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:7px 13px;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{background:var(--accent-2);color:#fff}
+.btn.sm{padding:4px 9px;font-size:12.5px;border-radius:7px}
+.btn.danger{color:var(--bad)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+button.link{all:unset;color:var(--accent);cursor:pointer;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.inp,select.inp,textarea.inp{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:7px 10px;outline:none;min-width:0}
+.inp:focus{border-color:var(--accent)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{all:unset;cursor:pointer;padding:8px 12px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--accent);border-color:var(--accent)}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--surface-2);color:var(--muted);white-space:nowrap}
+.tag.g{background:var(--good-soft);color:var(--good)}.tag.w{background:var(--warn-soft);color:var(--warn)}.tag.b{background:var(--bad-soft);color:var(--bad)}.tag.a{background:var(--accent-soft);color:var(--accent)}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{text-align:left;font-weight:600;color:var(--muted);font-size:12px;background:var(--surface-2);padding:9px 10px;white-space:nowrap;border-bottom:1px solid var(--line)}
+td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+tbody tr:hover{background:var(--surface-2)}
+.acts{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.sum div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sum span{display:block;font-size:12px;color:var(--muted)}
+.sum b{font-size:18px;font-variant-numeric:tabular-nums}
+/* beds */
+.ward h3{margin:4px 0 8px;font-size:14px;display:flex;gap:10px;align-items:center}
+.beds{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
+.bed{all:unset;cursor:pointer;border-radius:10px;padding:8px 10px;border:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:2px;border-left:4px solid var(--c-vac);min-height:52px}
+.bed b{font-size:13px}.bed small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bed.occ{border-left-color:var(--c-occ);background:var(--bad-soft)}
+.bed.mnt{border-left-color:var(--c-mnt);background:var(--surface-2)}
+.bed.blk{border-left-color:var(--c-blk);background:var(--warn-soft)}
+.bed:hover{outline:1px solid var(--accent)}
+.bed:focus-visible{outline:2px solid var(--accent)}
+/* modal */
+.scrim{position:fixed;inset:0;background:rgba(8,20,40,.45);display:grid;place-items:center;z-index:100;padding:16px}
+.modal{background:var(--surface);border-radius:14px;width:min(640px,100%);max-height:calc(100vh - 32px);overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.modal.wide{width:min(880px,100%)}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:1}
+.mh h3{margin:0;font-size:16px}
+.mb{padding:16px 18px;display:grid;gap:12px}
+.mf{display:flex;justify-content:flex-end;gap:8px;padding:12px 18px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--surface)}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg label{display:grid;gap:4px;font-size:12.5px;font-weight:600;color:var(--muted)}
+.fg label.full{grid-column:1/-1}
+.fg .inp{width:100%;color:var(--text);font-weight:400}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
+.checks label{display:flex;gap:6px;align-items:center;font-weight:500;color:var(--text)}
+.err{color:var(--bad);font-weight:600;font-size:13px}
+.kv{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px 16px}
+.kv div span{display:block;font-size:11.5px;color:var(--muted)}
+.lines{display:grid;gap:6px}
+.lines .ln{display:grid;grid-template-columns:1fr 80px 90px 30px;gap:6px;align-items:center}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#13213a;color:#fff;padding:10px 16px;border-radius:10px;z-index:200;box-shadow:0 10px 30px rgba(0,0,0,.25);font-weight:600;max-width:calc(100vw - 32px)}
+.toast.bad{background:var(--bad)}
+.banner{background:var(--warn-soft);color:var(--text);border:1px solid var(--warn);border-radius:var(--r);padding:12px 14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.foot{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);padding-block:12px 16px;border-top:1px solid var(--line)}
+.foot b{color:var(--text);font-size:14px}
+.loading{display:grid;place-items:center;min-height:60vh;color:var(--muted)}
+@media (max-width:1280px){.charts{grid-template-columns:1fr 1fr}.charts>:nth-child(2){grid-column:1/-1;order:-1}.lists{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;bottom:0;width:250px;z-index:90;transform:translateX(-105%);transition:transform .2s;padding-top:calc(18px + env(safe-area-inset-top,0px))}
+  .side.open{transform:none;box-shadow:0 0 0 100vmax rgba(8,20,40,.45)}
+  .tbtn.burger{display:inline-flex}
+  .main{padding-inline:16px}
+  .me .nm,.tbtn .lbl{display:none}
+}
+@media (max-width:640px){.charts,.lists{grid-template-columns:1fr}.fg{grid-template-columns:1fr}.search kbd{display:none}.search input{padding-right:10px}.lines .ln{grid-template-columns:1fr 60px 70px 28px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="app">
+  <aside class="side" id="side" aria-label="Main navigation">
+    <div class="brand">
+      <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><path d="M22 40C10 32 4 25 4 16a9 9 0 0 1 18-3 9 9 0 0 1 18 3c0 9-6 16-18 24z" fill="none" stroke="#4fb2ff" stroke-width="2.6"/><rect x="18.5" y="9" width="7" height="22" rx="1.5" fill="#fff"/><rect x="11" y="16.5" width="22" height="7" rx="1.5" fill="#fff"/></svg>
+      <div><b>AWT HOSPITAL</b><small>Care Today · Healthier Tomorrow</small></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="motto">Healing People<br>Empowering Lives<br>Together</div>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <button class="tbtn burger" data-a="menu" aria-label="Open menu"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <div class="search">
+        <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="gsearch" type="search" autocomplete="off" placeholder="Search patients (Name / UHID / EMR No. / Mobile)…" aria-label="Search patients">
+        <kbd>Ctrl + K</kbd>
+        <div class="drop" id="gdrop" hidden></div>
+      </div>
+      <button class="tbtn" data-a="alerts" aria-label="Alerts"><svg viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0"/></svg><span class="badge-dot" id="alertCount" hidden></span></button>
+      <button class="tbtn" data-a="help"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17.2v.1"/></svg><span class="lbl">Help</span></button>
+      <button class="tbtn" data-a="go" data-v="masters"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 3 14H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.7 1.7 0 0 0 10 3.1V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1A1.7 1.7 0 0 0 21 10h.1a2 2 0 1 1 0 4H21a1.7 1.7 0 0 0-1.6 1z"/></svg><span class="lbl">Settings</span></button>
+      <div class="me"><div class="av" style="background:var(--accent-soft);color:var(--accent)">AU</div><div class="nm"><b>Dr. Admin User</b><small>Administrator</small></div></div>
+    </header>
+    <main id="view" class="grid" style="gap:16px"><div class="loading">Connecting to hospital records…</div></main>
+    <footer class="foot">
+      <span>AWT Hospital ERP v1.0 &nbsp;|&nbsp; Licensed to AWT Hospital &nbsp;|&nbsp; <span id="storeMode">Connecting…</span></span>
+      <span>Care | Technology | People | A Healthier Tomorrow</span>
+      <span>Made with ♥ by <b>Opulence Byte</b></span>
+    </footer>
+  </div>
+</div>
+<div id="modalRoot"></div>
+
+<script>
+/*GEN*/
+</script>
+<script>
+(function(){
+'use strict';
+const COLS=['masters','doctors','patients','admissions','beds','visits','pharmacy','sales','labs','ot','inventory','assets','queries','receipts'];
+const D={}; COLS.forEach(c=>D[c]=new Map());
+let db=null, mode='loading', canWrite=true, downloads=null;
+const loaded=new Set();
+const LSKEY='awt-erp-local-v1';
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const dkey=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const today=()=>dkey(new Date());
+const shift=(k,n)=>{const d=new Date(k+'T12:00:00');d.setDate(d.getDate()+n);return dkey(d);};
+const nowLocal=()=>{const d=new Date();return dkey(d)+'T'+pad(d.getHours())+':'+pad(d.getMinutes());};
+const dayOf=s=>String(s||'').slice(0,10);
+const inr=n=>'₹ '+Math.round(n||0).toLocaleString('en-IN');
+const fT=s=>{if(!s)return '';const [h,m]=s.slice(11,16).split(':').map(Number);return (h%12||12)+':'+pad(m)+(h<12?' AM':' PM');};
+const fD=s=>{if(!s)return '';const d=new Date(s.slice(0,10)+'T12:00:00');return d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});};
+const fDT=s=>s?fD(s)+', '+fT(s):'';
+const all=c=>[...D[c].values()];
+const M=k=>((D.masters.get(k)||{}).items)||[];
+const uid=p=>p+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,5).toUpperCase();
+const initials=n=>String(n||'?').replace(/^Dr\.\s*/,'').split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase();
+const AVC=[['#e6effe','#1d6ae5'],['#fde9e2','#c4532b'],['#e3f6ef','#138a5c'],['#f1e8fd','#7a45d6'],['#fff1d9','#a86200'],['#e0f4f8','#0f7f95']];
+const avatar=(n,s)=>{let h=0;for(const c of String(n))h=(h*31+c.charCodeAt(0))>>>0;const [bg,fg]=AVC[h%AVC.length];return `<span class="av" style="background:${bg};color:${fg};${s?`width:${s}px;height:${s}px`:''}">${esc(initials(n))}</span>`;};
+const pct=(a,b)=>b?Math.round((a-b)/b*100):(a?100:0);
+const trend=(a,b)=>{const p=pct(a,b);return `<em class="${p>=0?'up':'down'}">${p>=0?'▲':'▼'} ${Math.abs(p)}%</em> <em>from yesterday</em>`;};
+
+const P=id=>D.patients.get(id)||{name:'Unknown patient',uhid:'—'};
+const DOC=id=>D.doctors.get(id)||{name:'—'};
+const DEPT=id=>(M('departments').find(d=>d.id===id)||{name:id||'—'});
+const PAYER=id=>id==='SELF'||!id?'Self pay':((M('tpa').find(t=>t.id===id)||{}).name||id);
+
+/* beds */
+function bedList(){const out=[];M('wards').forEach(w=>{for(let i=1;i<=w.count;i++)out.push({id:w.prefix+String(i).padStart(w.id==='ICU'?1:2,'0'),ward:w.id,wardName:w.name,rate:w.rate});});return out;}
+function bedStates(){
+  const occ={};all('admissions').filter(a=>a.status==='Admitted').forEach(a=>occ[a.bed]=a);
+  return bedList().map(b=>{const o=D.beds.get(b.id);return {...b,adm:occ[b.id],state:occ[b.id]?'occ':o&&o.status==='Maintenance'?'mnt':o&&o.status==='Blocked'?'blk':'vac',note:o&&o.note};});
+}
+/* IPD bill */
+function ipdBill(a){
+  const end=a.dischargedAt?new Date(a.dischargedAt):new Date();
+  const days=Math.max(1,Math.ceil((end-new Date(a.admittedAt))/864e5));
+  const room=days*(a.rate||0);
+  const ch=(a.charges||[]).reduce((s,c)=>s+(+c.amount||0),0);
+  const tpa=M('tpa').find(t=>t.id===(P(a.patientId).payer));
+  const disc=tpa?Math.round((room+ch)*(tpa.discount||0)/100):0;
+  const total=room+ch-disc, paid=(a.payments||[]).reduce((s,p)=>s+(+p.amount||0),0);
+  return {days,room,ch,disc,total,paid,due:total-paid};
+}
+/* ledger: every rupee collected */
+function ledger(){
+  const L=[];
+  all('visits').forEach(v=>{if(v.status!=='Cancelled'&&v.fee)L.push({at:v.at,src:'OPD',ref:'Token '+v.token+' · '+DEPT(v.dept).name,pid:v.patientId,amount:+v.fee,mode:v.mode});});
+  all('admissions').forEach(a=>(a.payments||[]).forEach(p=>L.push({at:p.at,src:'IPD',ref:a.ipNo+' · '+(p.note||'Payment'),pid:a.patientId,amount:+p.amount,mode:p.mode})));
+  all('sales').forEach(s=>L.push({at:s.at,src:'Pharmacy',ref:s.id+' · '+(s.lines||[]).length+' item(s)',pid:s.patientId,amount:+s.amount,mode:s.mode}));
+  all('labs').forEach(l=>{if(l.status!=='Cancelled')L.push({at:l.at,src:'Investigations',ref:(l.tests||[]).join(', '),pid:l.patientId,amount:+l.amount,mode:l.mode});});
+  all('receipts').forEach(r=>L.push({at:r.at,src:'Others',ref:r.desc,pid:r.patientId,amount:+r.amount,mode:r.mode}));
+  return L.sort((a,b)=>b.at.localeCompare(a.at));
+}
+const SRC=[['OPD','var(--c-opd)'],['IPD','var(--c-ipd)'],['Pharmacy','var(--c-ph)'],['Investigations','var(--c-inv)'],['Others','var(--c-oth)']];
+
+/* ---------- store ---------- */
+function clean(o){return JSON.parse(JSON.stringify(o));}
+function persistLocal(){if(mode!=='local')return;try{const o={};COLS.forEach(c=>o[c]=all(c));localStorage.setItem(LSKEY,JSON.stringify(o));}catch(e){}}
+function loadObj(o){COLS.forEach(c=>{D[c]=new Map((o[c]||[]).map(d=>[d.id,d]));});}
+async function save(col,obj){
+  if(!canWrite){toast('You have view-only access to these records.',1);throw new Error('ro');}
+  obj=clean(obj);D[col].set(obj.id,obj);schedule();
+  if(db){const {id,...rest}=obj;try{await db.collection(col).doc(id).set(rest);}catch(e){dbErr(e);}}else persistLocal();
+}
+async function remove(col,id){
+  if(!canWrite){toast('You have view-only access to these records.',1);return;}
+  D[col].delete(id);schedule();
+  if(db){try{await db.collection(col).doc(id).delete();}catch(e){dbErr(e);}}else persistLocal();
+}
+async function saveMaster(key,items){await save('masters',{id:key,items});}
+function dbErr(e){
+  const c=e&&e.code;
+  if(c==='invalid_argument'){canWrite=false;toast('Your access to this page is view-only, so the change was not saved.',1);}
+  else if(c==='quota_exceeded')toast('Storage is full: '+(e.message||''),1);
+  else toast('Could not save — '+(e&&e.message||'connection problem')+'. Try again.',1);
+}
+async function loadSample(){
+  const g=awtGenerate(today());
+  mode==='local'?loadObj(g):null;
+  if(db){toast('Loading sample records…');for(const c of COLS)for(const d of (g[c]||[])){const {id,...rest}=d;try{await db.collection(c).doc(id).set(rest);}catch(e){dbErr(e);return;}}}
+  else persistLocal();
+  toast('Sample hospital data loaded');schedule();
+}
+
+/* ---------- UI state ---------- */
+const ui={view:'dashboard',tab:{},q:{},date:today(),from:shift(today(),-6),to:today(),dept:'',src:''};
+let rq=0;function schedule(){if(rq)return;rq=requestAnimationFrame(()=>{rq=0;render();});}
+
+const I={
+  dash:'<rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  userplus:'<circle cx="10" cy="8" r="4"/><path d="M2 21a8 8 0 0 1 14-5.3M19 14v6M16 17h6"/>',
+  steth:'<path d="M6 3v6a5 5 0 0 0 10 0V3M11 14v2a5 5 0 0 0 10 0v-2"/><circle cx="21" cy="12" r="2"/>',
+  bed:'<path d="M3 7v12M3 16h18v3M21 16v-4a3 3 0 0 0-3-3h-8v7"/><circle cx="7" cy="12" r="2"/>',
+  doc:'<circle cx="12" cy="7" r="4"/><path d="M5 21a7 7 0 0 1 14 0M12 14v4M10 16h4"/>',
+  pill:'<rect x="3" y="9" width="18" height="7" rx="3.5" transform="rotate(-35 12 12.5)"/><path d="m9 8 6 8.5"/>',
+  flask:'<path d="M9 3h6M10 3v6L4 19a1.5 1.5 0 0 0 1.3 2h13.4A1.5 1.5 0 0 0 20 19l-6-10V3M7 14h10"/>',
+  ot:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4M9 10h6M12 7v6"/>',
+  box:'<path d="M21 8 12 3 3 8v8l9 5 9-5zM3 8l9 5 9-5M12 13v8"/>',
+  asset:'<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M8 6V4h8v2M3 12h18"/>',
+  bill:'<path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h4"/>',
+  corp:'<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20a6 6 0 0 1 12 0M14 20a4.5 4.5 0 0 1 8 0"/>',
+  report:'<path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h5"/>',
+  query:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M9 9.5a2 2 0 1 1 2.5 1.9c-.4.2-.5.5-.5.9M11 14v.1"/>',
+  admin:'<circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 12-4.9"/><circle cx="18" cy="17" r="3"/><path d="M18 12v2M18 20v2M13 17h2M21 17h2"/>',
+  master:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/>',
+  misc:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h10M7 17h6"/>',
+  rupee:'<path d="M6 4h12M6 9h12M13 20 6 13h3a4.5 4.5 0 0 0 0-9"/>',
+  out:'<path d="M14 4h6v16h-6M3 12h12M10 7l-5 5 5 5"/>',
+  in:'<path d="M10 4H4v16h6M21 12H9M16 7l5 5-5 5"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>'
+};
+const ic=(k,st)=>`<svg viewBox="0 0 24 24" aria-hidden="true" ${st?`style="${st}"`:''}>${I[k]}</svg>`;
+const NAV=[['dashboard','Dashboard','dash'],['reception','Reception','user'],['opd','OPD','steth'],['ipd','IPD','bed'],['beds','Bed Mapping','bed'],['doctors','Doctors','doc'],['pharmacy','Pharmacy','pill'],['labs','Investigations','flask'],['ot','OT / Operation Theatre','ot'],['inventory','Inventory','box'],['assets','Assets','asset'],['billing','Billing & Payments','bill'],['tpa','Corporate / TPA','corp'],['reports','Reports','report'],['queries','Queries','query'],['admin','Admin','admin'],['masters','Masters','master'],['misc','Miscellaneous','misc']];
+
+function renderNav(){
+  const cnt={opd:all('visits').filter(v=>dayOf(v.at)===today()&&v.status==='Waiting').length,labs:all('labs').filter(l=>l.status!=='Reported'&&l.status!=='Cancelled').length,queries:all('queries').filter(q=>q.status!=='Closed').length};
+  $('#nav').innerHTML=NAV.map(([k,l,i])=>`<button class="${ui.view===k?'on':''}" data-a="go" data-v="${k}" ${ui.view===k?'aria-current="page"':''}><svg viewBox="0 0 24 24">${I[i]}</svg>${l}${cnt[k]?`<span class="cnt">${cnt[k]}</span>`:''}</button>`).join('');
+}
+
+/* ---------- generic pieces ---------- */
+function table(cols,rows,empty){
+  if(!rows.length)return `<div class="tw"><div class="empty">${empty||'Nothing here yet.'}</div></div>`;
+  return `<div class="tw"><table><thead><tr>${cols.map(c=>`<th class="${c.r?'r':''}">${c.h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td class="${c.r?'r':''}">${c.v(r)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+}
+const tabs=(key,list)=>{const cur=ui.tab[key]||list[0][0];return `<div class="tabs" role="tablist">${list.map(([k,l])=>`<button role="tab" aria-selected="${cur===k}" class="${cur===k?'on':''}" data-a="tab" data-k="${key}" data-v="${k}">${l}</button>`).join('')}</div>`;};
+const curTab=(key,def)=>ui.tab[key]||def;
+const searchBox=(key,ph)=>`<input class="inp" id="q-${key}" data-q="${key}" type="search" placeholder="${ph}" value="${esc(ui.q[key]||'')}" style="width:min(280px,100%)">`;
+const match=(key,...f)=>{const q=(ui.q[key]||'').trim().toLowerCase();return !q||f.join(' ').toLowerCase().includes(q);};
+const st=(s)=>{const m={Completed:'g',Reported:'g',Admitted:'a','In consultation':'a','In progress':'a','Sample collected':'w',Waiting:'w',Pending:'w',Scheduled:'a',Discharged:'',Cancelled:'b',Open:'b',Closed:'g',Working:'g','Under service':'w','Out of order':'b',Active:'g',Inactive:''};return `<span class="tag ${m[s]??''}">${esc(s)}</span>`;};
+const ro=()=>canWrite?'':'disabled';
+const pLink=pid=>{const p=P(pid);return `<button class="link" style="text-decoration:none;color:var(--text)" data-a="patient" data-id="${esc(pid)}">${esc(p.name)}</button><div class="muted" style="font-size:11.5px">${esc(p.uhid)}</div>`;};
+
+/* ---------- modal & forms ---------- */
+let modalCleanup=null;
+function openModal(title,body,{wide,foot,onMount}={}){
+  $('#modalRoot').innerHTML=`<div class="scrim" data-scrim><div class="modal ${wide?'wide':''}" role="dialog" aria-modal="true" aria-label="${esc(title)}"><div class="mh"><h3>${esc(title)}</h3><button class="tbtn" data-a="close" aria-label="Close">✕</button></div>${body}${foot||''}</div></div>`;
+  const f=$('#modalRoot').querySelector('input:not([type=hidden]),select,textarea,button.btn');f&&f.focus();
+  onMount&&onMount($('#modalRoot .modal'));
+}
+function closeModal(){$('#modalRoot').innerHTML='';modalCleanup&&modalCleanup();modalCleanup=null;}
+function patientOptions(){return `<datalist id="plist">${all('patients').sort((a,b)=>(b.registeredAt||'').localeCompare(a.registeredAt||'')).map(p=>`<option value="${esc(p.uhid+' — '+p.name+' ('+p.phone+')')}"></option>`).join('')}</datalist>`;}
+function parsePatient(v){const m=String(v||'').match(/AWT-\d+/i);if(!m)return null;return all('patients').find(p=>p.uhid.toUpperCase()===m[0].toUpperCase())||null;}
+const pVal=pid=>{const p=D.patients.get(pid);return p?p.uhid+' — '+p.name+' ('+p.phone+')':'';};
+function field(f,v){
+  const id='f-'+f.name, req=f.required?'required':'', val=v??f.value??'';
+  let el;
+  if(f.type==='select')el=`<select class="inp" id="${id}" name="${f.name}" ${req}>${f.options.map(([k,l])=>`<option value="${esc(k)}" ${String(k)===String(val)?'selected':''}>${esc(l)}</option>`).join('')}</select>`;
+  else if(f.type==='textarea')el=`<textarea class="inp" id="${id}" name="${f.name}" rows="3" ${req}>${esc(val)}</textarea>`;
+  else if(f.type==='patient')el=`<input class="inp" id="${id}" name="${f.name}" list="plist" ${req} value="${esc(val)}" placeholder="Type name, UHID or mobile">`+patientOptions();
+  else if(f.type==='checks')el=`<div class="checks" id="${id}">${f.options.map(([k,l])=>`<label><input type="checkbox" name="${f.name}" value="${esc(k)}" ${(val||[]).includes(k)?'checked':''}> ${esc(l)}</label>`).join('')}</div>`;
+  else el=`<input class="inp" id="${id}" name="${f.name}" type="${f.type||'text'}" ${req} value="${esc(val)}" ${f.min!=null?`min="${f.min}"`:''} ${f.step?`step="${f.step}"`:''} ${f.pattern?`pattern="${f.pattern}"`:''} ${f.ph?`placeholder="${esc(f.ph)}"`:''}>`;
+  return `<label class="${f.full||f.type==='textarea'||f.type==='checks'||f.type==='patient'?'full':''}" for="${id}">${esc(f.label)}${el}${f.hint?`<span style="font-weight:400">${f.hint}</span>`:''}</label>`;
+}
+function formModal({title,fields,values={},submit='Save',onSubmit,wide,pre='',onMount}){
+  const body=`<form id="mform" novalidate><div class="mb">${pre}<div class="fg">${fields.map(f=>field(f,values[f.name])).join('')}</div><div class="err" id="ferr" role="alert"></div></div><div class="mf"><button type="button" class="btn" data-a="close">Cancel</button><button class="btn pri" type="submit" ${ro()}>${esc(submit)}</button></div></form>`;
+  openModal(title,body,{wide,onMount});
+  $('#mform').addEventListener('submit',async e=>{
+    e.preventDefault();const fm=e.target;
+    for(const f of fields){const el=fm.elements[f.name];if(f.required&&el&&!el.value&&f.type!=='checks'){$('#ferr').textContent=f.label+' is required.';el.focus&&el.focus();return;}}
+    const vals={};fields.forEach(f=>{if(f.type==='checks')vals[f.name]=[...fm.querySelectorAll(`input[name="${f.name}"]:checked`)].map(x=>x.value);else{const el=fm.elements[f.name];vals[f.name]=f.type==='number'?(el.value===''?'':+el.value):el.value.trim();}});
+    try{const r=await onSubmit(vals,fm);if(typeof r==='string'){$('#ferr').textContent=r;return;}closeModal();}catch(err){if(err.message!=='ro')$('#ferr').textContent=err.message;}
+  });
+}
+function confirmBox(title,msg,label,fn){openModal(title,`<div class="mb"><p style="margin:0">${msg}</p></div>`,{foot:`<div class="mf"><button class="btn" data-a="close">Cancel</button><button class="btn pri" id="okbtn" ${ro()}>${esc(label)}</button></div>`});$('#okbtn').onclick=async()=>{await fn();closeModal();};}
+let tt;function toast(m,bad){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('role','status');document.body.appendChild(t);}t.className='toast'+(bad?' bad':'');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,3200);}
+
+/* ---------- charts ---------- */
+function donut(segs,center,sub,size=170){
+  const tot=segs.reduce((s,x)=>s+x.value,0)||1,r=62,c=2*Math.PI*r;let off=0;
+  const arcs=segs.map(s=>{const len=s.value/tot*c;const el=`<circle r="${r}" cx="85" cy="85" fill="none" stroke="${s.color}" stroke-width="24" stroke-dasharray="${len} ${c-len}" stroke-dashoffset="${-off}" transform="rotate(-90 85 85)"><title>${esc(s.label)}: ${s.fmt?s.fmt(s.value):s.value}</title></circle>`;off+=len;return el;}).join('');
+  return `<svg viewBox="0 0 170 170" width="${size}" height="${size}" role="img" aria-label="${esc(sub)} ${esc(center)}"><circle r="${r}" cx="85" cy="85" fill="none" stroke="var(--line)" stroke-width="24"/>${arcs}<text x="85" y="84" text-anchor="middle" font-size="${center.length>7?19:26}" font-weight="800">${esc(center)}</text><text x="85" y="104" text-anchor="middle" font-size="11" class="mut">${esc(sub)}</text></svg>`;
+}
+function bars(data){
+  const W=560,H=250,L=34,B=34,T=24,R=8,max=Math.max(4,...data.map(d=>d.value));
+  const step=Math.ceil(max/4/5)*5||1,top=step*4,ih=H-B-T,bw=(W-L-R)/data.length;
+  let g='';for(let i=0;i<=4;i++){const y=T+ih-ih*i/4;g+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" class="gl"/><text x="${L-6}" y="${y+4}" text-anchor="end" font-size="11" class="mut">${step*i}</text>`;}
+  const b=data.map((d,i)=>{const h=ih*d.value/top,x=L+i*bw+bw*.22,w=bw*.56,y=T+ih-h;return `<rect x="${x}" y="${y}" width="${w}" height="${Math.max(h,0)}" rx="4" fill="${d.color}"><title>${esc(d.label)}: ${d.value}</title></rect><text x="${x+w/2}" y="${y-6}" text-anchor="middle" font-size="12" font-weight="700">${d.value}</text><text x="${x+w/2}" y="${H-12}" text-anchor="middle" font-size="11" class="mut">${esc(d.short||d.label)}</text>`;}).join('');
+  return `<div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:420px;height:auto" role="img" aria-label="Department wise OPD">${g}${b}</svg></div>`;
+}
+const DCOL=['#27c3b3','#3279f0','#4fb4f5','#5b9cf0','#6fa6f7','#f06a5e','#9b7bf2','#e59a2f'];
+
+/* ---------- views ---------- */
+const V={};
+V.dashboard=()=>{
+  const t=today(),y=shift(t,-1);
+  const vis=all('visits').filter(v=>v.status!=='Cancelled');
+  const opdT=vis.filter(v=>dayOf(v.at)===t).length,opdY=vis.filter(v=>dayOf(v.at)===y).length;
+  const adms=all('admissions'),act=adms.filter(a=>a.status==='Admitted');
+  const admT=adms.filter(a=>dayOf(a.admittedAt)===t),admY=adms.filter(a=>dayOf(a.admittedAt)===y).length;
+  const disT=adms.filter(a=>a.status==='Discharged'&&dayOf(a.dischargedAt)===t),disY=adms.filter(a=>a.status==='Discharged'&&dayOf(a.dischargedAt)===y).length;
+  const B=bedStates(),cnt=k=>B.filter(b=>b.state===k).length,occ=cnt('occ'),tot=B.length||1;
+  const L=ledger(),colT=L.filter(x=>dayOf(x.at)===t),colY=L.filter(x=>dayOf(x.at)===y).reduce((s,x)=>s+x.amount,0),sumT=colT.reduce((s,x)=>s+x.amount,0);
+  const actY=adms.filter(a=>dayOf(a.admittedAt)<=y&&(!a.dischargedAt||dayOf(a.dischargedAt)>y)).length;
+  const h=new Date().getHours(),greet=h<12?'Good Morning':h<17?'Good Afternoon':'Good Evening';
+  const k=(ic_,bg,fg,label,val,extra,go)=>`<button class="kpi" data-a="go" data-v="${go}"><span class="ic" style="background:${bg};color:${fg}">${ic(ic_)}</span><div><span>${label}</span><b>${val}</b>${extra}</div></button>`;
+  const depts=M('departments').map((d,i)=>({label:d.name,short:d.name.replace('General ','').replace('Orthopedics','Ortho.').replace('Dermatology','Derma.').replace('Gynecology','Gynae.').replace('Cardiology','Cardio.'),value:vis.filter(v=>dayOf(v.at)===t&&v.dept===d.id).length,color:DCOL[i%DCOL.length]}));
+  const srcSeg=SRC.map(([s,c])=>({label:s,color:c,value:colT.filter(x=>x.src===s).reduce((a,x)=>a+x.amount,0),fmt:inr}));
+  const regs=all('patients').sort((a,b)=>(b.registeredAt||'').localeCompare(a.registeredAt||'')).slice(0,5);
+  const li=(pid,sub,right,rsub,act_='patient',id=pid)=>{const p=P(pid);return `<div class="li" data-a="${act_}" data-id="${esc(id)}" tabindex="0" role="button">${avatar(p.name)}<div class="t"><b>${esc(p.name)}</b><small>${sub}</small></div><div class="r">${right}<br><small>${rsub}</small></div></div>`;};
+  const alerts=getAlerts();
+  return `
+  ${mode==='live'&&loaded.size===COLS.length&&!D.patients.size?`<div class="banner"><span><b>The records store is empty.</b> Load a realistic sample hospital to explore, or start adding real patients.</span><button class="btn pri" data-a="sample" ${ro()}>Load sample data</button></div>`:''}
+  <section class="hello"><div style="display:flex;gap:14px;align-items:center"><svg width="46" height="46" viewBox="0 0 46 46" aria-hidden="true"><circle cx="23" cy="23" r="9" fill="#ffb300"/>${[...Array(8)].map((_,i)=>`<line x1="23" y1="4" x2="23" y2="9" stroke="#ffb300" stroke-width="3" stroke-linecap="round" transform="rotate(${i*45} 23 23)"/>`).join('')}</svg><div><h1>${greet}, Admin!</h1><p>Together for a healthier tomorrow. Here's what's happening at AWT Hospital today.</p></div></div>
+  <div class="row"><span class="pill num" id="clock">${clockText()}</span><span class="pill"><span class="dot ${mode==='live'?'':'off'}"></span>${mode==='live'?'Online':'Offline copy'}</span></div></section>
+  <section class="grid kpis">
+    ${k('user','var(--accent-soft)','var(--accent)','OPD Patients',opdT,trend(opdT,opdY),'opd')}
+    ${k('bed','var(--teal-soft)','var(--teal)','IPD Patients',act.length,trend(act.length,actY),'ipd')}
+    ${k('bed','var(--warn-soft)','var(--c-blk)','Beds Occupied',`${occ} / ${tot}`,`<div class="bar" style="width:120px"><i style="width:${occ/tot*100}%"></i></div><em>${Math.round(occ/tot*100)}% occupancy</em>`,'beds')}
+    ${k('userplus','#efe7fd','#7a45d6',"Today's Admissions",admT.length,trend(admT.length,admY),'ipd')}
+    ${k('out','var(--teal-soft)','var(--teal)',"Today's Discharges",disT.length,trend(disT.length,disY),'ipd')}
+    ${k('rupee','var(--bad-soft)','var(--bad)',"Today's Collections",inr(sumT),trend(sumT,colY),'billing')}
+  </section>
+  <section class="grid charts">
+    <div class="card"><h2>Bed Occupancy <button class="link" data-a="go" data-v="beds">Bed map</button></h2><div class="donutwrap">${donut([{label:'Occupied',value:occ,color:'var(--c-occ)'},{label:'Vacant',value:cnt('vac'),color:'var(--c-vac)'},{label:'Maintenance',value:cnt('mnt'),color:'var(--c-mnt)'},{label:'Blocked',value:cnt('blk'),color:'var(--c-blk)'}],Math.round(occ/tot*100)+'%',`${occ} of ${tot} beds`)}
+      <div class="legend">${[['Occupied','occ'],['Vacant','vac'],['Maintenance','mnt'],['Blocked','blk']].map(([l,s])=>`<div><i style="background:var(--c-${s})"></i>${l}<b>${cnt(s)}</b></div>`).join('')}</div></div></div>
+    <div class="card"><h2>Department Wise OPD (Today) <span class="muted" style="font-size:12.5px;font-weight:500">${opdT} visits</span></h2>${bars(depts)}</div>
+    <div class="card"><h2>Today's Collections <button class="link" data-a="go" data-v="billing">Ledger</button></h2><div class="donutwrap">${donut(srcSeg,inr(sumT),'Total')}
+      <div class="legend">${srcSeg.map(s=>`<div><i style="background:${s.color}"></i>${s.label}<b>${inr(s.value)}</b></div>`).join('')}</div></div></div>
+  </section>
+  <section class="grid lists">
+    <div class="card"><h2>Today's Admissions <button class="link" data-a="go" data-v="ipd">View all</button></h2>${admT.sort((a,b)=>b.admittedAt.localeCompare(a.admittedAt)).slice(0,5).map(a=>li(a.patientId,esc(a.ipNo),fT(a.admittedAt),'<span style="color:var(--bad)">●</span> '+esc(wardName(a.ward)+' - '+a.bed),'adm',a.id)).join('')||'<div class="empty">No admissions yet today.</div>'}</div>
+    <div class="card"><h2>Today's Discharges <button class="link" data-a="tabgo" data-v="ipd" data-k="ipd" data-t="dis">View all</button></h2>${disT.sort((a,b)=>b.dischargedAt.localeCompare(a.dischargedAt)).slice(0,5).map(a=>li(a.patientId,esc(a.ipNo),fT(a.dischargedAt),esc(wardName(a.ward)+' - '+a.bed),'adm',a.id)).join('')||'<div class="empty">No discharges yet today.</div>'}</div>
+    <div class="card"><h2>Recent Registrations <button class="link" data-a="go" data-v="reception">View all</button></h2>${regs.map(p=>li(p.id,'EMR: '+esc(p.emr),`<span class="tag a">${esc(p.gender[0])}, ${esc(p.age)}y</span>`,fDT(p.registeredAt).split(', ')[dayOf(p.registeredAt)===t?1:0])).join('')||'<div class="empty">No patients yet.</div>'}</div>
+    <div class="card"><h2>Quick Actions</h2><div class="qa">
+      ${[['newPatient','New Registration','userplus','#fde9e2','#c4532b'],['go:beds','Bed Mapping','bed','var(--accent-soft)','var(--accent)'],['newVisit','OPD Billing','bill','#efe7fd','#7a45d6'],['newAdmission','IPD Admission','bed','var(--accent-soft)','var(--accent)'],['newSale','Pharmacy Sale','pill','var(--teal-soft)','var(--teal)'],['newLab','Lab Registration','flask','#efe7fd','#7a45d6'],['newOT','OT Booking','ot','var(--teal-soft)','var(--teal)'],['go:reports','Generate Report','report','var(--good-soft)','var(--good)'],['focusSearch','Search Patient','search','var(--surface)','var(--text)']].map(([a,l,i,bg,fg])=>{const [act_,v]=a.split(':');return `<button data-a="${act_}" ${v?`data-v="${v}"`:''}><span class="ic" style="background:${bg};color:${fg}">${ic(i)}</span>${l}</button>`;}).join('')}
+    </div></div>
+  </section>
+  ${alerts.length?`<section class="card"><h2>Needs attention <span class="tag b">${alerts.length}</span></h2><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px">${alerts.slice(0,6).map(x=>`<div class="li" data-a="go" data-v="${x.go}" role="button" tabindex="0"><span class="tag ${x.sev}">${x.kind}</span><div class="t"><b>${esc(x.text)}</b></div></div>`).join('')}</div></section>`:''}
+  <section class="grid mods">
+    ${[['reception','Patient EMR','Complete medical records','user','var(--accent-soft)','var(--accent)'],['pharmacy','Pharmacy','Purchase, sales, inventory','pill','var(--teal-soft)','var(--teal)'],['labs','Laboratory','Investigations & reports','flask','var(--teal-soft)','var(--teal)'],['ipd','IPD Management','Admission to discharge','bed','var(--bad-soft)','var(--bad)'],['ot','OT Management','Procedures & scheduling','ot','var(--accent-soft)','var(--accent)'],['inventory','Inventory','Stock & asset management','box','var(--good-soft)','var(--good)'],['tpa','Corporate / TPA','Cashless & billing','corp','var(--bad-soft)','var(--bad)'],['reports','Reports','Analytics & MIS','report','var(--warn-soft)','var(--warn)']].map(([v,t_,s,i,bg,fg])=>`<button class="mod" data-a="go" data-v="${v}"><span class="ic" style="background:${bg};color:${fg}">${ic(i)}</span><span><b>${t_}</b><small>${s}</small></span></button>`).join('')}
+  </section>`;
+};
+const wardName=id=>(M('wards').find(w=>w.id===id)||{name:id}).name;
+function clockText(){const d=new Date();return d.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'})+' · '+d.toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'});}
+
+function getAlerts(){
+  const A=[],t=today();
+  all('pharmacy').filter(m=>m.stock<=m.reorder).forEach(m=>A.push({sev:'b',kind:'Low stock',text:`${m.name}: ${m.stock} left`,go:'pharmacy'}));
+  all('pharmacy').filter(m=>m.expiry&&m.expiry<=shift(t,60)).forEach(m=>A.push({sev:'w',kind:'Expiring',text:`${m.name} expires ${fD(m.expiry)}`,go:'pharmacy'}));
+  all('inventory').filter(m=>m.stock<=m.reorder).forEach(m=>A.push({sev:'b',kind:'Low stock',text:`${m.name}: ${m.stock} left`,go:'inventory'}));
+  const pend=all('labs').filter(l=>l.status==='Pending'||l.status==='Sample collected').length;if(pend)A.push({sev:'w',kind:'Lab',text:`${pend} investigation(s) awaiting report`,go:'labs'});
+  all('ot').filter(o=>dayOf(o.start)===t&&o.status==='Scheduled').forEach(o=>A.push({sev:'a',kind:'OT today',text:`${fT(o.start)} ${o.theatre}: ${o.procedure}`,go:'ot'}));
+  all('assets').filter(a=>a.nextService&&a.nextService<=shift(t,7)).forEach(a=>A.push({sev:'w',kind:'Service due',text:`${a.name} — ${fD(a.nextService)}`,go:'assets'}));
+  const oq=all('queries').filter(q=>q.status==='Open').length;if(oq)A.push({sev:'b',kind:'Queries',text:`${oq} open patient quer${oq>1?'ies':'y'}`,go:'queries'});
+  return A;
+}
+
+V.reception=()=>{
+  const rows=all('patients').filter(p=>match('pt',p.name,p.uhid,p.emr,p.phone,p.address)).sort((a,b)=>(b.registeredAt||'').localeCompare(a.registeredAt||''));
+  const t=today();
+  return `<div class="ph"><div><h1>Reception</h1><p>${D.patients.size} registered patients · ${all('patients').filter(p=>dayOf(p.registeredAt)===t).length} new today</p></div><div class="row">${searchBox('pt','Search name, UHID, EMR, mobile')}<button class="btn pri" data-a="newPatient" ${ro()}>+ New registration</button></div></div>
+  ${table([{h:'Patient',v:p=>`<div style="display:flex;gap:8px;align-items:center">${avatar(p.name,30)}${pLink(p.id)}</div>`},{h:'EMR No.',v:p=>esc(p.emr)},{h:'Sex / Age',v:p=>esc(p.gender)+', '+esc(p.age)},{h:'Mobile',v:p=>esc(p.phone)},{h:'Payer',v:p=>esc(PAYER(p.payer))},{h:'Registered',v:p=>fDT(p.registeredAt)},{h:'',r:1,v:p=>`<div class="acts"><button class="btn sm" data-a="newVisit" data-id="${p.id}" ${ro()}>OPD visit</button><button class="btn sm" data-a="newAdmission" data-id="${p.id}" ${ro()}>Admit</button><button class="btn sm" data-a="editPatient" data-id="${p.id}" ${ro()}>Edit</button></div>`}],rows.slice(0,200),ui.q.pt?'No patient matches that search.':'No patients registered yet.')}
+  ${rows.length>200?`<p class="muted">Showing the 200 most recent of ${rows.length}. Refine the search to find others.</p>`:''}`;
+};
+
+V.opd=()=>{
+  const d=ui.date;
+  const rows=all('visits').filter(v=>dayOf(v.at)===d&&(!ui.dept||v.dept===ui.dept)&&match('opd',P(v.patientId).name,P(v.patientId).uhid,DOC(v.doctorId).name)).sort((a,b)=>a.token-b.token);
+  const c=s=>rows.filter(v=>v.status===s).length;
+  const next={Waiting:'In consultation','In consultation':'Completed'};
+  return `<div class="ph"><div><h1>OPD</h1><p>Outpatient queue and consultation billing</p></div><div class="row"><input class="inp" type="date" id="opd-date" data-set="date" value="${d}"><select class="inp" id="opd-dept" data-set="dept"><option value="">All departments</option>${M('departments').map(x=>`<option value="${x.id}" ${ui.dept===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select>${searchBox('opd','Search patient or doctor')}<button class="btn pri" data-a="newVisit" ${ro()}>+ New OPD visit</button></div></div>
+  <div class="sum"><div><span>Total visits</span><b>${rows.filter(v=>v.status!=='Cancelled').length}</b></div><div><span>Waiting</span><b>${c('Waiting')}</b></div><div><span>In consultation</span><b>${c('In consultation')}</b></div><div><span>Completed</span><b>${c('Completed')}</b></div><div><span>Consultation fees</span><b>${inr(rows.filter(v=>v.status!=='Cancelled').reduce((s,v)=>s+(+v.fee||0),0))}</b></div></div>
+  ${table([{h:'Token',v:v=>`<b>#${v.token}</b>`},{h:'Time',v:v=>fT(v.at)},{h:'Patient',v:v=>pLink(v.patientId)},{h:'Department',v:v=>esc(DEPT(v.dept).name)},{h:'Doctor',v:v=>esc(DOC(v.doctorId).name)},{h:'Complaint',v:v=>esc(v.complaint||'')},{h:'Fee',r:1,v:v=>inr(v.fee)+`<div class="muted" style="font-size:11px">${esc(v.mode||'')}</div>`},{h:'Status',v:v=>st(v.status)},{h:'',r:1,v:v=>`<div class="acts">${next[v.status]?`<button class="btn sm" data-a="visitStatus" data-id="${v.id}" data-s="${next[v.status]}" ${ro()}>${v.status==='Waiting'?'Call in':'Complete'}</button>`:''}${v.status==='Waiting'?`<button class="btn sm danger" data-a="visitStatus" data-id="${v.id}" data-s="Cancelled" ${ro()}>Cancel</button>`:''}<button class="btn sm" data-a="newLab" data-id="${v.patientId}" ${ro()}>Lab</button></div>`}],rows,`No OPD visits on ${fD(d)}.`)}`;
+};
+
+V.ipd=()=>{
+  const tab=curTab('ipd','act');
+  let rows=all('admissions').filter(a=>(tab==='act'?a.status==='Admitted':a.status==='Discharged')&&match('ipd',P(a.patientId).name,P(a.patientId).uhid,a.ipNo,a.bed,DOC(a.doctorId).name,a.diagnosis));
+  rows.sort((a,b)=>tab==='act'?b.admittedAt.localeCompare(a.admittedAt):(b.dischargedAt||'').localeCompare(a.dischargedAt||''));
+  const dues=rows.map(ipdBill);
+  return `<div class="ph"><div><h1>IPD</h1><p>Admissions, running bills and discharge</p></div><div class="row">${searchBox('ipd','Search patient, IP no., bed')}<button class="btn" data-a="go" data-v="beds">Bed map</button><button class="btn pri" data-a="newAdmission" ${ro()}>+ New admission</button></div></div>
+  ${tabs('ipd',[['act','Admitted ('+all('admissions').filter(a=>a.status==='Admitted').length+')'],['dis','Discharged']])}
+  ${tab==='act'?`<div class="sum"><div><span>In-patients</span><b>${rows.length}</b></div><div><span>Running bills</span><b>${inr(dues.reduce((s,b)=>s+b.total,0))}</b></div><div><span>Received</span><b>${inr(dues.reduce((s,b)=>s+b.paid,0))}</b></div><div><span>Outstanding</span><b>${inr(dues.reduce((s,b)=>s+Math.max(0,b.due),0))}</b></div></div>`:''}
+  ${table([{h:'IP No.',v:a=>`<button class="link" data-a="adm" data-id="${a.id}">${esc(a.ipNo)}</button>`},{h:'Patient',v:a=>pLink(a.patientId)},{h:'Bed',v:a=>esc(a.bed)+`<div class="muted" style="font-size:11.5px">${esc(wardName(a.ward))}</div>`},{h:'Doctor',v:a=>esc(DOC(a.doctorId).name)+`<div class="muted" style="font-size:11.5px">${esc(DEPT(a.dept).name)}</div>`},{h:'Diagnosis',v:a=>esc(a.diagnosis||'')},{h:tab==='act'?'Admitted':'Discharged',v:a=>fDT(tab==='act'?a.admittedAt:a.dischargedAt)},{h:'Days',r:1,v:a=>ipdBill(a).days},{h:'Bill',r:1,v:a=>inr(ipdBill(a).total)},{h:'Due',r:1,v:a=>{const d=ipdBill(a).due;return `<b style="color:${d>0?'var(--bad)':'var(--good)'}">${inr(d)}</b>`;}},{h:'',r:1,v:a=>tab==='act'?`<div class="acts"><button class="btn sm" data-a="addCharge" data-id="${a.id}" ${ro()}>Charge</button><button class="btn sm" data-a="collect" data-id="${a.id}" ${ro()}>Payment</button><button class="btn sm" data-a="transfer" data-id="${a.id}" ${ro()}>Transfer</button><button class="btn sm pri" data-a="discharge" data-id="${a.id}" ${ro()}>Discharge</button></div>`:`<button class="btn sm" data-a="adm" data-id="${a.id}">Bill</button>`}],rows,tab==='act'?'No patients admitted.':'No discharges yet.')}`;
+};
+
+V.beds=()=>{
+  const B=bedStates(),c=k=>B.filter(b=>b.state===k).length;
+  return `<div class="ph"><div><h1>Bed Mapping</h1><p>Select a bed to admit, view the patient, or change its status.</p></div><div class="row">${[['occ','Occupied'],['vac','Vacant'],['mnt','Maintenance'],['blk','Blocked']].map(([k,l])=>`<span class="pill" style="font-weight:500"><i style="width:10px;height:10px;border-radius:3px;background:var(--c-${k});display:inline-block"></i>${l} <b>${c(k)}</b></span>`).join('')}</div></div>
+  ${M('wards').map(w=>{const wb=B.filter(b=>b.ward===w.id);return `<section class="card ward"><h3>${esc(w.name)} <span class="tag">${wb.filter(b=>b.state==='occ').length}/${wb.length} occupied</span><span class="muted" style="font-weight:500;font-size:12.5px">${inr(w.rate)}/day</span></h3><div class="beds">${wb.map(b=>`<button class="bed ${b.state}" data-a="bed" data-id="${b.id}"><b>${esc(b.id)}</b><small>${b.adm?esc(P(b.adm.patientId).name):b.state==='vac'?'Vacant':esc((b.state==='mnt'?'Maintenance':'Blocked')+(b.note?' · '+b.note:''))}</small></button>`).join('')}</div></section>`;}).join('')}`;
+};
+
+V.doctors=()=>{
+  const t=today(),rows=all('doctors').filter(d=>match('doc',d.name,DEPT(d.dept).name,d.qualification)).sort((a,b)=>a.name.localeCompare(b.name));
+  return `<div class="ph"><div><h1>Doctors</h1><p>${all('doctors').filter(d=>d.available).length} of ${D.doctors.size} available today</p></div><div class="row">${searchBox('doc','Search doctor or department')}<button class="btn pri" data-a="editDoctor" ${ro()}>+ Add doctor</button></div></div>
+  ${table([{h:'Doctor',v:d=>`<div style="display:flex;gap:8px;align-items:center">${avatar(d.name,30)}<div><b>${esc(d.name)}</b><div class="muted" style="font-size:11.5px">${esc(d.qualification)}</div></div></div>`},{h:'Department',v:d=>esc(DEPT(d.dept).name)},{h:'Room',v:d=>esc(d.room)},{h:'OPD days',v:d=>esc(d.days)},{h:'Phone',v:d=>esc(d.phone)},{h:'OPD today',r:1,v:d=>all('visits').filter(v=>v.doctorId===d.id&&dayOf(v.at)===t&&v.status!=='Cancelled').length},{h:'In-patients',r:1,v:d=>all('admissions').filter(a=>a.doctorId===d.id&&a.status==='Admitted').length},{h:'Status',v:d=>`<button class="btn sm" data-a="toggleDoc" data-id="${d.id}" ${ro()} aria-label="Toggle availability">${d.available?'<span class="dot"></span> Available':'<span class="dot off"></span> On leave'}</button>`},{h:'',r:1,v:d=>`<button class="btn sm" data-a="editDoctor" data-id="${d.id}" ${ro()}>Edit</button>`}],rows)}`;
+};
+
+V.pharmacy=()=>{
+  const tab=curTab('ph','stock');
+  if(tab==='sales'){const rows=all('sales').filter(s=>match('ph',P(s.patientId).name,s.id,(s.lines||[]).map(l=>l.name).join(' '))).sort((a,b)=>b.at.localeCompare(a.at));
+    return phHead()+tabs('ph',[['stock','Stock'],['sales','Sales']])+table([{h:'Bill No.',v:s=>esc(s.id)},{h:'Date',v:s=>fDT(s.at)},{h:'Patient',v:s=>pLink(s.patientId)},{h:'Items',v:s=>(s.lines||[]).map(l=>esc(l.name)+' × '+l.qty).join('<br>')},{h:'Mode',v:s=>esc(s.mode)},{h:'Amount',r:1,v:s=>'<b>'+inr(s.amount)+'</b>'}],rows,'No sales yet.');}
+  const t=today(),rows=all('pharmacy').filter(m=>match('ph',m.name,m.form,m.batch)).sort((a,b)=>a.name.localeCompare(b.name));
+  return phHead()+tabs('ph',[['stock','Stock'],['sales','Sales']])+`<div class="sum"><div><span>Items</span><b>${D.pharmacy.size}</b></div><div><span>Low stock</span><b style="color:var(--bad)">${all('pharmacy').filter(m=>m.stock<=m.reorder).length}</b></div><div><span>Stock value</span><b>${inr(all('pharmacy').reduce((s,m)=>s+m.stock*m.price,0))}</b></div><div><span>Sales today</span><b>${inr(all('sales').filter(s=>dayOf(s.at)===t).reduce((s,x)=>s+x.amount,0))}</b></div></div>`+
+  table([{h:'Medicine',v:m=>`<b>${esc(m.name)}</b><div class="muted" style="font-size:11.5px">${esc(m.form)}</div>`},{h:'Batch',v:m=>esc(m.batch)},{h:'Expiry',v:m=>fD(m.expiry)+(m.expiry<=shift(t,60)?' <span class="tag w">Soon</span>':'')},{h:'MRP',r:1,v:m=>'₹ '+(+m.price).toFixed(2)},{h:'Stock',r:1,v:m=>`<b>${m.stock}</b> ${m.stock<=m.reorder?'<span class="tag b">Low</span>':''}`},{h:'',r:1,v:m=>`<div class="acts"><button class="btn sm" data-a="restock" data-c="pharmacy" data-id="${m.id}" ${ro()}>Stock in</button><button class="btn sm" data-a="editMed" data-id="${m.id}" ${ro()}>Edit</button></div>`}],rows);
+};
+const phHead=()=>`<div class="ph"><div><h1>Pharmacy</h1><p>Dispensing, stock and expiry</p></div><div class="row">${searchBox('ph','Search medicine or bill')}<button class="btn" data-a="editMed" ${ro()}>+ Add medicine</button><button class="btn pri" data-a="newSale" ${ro()}>+ New sale</button></div></div>`;
+
+V.labs=()=>{
+  const tab=curTab('lab','open');
+  const rows=all('labs').filter(l=>(tab==='open'?(l.status==='Pending'||l.status==='Sample collected'):tab==='done'?l.status==='Reported':true)&&match('lab',P(l.patientId).name,P(l.patientId).uhid,(l.tests||[]).join(' '),l.id)).sort((a,b)=>b.at.localeCompare(a.at));
+  const tn=c=>(M('tests').find(t=>t.code===c)||{name:c}).name;
+  return `<div class="ph"><div><h1>Investigations</h1><p>Lab and radiology orders from sample to report</p></div><div class="row">${searchBox('lab','Search patient or test')}<button class="btn pri" data-a="newLab" ${ro()}>+ New order</button></div></div>
+  ${tabs('lab',[['open','Awaiting report ('+all('labs').filter(l=>l.status==='Pending'||l.status==='Sample collected').length+')'],['done','Reported'],['all','All orders']])}
+  ${table([{h:'Order',v:l=>esc(l.id)+`<div class="muted" style="font-size:11.5px">${fDT(l.at)}</div>`},{h:'Patient',v:l=>pLink(l.patientId)},{h:'Tests',v:l=>(l.tests||[]).map(tn).map(esc).join('<br>')},{h:'Referred by',v:l=>esc(DOC(l.doctorId).name)},{h:'Amount',r:1,v:l=>inr(l.amount)},{h:'Status',v:l=>st(l.status)},{h:'',r:1,v:l=>`<div class="acts">${l.status==='Pending'?`<button class="btn sm" data-a="labStatus" data-id="${l.id}" ${ro()}>Collect sample</button>`:''}${l.status==='Sample collected'?`<button class="btn sm pri" data-a="labResult" data-id="${l.id}" ${ro()}>Enter result</button>`:''}${l.status==='Reported'?`<button class="btn sm" data-a="labResult" data-id="${l.id}">View report</button>`:''}</div>`}],rows,'No orders in this list.')}`;
+};
+
+V.ot=()=>{
+  const rows=all('ot').filter(o=>match('ot',P(o.patientId).name,o.procedure,o.theatre,DOC(o.surgeonId).name)).sort((a,b)=>a.start.localeCompare(b.start));
+  const nx={Scheduled:'In progress','In progress':'Completed'};
+  return `<div class="ph"><div><h1>Operation Theatre</h1><p>Surgery schedule across theatres</p></div><div class="row">${searchBox('ot','Search patient, procedure, surgeon')}<button class="btn pri" data-a="newOT" ${ro()}>+ Book OT</button></div></div>
+  ${table([{h:'When',v:o=>fD(o.start)+`<div class="muted" style="font-size:11.5px">${fT(o.start)} · ${o.duration} min</div>`},{h:'Theatre',v:o=>esc(o.theatre)},{h:'Patient',v:o=>pLink(o.patientId)},{h:'Procedure',v:o=>esc(o.procedure)},{h:'Surgeon',v:o=>esc(DOC(o.surgeonId).name)},{h:'Anaesthesia',v:o=>esc(o.anaesthesia)},{h:'Status',v:o=>st(o.status)},{h:'',r:1,v:o=>`<div class="acts">${nx[o.status]?`<button class="btn sm" data-a="otStatus" data-id="${o.id}" data-s="${nx[o.status]}" ${ro()}>${o.status==='Scheduled'?'Start':'Complete'}</button>`:''}${o.status==='Scheduled'?`<button class="btn sm" data-a="newOT" data-e="${o.id}" ${ro()}>Edit</button><button class="btn sm danger" data-a="otStatus" data-id="${o.id}" data-s="Cancelled" ${ro()}>Cancel</button>`:''}</div>`}],rows,'No surgeries booked.')}`;
+};
+
+V.inventory=()=>{
+  const rows=all('inventory').filter(m=>match('inv',m.name,m.category,m.location)&&(curTab('inv','all')==='all'||m.stock<=m.reorder)).sort((a,b)=>a.name.localeCompare(b.name));
+  return `<div class="ph"><div><h1>Inventory</h1><p>Consumables, linen and stores</p></div><div class="row">${searchBox('inv','Search item, category, store')}<button class="btn pri" data-a="editInv" ${ro()}>+ Add item</button></div></div>
+  ${tabs('inv',[['all','All items'],['low','Low stock ('+all('inventory').filter(m=>m.stock<=m.reorder).length+')']])}
+  ${table([{h:'Item',v:m=>'<b>'+esc(m.name)+'</b>'},{h:'Category',v:m=>esc(m.category)},{h:'Store',v:m=>esc(m.location)},{h:'Reorder at',r:1,v:m=>m.reorder},{h:'Stock',r:1,v:m=>`<b>${m.stock}</b> ${m.stock<=m.reorder?'<span class="tag b">Low</span>':''}`},{h:'',r:1,v:m=>`<div class="acts"><button class="btn sm" data-a="restock" data-c="inventory" data-id="${m.id}" ${ro()}>Stock in</button><button class="btn sm" data-a="issue" data-id="${m.id}" ${ro()}>Issue</button><button class="btn sm" data-a="editInv" data-id="${m.id}" ${ro()}>Edit</button></div>`}],rows,'No items.')}`;
+};
+
+V.assets=()=>{
+  const t=today(),rows=all('assets').filter(a=>match('as',a.name,a.location,a.status)).sort((a,b)=>a.name.localeCompare(b.name));
+  return `<div class="ph"><div><h1>Assets</h1><p>Equipment register and service schedule · total value ${inr(all('assets').reduce((s,a)=>s+(+a.value||0),0))}</p></div><div class="row">${searchBox('as','Search equipment or location')}<button class="btn pri" data-a="editAsset" ${ro()}>+ Add asset</button></div></div>
+  ${table([{h:'Asset',v:a=>'<b>'+esc(a.name)+'</b>'},{h:'Location',v:a=>esc(a.location)},{h:'Purchased',v:a=>fD(a.purchased)},{h:'Next service',v:a=>fD(a.nextService)+(a.nextService&&a.nextService<t?' <span class="tag b">Overdue</span>':a.nextService&&a.nextService<=shift(t,7)?' <span class="tag w">This week</span>':'')},{h:'Value',r:1,v:a=>inr(a.value)},{h:'Status',v:a=>st(a.status)},{h:'',r:1,v:a=>`<button class="btn sm" data-a="editAsset" data-id="${a.id}" ${ro()}>Edit</button>`}],rows,'No assets.')}`;
+};
+
+V.billing=()=>{
+  const tab=curTab('bill','ledger');
+  if(tab==='dues'){const rows=all('admissions').filter(a=>a.status==='Admitted').map(a=>({a,b:ipdBill(a)})).filter(x=>x.b.due>0).sort((x,y)=>y.b.due-x.b.due);
+    return billHead()+tabs('bill',[['ledger','Collections ledger'],['dues','IPD dues']])+table([{h:'IP No.',v:x=>`<button class="link" data-a="adm" data-id="${x.a.id}">${esc(x.a.ipNo)}</button>`},{h:'Patient',v:x=>pLink(x.a.patientId)},{h:'Payer',v:x=>esc(PAYER(P(x.a.patientId).payer))},{h:'Bill',r:1,v:x=>inr(x.b.total)},{h:'Paid',r:1,v:x=>inr(x.b.paid)},{h:'Due',r:1,v:x=>`<b style="color:var(--bad)">${inr(x.b.due)}</b>`},{h:'',r:1,v:x=>`<button class="btn sm pri" data-a="collect" data-id="${x.a.id}" ${ro()}>Collect</button>`}],rows,'No outstanding IPD dues.');}
+  const L=ledger().filter(x=>dayOf(x.at)>=ui.from&&dayOf(x.at)<=ui.to&&(!ui.src||x.src===ui.src)&&match('bill',P(x.pid).name,x.ref,x.src));
+  const byMode={};L.forEach(x=>byMode[x.mode||'Other']=(byMode[x.mode||'Other']||0)+x.amount);
+  return billHead()+tabs('bill',[['ledger','Collections ledger'],['dues','IPD dues']])+`<div class="row"><label class="muted">From <input class="inp" type="date" id="b-from" data-set="from" value="${ui.from}"></label><label class="muted">To <input class="inp" type="date" id="b-to" data-set="to" value="${ui.to}"></label><select class="inp" id="b-src" data-set="src"><option value="">All sources</option>${SRC.map(([s])=>`<option ${ui.src===s?'selected':''}>${s}</option>`).join('')}</select>${searchBox('bill','Search patient or reference')}</div>
+  <div class="sum"><div><span>Total collected</span><b>${inr(L.reduce((s,x)=>s+x.amount,0))}</b></div>${Object.entries(byMode).map(([m,v])=>`<div><span>${esc(m)}</span><b>${inr(v)}</b></div>`).join('')}<div><span>Transactions</span><b>${L.length}</b></div></div>
+  ${table([{h:'Date & time',v:x=>fDT(x.at)},{h:'Source',v:x=>`<span class="tag" style="background:color-mix(in srgb,${(SRC.find(s=>s[0]===x.src)||[])[1]} 18%,transparent);color:var(--text)">${x.src}</span>`},{h:'Patient',v:x=>x.pid?pLink(x.pid):'—'},{h:'Reference',v:x=>esc(x.ref)},{h:'Mode',v:x=>esc(x.mode||'')},{h:'Amount',r:1,v:x=>'<b>'+inr(x.amount)+'</b>'}],L.slice(0,300),'No collections in this period.')}`;
+};
+const billHead=()=>`<div class="ph"><div><h1>Billing & Payments</h1><p>Every rupee received across OPD, IPD, pharmacy and lab</p></div><div class="row"><button class="btn" data-a="newReceipt" ${ro()}>+ Other receipt</button><button class="btn pri" data-a="newVisit" ${ro()}>+ OPD bill</button></div></div>`;
+
+V.tpa=()=>{
+  const act=all('admissions').filter(a=>a.status==='Admitted');
+  return `<div class="ph"><div><h1>Corporate / TPA</h1><p>Insurance, TPA, government and corporate panels. Panel discount applies to IPD room and procedure charges.</p></div><button class="btn pri" data-a="editTpa" ${ro()}>+ Add panel</button></div>
+  ${table([{h:'Panel',v:t=>'<b>'+esc(t.name)+'</b>'},{h:'Type',v:t=>esc(t.type)},{h:'Helpline',v:t=>esc(t.contact)},{h:'Discount',r:1,v:t=>(t.discount||0)+'%'},{h:'Patients',r:1,v:t=>all('patients').filter(p=>p.payer===t.id).length},{h:'In-patients now',r:1,v:t=>act.filter(a=>P(a.patientId).payer===t.id).length},{h:'Claim value (open)',r:1,v:t=>inr(act.filter(a=>P(a.patientId).payer===t.id).reduce((s,a)=>s+ipdBill(a).total,0))},{h:'',r:1,v:t=>`<div class="acts"><button class="btn sm" data-a="editTpa" data-id="${t.id}" ${ro()}>Edit</button><button class="btn sm danger" data-a="delTpa" data-id="${t.id}" ${ro()}>Remove</button></div>`}],M('tpa'),'No panels yet.')}`;
+};
+
+V.reports=()=>{
+  const f=ui.from,t=ui.to,inR=s=>dayOf(s)>=f&&dayOf(s)<=t;
+  const vis=all('visits').filter(v=>inR(v.at)&&v.status!=='Cancelled'),adm=all('admissions'),L=ledger().filter(x=>inR(x.at));
+  const labs=all('labs').filter(l=>inR(l.at)&&l.status!=='Cancelled');
+  const medQ={};all('sales').filter(s=>inR(s.at)).forEach(s=>(s.lines||[]).forEach(l=>medQ[l.name]=(medQ[l.name]||0)+l.qty));
+  const R=reportRows();
+  return `<div class="ph"><div><h1>Reports</h1><p>MIS for the selected period</p></div><div class="row"><label class="muted">From <input class="inp" type="date" id="r-from" data-set="from" value="${f}"></label><label class="muted">To <input class="inp" type="date" id="r-to" data-set="to" value="${t}"></label><button class="btn" data-a="range" data-n="0">Today</button><button class="btn" data-a="range" data-n="6">7 days</button><button class="btn" data-a="range" data-n="29">30 days</button><button class="btn pri" data-a="exportCsv">Export CSV</button></div></div>
+  <div class="sum"><div><span>OPD visits</span><b>${vis.length}</b></div><div><span>New registrations</span><b>${all('patients').filter(p=>inR(p.registeredAt)).length}</b></div><div><span>Admissions</span><b>${adm.filter(a=>inR(a.admittedAt)).length}</b></div><div><span>Discharges</span><b>${adm.filter(a=>a.dischargedAt&&inR(a.dischargedAt)).length}</b></div><div><span>Investigations</span><b>${labs.length}</b></div><div><span>Collections</span><b>${inr(L.reduce((s,x)=>s+x.amount,0))}</b></div></div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card"><h2>Daily summary</h2>${table([{h:'Date',v:r=>fD(r.d)},{h:'OPD',r:1,v:r=>r.opd},{h:'Admit',r:1,v:r=>r.adm},{h:'Disch.',r:1,v:r=>r.dis},{h:'Collected',r:1,v:r=>inr(r.col)}],R)}</div>
+    <div class="card"><h2>OPD by department</h2>${table([{h:'Department',v:d=>esc(d.name)},{h:'Visits',r:1,v:d=>d.n},{h:'Fees',r:1,v:d=>inr(d.f)}],M('departments').map(d=>({name:d.name,n:vis.filter(v=>v.dept===d.id).length,f:vis.filter(v=>v.dept===d.id).reduce((s,v)=>s+(+v.fee||0),0)})).sort((a,b)=>b.n-a.n))}</div>
+    <div class="card"><h2>Collections by source</h2>${table([{h:'Source',v:s=>s[0]},{h:'Amount',r:1,v:s=>inr(L.filter(x=>x.src===s[0]).reduce((a,x)=>a+x.amount,0))}],SRC)}</div>
+    <div class="card"><h2>Top medicines dispensed</h2>${table([{h:'Medicine',v:m=>esc(m[0])},{h:'Qty',r:1,v:m=>m[1]}],Object.entries(medQ).sort((a,b)=>b[1]-a[1]).slice(0,8),'No sales in this period.')}</div>
+  </div>`;
+};
+function reportRows(){const out=[];let d=ui.to;const adm=all('admissions'),vis=all('visits'),L=ledger();for(let i=0;i<120&&d>=ui.from;i++){out.push({d,opd:vis.filter(v=>dayOf(v.at)===d&&v.status!=='Cancelled').length,adm:adm.filter(a=>dayOf(a.admittedAt)===d).length,dis:adm.filter(a=>dayOf(a.dischargedAt)===d).length,col:L.filter(x=>dayOf(x.at)===d).reduce((s,x)=>s+x.amount,0)});d=shift(d,-1);}return out;}
+
+V.queries=()=>{
+  const rows=all('queries').filter(q=>match('qr',q.subject,q.from,q.type,q.status)).sort((a,b)=>b.at.localeCompare(a.at));
+  return `<div class="ph"><div><h1>Queries</h1><p>Patient enquiries and complaints</p></div><div class="row">${searchBox('qr','Search queries')}<button class="btn pri" data-a="editQuery" ${ro()}>+ Log query</button></div></div>
+  ${table([{h:'Received',v:q=>fDT(q.at)},{h:'From',v:q=>esc(q.from)+`<div class="muted" style="font-size:11.5px">${esc(q.phone)}</div>`},{h:'Type',v:q=>`<span class="tag ${q.type==='Complaint'?'b':'a'}">${esc(q.type)}</span>`},{h:'Subject',v:q=>'<b>'+esc(q.subject)+'</b>'+(q.note?`<div class="muted" style="font-size:12px">${esc(q.note)}</div>`:'')},{h:'Status',v:q=>st(q.status)},{h:'',r:1,v:q=>`<button class="btn sm" data-a="editQuery" data-id="${q.id}" ${ro()}>Update</button>`}],rows,'No queries logged.')}`;
+};
+
+V.admin=()=>`<div class="ph"><div><h1>Admin</h1><p>Staff accounts and data tools</p></div><button class="btn pri" data-a="editStaff" ${ro()}>+ Add staff</button></div>
+  ${table([{h:'Name',v:u=>`<div style="display:flex;gap:8px;align-items:center">${avatar(u.name,30)}<b>${esc(u.name)}</b></div>`},{h:'Role',v:u=>esc(u.role)},{h:'Email',v:u=>esc(u.email)},{h:'Status',v:u=>st(u.active?'Active':'Inactive')},{h:'',r:1,v:u=>`<button class="btn sm" data-a="editStaff" data-id="${u.id}" ${ro()}>Edit</button>`}],M('staff'))}
+  <div class="card"><h2>Data</h2><p class="muted" style="margin-top:0">Records are stored ${mode==='live'?'in this page’s shared database and update live for everyone who has it open':'only in this browser (offline copy)'}. ${COLS.reduce((s,c)=>s+D[c].size,0)} records across ${COLS.length} registers.</p><div class="row"><button class="btn" data-a="exportJson">Export all records (JSON)</button><button class="btn" data-a="sample" ${ro()}>Reload sample data</button></div></div>`;
+
+V.masters=()=>{
+  const tab=curTab('ms','dept');
+  const head=`<div class="ph"><div><h1>Masters</h1><p>Departments, fees, tests and wards used across the system</p></div><button class="btn pri" data-a="editMaster" data-k="${tab}" ${ro()}>+ Add ${tab==='dept'?'department':tab==='tests'?'test':'ward'}</button></div>`+tabs('ms',[['dept','Departments & OPD fees'],['tests','Lab tests'],['wards','Wards & bed rates']]);
+  if(tab==='tests')return head+table([{h:'Code',v:t=>esc(t.code)},{h:'Test',v:t=>esc(t.name)},{h:'Price',r:1,v:t=>inr(t.price)},{h:'',r:1,v:t=>`<button class="btn sm" data-a="editMaster" data-k="tests" data-id="${esc(t.code)}" ${ro()}>Edit</button>`}],M('tests'));
+  if(tab==='wards')return head+table([{h:'Ward',v:w=>esc(w.name)},{h:'Bed prefix',v:w=>esc(w.prefix)},{h:'Beds',r:1,v:w=>w.count},{h:'Rate / day',r:1,v:w=>inr(w.rate)},{h:'',r:1,v:w=>`<button class="btn sm" data-a="editMaster" data-k="wards" data-id="${esc(w.id)}" ${ro()}>Edit</button>`}],M('wards'));
+  return head+table([{h:'Code',v:d=>esc(d.id)},{h:'Department',v:d=>esc(d.name)},{h:'OPD fee',r:1,v:d=>inr(d.fee)},{h:'Doctors',r:1,v:d=>all('doctors').filter(x=>x.dept===d.id).length},{h:'',r:1,v:d=>`<button class="btn sm" data-a="editMaster" data-k="dept" data-id="${esc(d.id)}" ${ro()}>Edit</button>`}],M('departments'));
+};
+
+V.misc=()=>`<div class="ph"><div><h1>Miscellaneous</h1><p>Notice board for all staff</p></div><button class="btn pri" data-a="editNotice" ${ro()}>+ Post notice</button></div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">${M('notices').slice().sort((a,b)=>b.date.localeCompare(a.date)).map(n=>`<div class="card"><h2>${esc(n.title)}<span class="muted" style="font-size:12px;font-weight:500">${fD(n.date)}</span></h2><p style="margin:0 0 10px">${esc(n.body)}</p><div class="row"><button class="btn sm" data-a="editNotice" data-id="${n.id}" ${ro()}>Edit</button><button class="btn sm danger" data-a="delNotice" data-id="${n.id}" ${ro()}>Remove</button></div></div>`).join('')||'<div class="empty">No notices.</div>'}</div>`;
+
+/* ---------- render ---------- */
+function render(){
+  renderNav();
+  const a=document.activeElement,aid=a&&a.id,sel=a&&a.selectionStart;
+  if(mode==='loading'){return;}
+  $('#view').innerHTML=(V[ui.view]||V.dashboard)();
+  if(aid&&aid!=='gsearch'){const n=document.getElementById(aid);if(n&&n.closest('#view')){n.focus();try{if(sel!=null)n.setSelectionRange(sel,sel);}catch(e){}}}
+  const al=getAlerts().length,b=$('#alertCount');b.hidden=!al;b.textContent=al;
+  $('#storeMode').textContent=mode==='live'?(canWrite?'Live · shared database':'Live · view only'):'Offline copy · saved in this browser';
+}
+
+/* ---------- actions ---------- */
+const deptOpts=()=>M('departments').map(d=>[d.id,d.name]);
+const docOpts=dept=>all('doctors').filter(d=>!dept||d.dept===dept).sort((a,b)=>a.name.localeCompare(b.name)).map(d=>[d.id,d.name+' — '+DEPT(d.dept).name+(d.available?'':' (on leave)')]);
+const MODES=[['Cash','Cash'],['UPI','UPI'],['Card','Card'],['Cheque','Cheque'],['Insurance','Insurance / TPA']];
+const vacantBeds=()=>bedStates().filter(b=>b.state==='vac').map(b=>[b.id,b.id+' — '+b.wardName+' ('+inr(b.rate)+'/day)']);
+function nextPatientIds(){let mu=0,me=210578400;all('patients').forEach(p=>{const n=+String(p.uhid).replace(/\D/g,'');if(n>mu)mu=n;if(+p.emr>me)me=+p.emr;});return {uhid:'AWT-'+String(mu+1).padStart(6,'0'),emr:String(me+1)};}
+
+const ACT={
+  go:d=>{ui.view=d.v;$('#side').classList.remove('open');render();window.scrollTo(0,0);},
+  tabgo:d=>{ui.tab[d.k]=d.t;ACT.go(d);},
+  tab:d=>{ui.tab[d.k]=d.v;render();},
+  menu:()=>$('#side').classList.toggle('open'),
+  close:closeModal,
+  focusSearch:()=>{$('#gsearch').focus();},
+  sample:()=>confirmBox('Load sample data','This writes a complete sample hospital (patients, OPD, IPD, pharmacy, lab and more) dated around today. Existing records with the same IDs are replaced.','Load sample data',loadSample),
+  range:d=>{ui.to=today();ui.from=shift(ui.to,-(+d.n));render();},
+  patient:d=>showPatient(d.id),
+  newPatient:(d,after)=>patientForm(null,after),
+  editPatient:d=>patientForm(D.patients.get(d.id)),
+  newVisit:d=>visitForm(d.id),
+  visitStatus:async d=>{const v=D.visits.get(d.id);await save('visits',{...v,status:d.s});toast('Token #'+v.token+' — '+d.s);},
+  newAdmission:d=>admissionForm(d.id,d.bed),
+  adm:d=>showAdmission(d.id),
+  addCharge:d=>chargeForm(d.id),
+  collect:d=>paymentForm(d.id),
+  transfer:d=>transferForm(d.id),
+  discharge:d=>dischargeForm(d.id),
+  bed:d=>bedAction(d.id),
+  toggleDoc:async d=>{const x=D.doctors.get(d.id);await save('doctors',{...x,available:!x.available});},
+  editDoctor:d=>doctorForm(D.doctors.get(d.id)),
+  editMed:d=>medForm(D.pharmacy.get(d.id)),
+  restock:d=>restockForm(d.c,d.id),
+  issue:d=>issueForm(d.id),
+  newSale:d=>saleForm(d.id),
+  newLab:d=>labForm(d.id),
+  labStatus:async d=>{const l=D.labs.get(d.id);await save('labs',{...l,status:'Sample collected',collectedAt:nowLocal()});toast('Sample collected for '+l.id);},
+  labResult:d=>labResultForm(d.id),
+  newOT:d=>otForm(d.id,d.e),
+  otStatus:async d=>{const o=D.ot.get(d.id);await save('ot',{...o,status:d.s});toast(o.procedure+' — '+d.s);},
+  editInv:d=>invForm(D.inventory.get(d.id)),
+  editAsset:d=>assetForm(D.assets.get(d.id)),
+  newReceipt:()=>receiptForm(),
+  editTpa:d=>tpaForm(d.id),
+  delTpa:d=>confirmBox('Remove panel','Remove this panel? Patients linked to it will show as self pay.','Remove',()=>saveMaster('tpa',M('tpa').filter(t=>t.id!==d.id))),
+  editQuery:d=>queryForm(D.queries.get(d.id)),
+  editStaff:d=>staffForm(d.id),
+  editMaster:d=>masterForm(d.k,d.id),
+  editNotice:d=>noticeForm(d.id),
+  delNotice:d=>confirmBox('Remove notice','Remove this notice from the board?','Remove',()=>saveMaster('notices',M('notices').filter(n=>n.id!==d.id))),
+  alerts:()=>{const A=getAlerts();openModal('Alerts',`<div class="mb">${A.map(x=>`<div class="li" data-a="goClose" data-v="${x.go}" role="button" tabindex="0"><span class="tag ${x.sev}">${x.kind}</span><div class="t"><b>${esc(x.text)}</b></div></div>`).join('')||'<div class="empty">All clear — nothing needs attention.</div>'}</div>`);},
+  goClose:d=>{closeModal();ACT.go(d);},
+  help:()=>openModal('Help',`<div class="mb"><p style="margin:0"><b>Ctrl + K</b> jumps to patient search. Press <b>Enter</b> to open the first match.</p><p style="margin:0">Typical flow: <b>New registration</b> → <b>OPD visit</b> (token and fee) or <b>Admit</b> (bed and deposit) → charges and payments → <b>Discharge</b> with final settlement.</p><p style="margin:0">Collections on the dashboard add up OPD fees, IPD payments, pharmacy sales, investigations and other receipts for the day. Panel discounts from <b>Corporate / TPA</b> apply to IPD bills.</p><p style="margin:0" class="muted">${mode==='live'?'Every change is saved to the shared database and appears for other staff instantly.':'This copy runs offline and keeps changes in this browser only.'}</p></div>`),
+  exportCsv:async()=>{const R=reportRows();const csv='Date,OPD visits,Admissions,Discharges,Collections\n'+R.map(r=>[r.d,r.opd,r.adm,r.dis,r.col].join(',')).join('\n');await giveFile(`awt-report-${ui.from}-to-${ui.to}.csv`,csv);},
+  exportJson:async()=>{const o={};COLS.forEach(c=>o[c]=all(c));await giveFile('awt-hospital-records-'+today()+'.json',JSON.stringify(o,null,1));}
+};
+async function giveFile(name,text){
+  if(downloads){try{await downloads.save({filename:name,data:text});return;}catch(e){if(e&&e.code==='declined')return;}}
+  try{await navigator.clipboard.writeText(text);toast('Copied to clipboard — paste into a spreadsheet or file.');}catch(e){openModal(name,`<div class="mb"><textarea class="inp" rows="14" style="width:100%" readonly>${esc(text)}</textarea></div>`);}
+}
+
+/* forms */
+function patientForm(p,after){
+  const ids=p||nextPatientIds();
+  formModal({title:p?'Edit patient':'New registration',pre:`<div class="muted">UHID <b>${esc(ids.uhid)}</b> · EMR <b>${esc(ids.emr)}</b></div>`,fields:[
+    {name:'name',label:'Full name',required:1,full:1},{name:'gender',label:'Sex',type:'select',options:[['Male','Male'],['Female','Female'],['Other','Other']]},{name:'age',label:'Age (years)',type:'number',min:0,required:1},
+    {name:'phone',label:'Mobile',required:1,pattern:'[0-9]{10}',ph:'10-digit mobile'},{name:'blood',label:'Blood group',type:'select',options:[['','Unknown'],...['A+','A-','B+','B-','O+','O-','AB+','AB-'].map(x=>[x,x])]},
+    {name:'address',label:'Address',full:1},{name:'payer',label:'Payer',type:'select',options:[['SELF','Self pay'],...M('tpa').map(t=>[t.id,t.name])]}],
+    values:p||{gender:'Male',payer:'SELF'},submit:p?'Save changes':'Register patient',
+    onSubmit:async v=>{if(!/^\d{10}$/.test(v.phone))return 'Mobile must be 10 digits.';if(v.age<0||v.age>120)return 'Enter a valid age.';
+      const dup=!p&&all('patients').find(x=>x.phone===v.phone&&x.name.toLowerCase()===v.name.toLowerCase());if(dup)return `Already registered as ${dup.uhid}.`;
+      const rec=p?{...p,...v}:{id:uid('P'),uhid:ids.uhid,emr:ids.emr,...v,registeredAt:nowLocal()};await save('patients',rec);toast(p?'Patient updated':`Registered ${rec.name} · ${rec.uhid}`);
+      if(!p)setTimeout(()=>showPatient(rec.id),0);}
+  });
+}
+function visitForm(pid){
+  const d0=M('departments')[0]||{};
+  formModal({title:'New OPD visit',fields:[{name:'patient',label:'Patient',type:'patient',required:1},{name:'dept',label:'Department',type:'select',options:deptOpts()},{name:'doctorId',label:'Doctor',type:'select',options:docOpts(d0.id)},{name:'complaint',label:'Chief complaint',full:1},{name:'fee',label:'Consultation fee (₹)',type:'number',min:0},{name:'mode',label:'Payment mode',type:'select',options:MODES}],
+    values:{patient:pVal(pid),dept:d0.id,fee:d0.fee,mode:'Cash'},submit:'Create token & bill',
+    pre:`<div class="muted">New patient? <button type="button" class="link" data-a="newPatient">Register first</button></div>`,
+    onMount:m=>{const ds=m.querySelector('#f-dept');ds.onchange=()=>{const dp=M('departments').find(x=>x.id===ds.value)||{};m.querySelector('#f-fee').value=dp.fee||0;m.querySelector('#f-doctorId').innerHTML=docOpts(ds.value).map(([k,l])=>`<option value="${k}">${esc(l)}</option>`).join('');};},
+    onSubmit:async v=>{const p=parsePatient(v.patient);if(!p)return 'Choose a registered patient from the list.';if(!v.doctorId)return 'No doctor in this department — add one under Doctors.';
+      const t=today(),tok=Math.max(0,...all('visits').filter(x=>dayOf(x.at)===t).map(x=>x.token))+1;
+      await save('visits',{id:uid('V'),token:tok,patientId:p.id,dept:v.dept,doctorId:v.doctorId,at:nowLocal(),fee:+v.fee||0,mode:v.mode,status:'Waiting',complaint:v.complaint});toast(`Token #${tok} issued to ${p.name} — ${inr(v.fee)} collected`);}
+  });
+}
+function admissionForm(pid,bed){
+  const beds=vacantBeds();if(!beds.length){toast('No vacant beds available.',1);return;}
+  formModal({title:'IPD admission',fields:[{name:'patient',label:'Patient',type:'patient',required:1},{name:'dept',label:'Department',type:'select',options:deptOpts()},{name:'doctorId',label:'Admitting doctor',type:'select',options:docOpts()},{name:'bed',label:'Bed',type:'select',options:beds},{name:'diagnosis',label:'Provisional diagnosis',full:1,required:1},{name:'deposit',label:'Deposit (₹)',type:'number',min:0},{name:'mode',label:'Payment mode',type:'select',options:MODES}],
+    values:{patient:pVal(pid),bed:bed||beds[0][0],deposit:10000,mode:'Cash',dept:(M('departments')[0]||{}).id},submit:'Admit patient',
+    onSubmit:async v=>{const p=parsePatient(v.patient);if(!p)return 'Choose a registered patient from the list.';
+      if(all('admissions').some(a=>a.patientId===p.id&&a.status==='Admitted'))return p.name+' is already admitted.';
+      const b=bedStates().find(x=>x.id===v.bed);if(!b||b.state!=='vac')return 'That bed was just taken — pick another.';
+      const n=Math.max(400,...all('admissions').map(a=>+String(a.ipNo).split('-').pop()||0))+1,at=nowLocal();
+      await save('admissions',{id:uid('A'),ipNo:'IP-'+at.slice(0,4)+'-'+String(n).padStart(4,'0'),patientId:p.id,doctorId:v.doctorId,dept:v.dept,bed:b.id,ward:b.ward,rate:b.rate,admittedAt:at,diagnosis:v.diagnosis,status:'Admitted',payments:+v.deposit?[{at,amount:+v.deposit,mode:v.mode,note:'Admission deposit'}]:[],charges:[]});
+      toast(`${p.name} admitted to ${b.id}`);}
+  });
+}
+function billHtml(a){const b=ipdBill(a);return `<div class="sum"><div><span>Room (${b.days} day${b.days>1?'s':''} × ${inr(a.rate)})</span><b>${inr(b.room)}</b></div><div><span>Charges</span><b>${inr(b.ch)}</b></div>${b.disc?`<div><span>Panel discount</span><b>− ${inr(b.disc)}</b></div>`:''}<div><span>Paid</span><b>${inr(b.paid)}</b></div><div><span>${b.due>=0?'Balance due':'Refund due'}</span><b style="color:${b.due>0?'var(--bad)':'var(--good)'}">${inr(Math.abs(b.due))}</b></div></div>`;}
+function showAdmission(id){
+  const a=D.admissions.get(id);if(!a)return;const p=P(a.patientId);
+  openModal(a.ipNo+' · '+p.name,`<div class="mb"><div class="kv"><div><span>Patient</span>${esc(p.name)} (${esc(p.uhid)})</div><div><span>Bed</span>${esc(a.bed)} · ${esc(wardName(a.ward))}</div><div><span>Doctor</span>${esc(DOC(a.doctorId).name)}</div><div><span>Diagnosis</span>${esc(a.diagnosis)}</div><div><span>Admitted</span>${fDT(a.admittedAt)}</div><div><span>${a.dischargedAt?'Discharged':'Status'}</span>${a.dischargedAt?fDT(a.dischargedAt):st(a.status)}</div><div><span>Payer</span>${esc(PAYER(p.payer))}</div></div>${billHtml(a)}
+  <h4 style="margin:4px 0 0">Charges</h4>${table([{h:'Date',v:c=>fDT(c.at)},{h:'Description',v:c=>esc(c.desc)},{h:'Amount',r:1,v:c=>inr(c.amount)}],a.charges||[],'No extra charges.')}
+  <h4 style="margin:4px 0 0">Payments</h4>${table([{h:'Date',v:c=>fDT(c.at)},{h:'Note',v:c=>esc(c.note)},{h:'Mode',v:c=>esc(c.mode)},{h:'Amount',r:1,v:c=>inr(c.amount)}],a.payments||[],'No payments yet.')}</div>`,
+  {wide:1,foot:a.status==='Admitted'?`<div class="mf"><button class="btn" data-a="addCharge" data-id="${a.id}" ${ro()}>Add charge</button><button class="btn" data-a="collect" data-id="${a.id}" ${ro()}>Take payment</button><button class="btn pri" data-a="discharge" data-id="${a.id}" ${ro()}>Discharge</button></div>`:''});
+}
+function chargeForm(id){const a=D.admissions.get(id);formModal({title:'Add charge · '+a.ipNo,fields:[{name:'desc',label:'Description',required:1,full:1,ph:'e.g. Physiotherapy session, CT scan, surgeon fee'},{name:'amount',label:'Amount (₹)',type:'number',min:1,required:1}],submit:'Add to bill',onSubmit:async v=>{if(!(v.amount>0))return 'Enter an amount.';await save('admissions',{...a,charges:[...(a.charges||[]),{at:nowLocal(),desc:v.desc,amount:v.amount}]});toast('Charge added to '+a.ipNo);}});}
+function paymentForm(id){const a=D.admissions.get(id),b=ipdBill(a);formModal({title:'Payment · '+a.ipNo,pre:billHtml(a),fields:[{name:'amount',label:'Amount received (₹)',type:'number',min:1,required:1},{name:'mode',label:'Mode',type:'select',options:MODES},{name:'note',label:'Note',full:1}],values:{amount:Math.max(0,b.due)||'',mode:'Cash',note:'Interim payment'},submit:'Record payment',onSubmit:async v=>{if(!(v.amount>0))return 'Enter the amount received.';await save('admissions',{...a,payments:[...(a.payments||[]),{at:nowLocal(),amount:v.amount,mode:v.mode,note:v.note||'Payment'}]});toast(inr(v.amount)+' received for '+a.ipNo);}});}
+function transferForm(id){const a=D.admissions.get(id),beds=vacantBeds();if(!beds.length){toast('No vacant beds to transfer to.',1);return;}formModal({title:'Transfer bed · '+a.ipNo,pre:`<div class="muted">Currently in <b>${esc(a.bed)}</b> (${esc(wardName(a.ward))}). Room days so far are billed at the new rate from now on.</div>`,fields:[{name:'bed',label:'Move to',type:'select',options:beds}],submit:'Transfer',onSubmit:async v=>{const b=bedStates().find(x=>x.id===v.bed);if(!b||b.state!=='vac')return 'That bed is no longer vacant.';const bl=ipdBill(a);const ch=[...(a.charges||[]),{at:nowLocal(),desc:`Room charges ${a.bed} (${bl.days} day${bl.days>1?'s':''})`,amount:bl.room}];await save('admissions',{...a,bed:b.id,ward:b.ward,rate:b.rate,admittedAt:nowLocal(),originalAdmit:a.originalAdmit||a.admittedAt,charges:ch});toast('Moved to '+b.id);}});}
+function dischargeForm(id){const a=D.admissions.get(id),b=ipdBill(a);formModal({title:'Discharge · '+P(a.patientId).name,pre:billHtml(a),fields:[{name:'amount',label:'Final settlement (₹)',type:'number',min:0},{name:'mode',label:'Mode',type:'select',options:MODES},{name:'summary',label:'Discharge summary',type:'textarea'}],values:{amount:Math.max(0,b.due),mode:'Cash'},submit:'Discharge & free bed',onSubmit:async v=>{const at=nowLocal();const pay=[...(a.payments||[])];if(+v.amount>0)pay.push({at,amount:+v.amount,mode:v.mode,note:'Final settlement'});await save('admissions',{...a,status:'Discharged',dischargedAt:at,payments:pay,summary:v.summary});toast(`${P(a.patientId).name} discharged — ${a.bed} is free`);}});}
+function bedAction(id){
+  const b=bedStates().find(x=>x.id===id);if(!b)return;
+  if(b.state==='occ')return showAdmission(b.adm.id);
+  const set=async s=>{if(s)await save('beds',{id,status:s,note:s==='Maintenance'?'Under maintenance':'Blocked'});else await remove('beds',id);closeModal();toast(id+' — '+(s||'available'));};
+  openModal('Bed '+id+' · '+b.wardName,`<div class="mb"><p style="margin:0">${b.state==='vac'?'This bed is vacant.':'This bed is marked <b>'+(b.state==='mnt'?'Maintenance':'Blocked')+'</b>'+(b.note?' — '+esc(b.note):'')+'.'}</p><div class="row">${b.state==='vac'?`<button class="btn pri" id="bAdmit" ${ro()}>Admit a patient here</button><button class="btn" id="bMnt" ${ro()}>Mark maintenance</button><button class="btn" id="bBlk" ${ro()}>Block bed</button>`:`<button class="btn pri" id="bFree" ${ro()}>Mark available</button>`}</div></div>`);
+  const on=(s,f)=>{const e=document.getElementById(s);if(e)e.onclick=f;};
+  on('bAdmit',()=>{closeModal();admissionForm(null,id);});on('bMnt',()=>set('Maintenance'));on('bBlk',()=>set('Blocked'));on('bFree',()=>set(null));
+}
+function doctorForm(d){formModal({title:d?'Edit doctor':'Add doctor',fields:[{name:'name',label:'Name',required:1,ph:'Dr. …'},{name:'qualification',label:'Qualification'},{name:'dept',label:'Department',type:'select',options:deptOpts()},{name:'room',label:'OPD room'},{name:'days',label:'OPD days',ph:'Mon–Sat'},{name:'phone',label:'Phone'}],values:d||{dept:(M('departments')[0]||{}).id},onSubmit:async v=>{await save('doctors',{...(d||{id:uid('D'),available:true}),...v});toast('Doctor saved');}});}
+function medForm(m){formModal({title:m?'Edit medicine':'Add medicine',fields:[{name:'name',label:'Name & strength',required:1,full:1},{name:'form',label:'Form',ph:'Tablet'},{name:'batch',label:'Batch'},{name:'price',label:'MRP per unit (₹)',type:'number',min:0,step:'0.01',required:1},{name:'expiry',label:'Expiry',type:'date',required:1},{name:'stock',label:'Stock (units)',type:'number',min:0},{name:'reorder',label:'Reorder level',type:'number',min:0}],values:m||{stock:0,reorder:50},onSubmit:async v=>{await save('pharmacy',{...(m||{id:uid('M')}),...v,stock:+v.stock||0,reorder:+v.reorder||0});toast('Medicine saved');}});}
+function restockForm(col,id){const m=D[col].get(id);formModal({title:'Stock in · '+m.name,pre:`<div class="muted">Current stock: <b>${m.stock}</b></div>`,fields:[{name:'qty',label:'Quantity received',type:'number',min:1,required:1},...(col==='pharmacy'?[{name:'batch',label:'Batch'},{name:'expiry',label:'Expiry',type:'date'}]:[])],values:{batch:m.batch,expiry:m.expiry},submit:'Add stock',onSubmit:async v=>{if(!(v.qty>0))return 'Enter a quantity.';const n={...m,stock:(+m.stock||0)+v.qty};if(v.batch)n.batch=v.batch;if(v.expiry)n.expiry=v.expiry;await save(col,n);toast(`${m.name}: stock now ${n.stock}`);}});}
+function issueForm(id){const m=D.inventory.get(id);formModal({title:'Issue · '+m.name,pre:`<div class="muted">In stock: <b>${m.stock}</b></div>`,fields:[{name:'qty',label:'Quantity',type:'number',min:1,required:1},{name:'to',label:'Issued to',ph:'Ward / department'}],submit:'Issue',onSubmit:async v=>{if(!(v.qty>0))return 'Enter a quantity.';if(v.qty>m.stock)return 'Only '+m.stock+' in stock.';await save('inventory',{...m,stock:m.stock-v.qty});toast(`Issued ${v.qty} ${m.name}${v.to?' to '+v.to:''}`);}});}
+function invForm(m){formModal({title:m?'Edit item':'Add item',fields:[{name:'name',label:'Item',required:1,full:1},{name:'category',label:'Category',type:'select',options:['Consumables','Linen','Medical gas','Stationery','Diagnostics','Equipment'].map(x=>[x,x])},{name:'location',label:'Store',type:'select',options:['Central store','OT store','Ward store','Pharmacy store'].map(x=>[x,x])},{name:'stock',label:'Stock',type:'number',min:0},{name:'reorder',label:'Reorder level',type:'number',min:0}],values:m||{stock:0,reorder:10},onSubmit:async v=>{await save('inventory',{...(m||{id:uid('I'),unit:'units'}),...v,stock:+v.stock||0,reorder:+v.reorder||0});toast('Item saved');}});}
+function assetForm(a){formModal({title:a?'Edit asset':'Add asset',fields:[{name:'name',label:'Asset',required:1,full:1},{name:'location',label:'Location'},{name:'status',label:'Status',type:'select',options:['Working','Under service','Out of order'].map(x=>[x,x])},{name:'purchased',label:'Purchased',type:'date'},{name:'nextService',label:'Next service',type:'date'},{name:'value',label:'Value (₹)',type:'number',min:0}],values:a||{status:'Working'},onSubmit:async v=>{await save('assets',{...(a||{id:uid('AS')}),...v,value:+v.value||0});toast('Asset saved');}});}
+function saleForm(pid){
+  const meds=all('pharmacy').filter(m=>m.stock>0).sort((a,b)=>a.name.localeCompare(b.name));
+  const opt=meds.map(m=>`<option value="${m.id}">${esc(m.name)} — ₹${(+m.price).toFixed(2)} (${m.stock} left)</option>`).join('');
+  const line=()=>`<div class="ln"><select class="inp" aria-label="Medicine">${opt}</select><input class="inp" type="number" min="1" value="1" aria-label="Quantity"><span class="num lt" style="text-align:right"></span><button type="button" class="tbtn" aria-label="Remove line">✕</button></div>`;
+  formModal({title:'Pharmacy sale',fields:[{name:'patient',label:'Patient (optional for walk-in)',type:'patient'},{name:'mode',label:'Payment mode',type:'select',options:MODES}],values:{patient:pVal(pid),mode:'Cash'},submit:'Complete sale',
+    pre:'',onMount:m=>{const fg=m.querySelector('.fg');fg.insertAdjacentHTML('afterend',`<div><div class="lines" id="lines">${line()}</div><div class="row" style="justify-content:space-between;margin-top:8px"><button type="button" class="btn sm" id="addLine">+ Add medicine</button><b id="saleTot" class="num"></b></div></div>`);
+      const calc=()=>{let t=0;m.querySelectorAll('.ln').forEach(l=>{const md=D.pharmacy.get(l.children[0].value),q=+l.children[1].value||0,v=md?md.price*q:0;t+=v;l.querySelector('.lt').textContent=inr(v);});m.querySelector('#saleTot').textContent='Total '+inr(t);};
+      m.querySelector('#lines').addEventListener('input',calc);m.querySelector('#lines').addEventListener('click',e=>{if(e.target.closest('.tbtn')&&m.querySelectorAll('.ln').length>1){e.target.closest('.ln').remove();calc();}});
+      m.querySelector('#addLine').onclick=()=>{m.querySelector('#lines').insertAdjacentHTML('beforeend',line());calc();};calc();},
+    onSubmit:async(v,fm)=>{if(!meds.length)return 'No medicines in stock.';const p=v.patient?parsePatient(v.patient):null;if(v.patient&&!p)return 'Choose a patient from the list or leave it empty.';
+      const agg={};fm.querySelectorAll('.ln').forEach(l=>{const id=l.children[0].value,q=+l.children[1].value||0;if(q>0)agg[id]=(agg[id]||0)+q;});
+      const lines=[];for(const [id,q] of Object.entries(agg)){const md=D.pharmacy.get(id);if(q>md.stock)return `Only ${md.stock} of ${md.name} in stock.`;lines.push({itemId:id,name:md.name,qty:q,price:md.price});}
+      if(!lines.length)return 'Add at least one medicine.';
+      const amount=Math.round(lines.reduce((s,l)=>s+l.qty*l.price,0));
+      for(const l of lines){const md=D.pharmacy.get(l.itemId);await save('pharmacy',{...md,stock:md.stock-l.qty});}
+      await save('sales',{id:uid('S'),at:nowLocal(),patientId:p?p.id:'',lines,amount,mode:v.mode});toast('Sale completed — '+inr(amount));}
+  });
+}
+function labForm(pid){
+  const T=M('tests');
+  formModal({title:'New investigation order',fields:[{name:'patient',label:'Patient',type:'patient',required:1},{name:'doctorId',label:'Referred by',type:'select',options:docOpts()},{name:'mode',label:'Payment mode',type:'select',options:MODES},{name:'tests',label:'Tests',type:'checks',options:T.map(t=>[t.code,t.name+' — '+inr(t.price)])}],values:{patient:pVal(pid),mode:'Cash',tests:[]},submit:'Create order',
+    onMount:m=>{const s=document.createElement('b');s.className='num';s.id='labTot';m.querySelector('#f-tests').after(s);const calc=()=>{const t=[...m.querySelectorAll('input[name=tests]:checked')].reduce((a,c)=>a+((T.find(x=>x.code===c.value)||{}).price||0),0);s.textContent='Total '+inr(t);};m.querySelector('#f-tests').addEventListener('change',calc);calc();},
+    onSubmit:async v=>{const p=parsePatient(v.patient);if(!p)return 'Choose a registered patient from the list.';if(!v.tests.length)return 'Select at least one test.';const amount=v.tests.reduce((s,c)=>s+((T.find(x=>x.code===c)||{}).price||0),0);
+      await save('labs',{id:uid('L'),at:nowLocal(),patientId:p.id,doctorId:v.doctorId,tests:v.tests,amount,status:'Pending',result:'',mode:v.mode});toast('Order created — '+inr(amount));}
+  });
+}
+function labResultForm(id){const l=D.labs.get(id),done=l.status==='Reported';formModal({title:(done?'Report · ':'Enter result · ')+l.id,pre:`<div class="kv"><div><span>Patient</span>${esc(P(l.patientId).name)} (${esc(P(l.patientId).uhid)})</div><div><span>Tests</span>${esc((l.tests||[]).join(', '))}</div><div><span>Ordered</span>${fDT(l.at)}</div>${l.reportedAt?`<div><span>Reported</span>${fDT(l.reportedAt)}</div>`:''}</div>`,fields:[{name:'result',label:'Findings / values',type:'textarea',required:1}],values:{result:l.result},submit:done?'Update report':'Save & mark reported',onSubmit:async v=>{await save('labs',{...l,result:v.result,status:'Reported',reportedAt:l.reportedAt||nowLocal()});toast('Report saved for '+l.id);}});}
+function otForm(pid,eid){
+  const o=eid?D.ot.get(eid):null;
+  formModal({title:o?'Edit OT booking':'Book operation theatre',fields:[{name:'patient',label:'Patient',type:'patient',required:1},{name:'procedure',label:'Procedure',required:1,full:1},{name:'surgeonId',label:'Surgeon',type:'select',options:docOpts()},{name:'theatre',label:'Theatre',type:'select',options:[['OT-1','OT-1'],['OT-2','OT-2'],['OT-3','OT-3']]},{name:'start',label:'Start',type:'datetime-local',required:1},{name:'duration',label:'Duration (min)',type:'number',min:15,step:15},{name:'anaesthesia',label:'Anaesthesia',type:'select',options:['General','Spinal','Local','Regional'].map(x=>[x,x])}],
+    values:o?{...o,patient:pVal(o.patientId)}:{patient:pVal(pid),start:shift(today(),1)+'T09:00',duration:90,anaesthesia:'General'},submit:o?'Save booking':'Book theatre',
+    onSubmit:async v=>{const p=parsePatient(v.patient);if(!p)return 'Choose a registered patient from the list.';const s=new Date(v.start),e=new Date(s.getTime()+(+v.duration||60)*6e4);
+      const clash=all('ot').find(x=>x.id!==(o&&o.id)&&x.theatre===v.theatre&&x.status!=='Cancelled'&&x.status!=='Completed'&&new Date(x.start)<e&&new Date(new Date(x.start).getTime()+x.duration*6e4)>s);
+      if(clash)return `${v.theatre} is booked ${fT(clash.start)}–${clash.duration} min for ${clash.procedure}. Choose another time or theatre.`;
+      await save('ot',{...(o||{id:uid('OT'),status:'Scheduled'}),patientId:p.id,procedure:v.procedure,surgeonId:v.surgeonId,theatre:v.theatre,start:v.start,duration:+v.duration||60,anaesthesia:v.anaesthesia});toast('OT booked for '+fDT(v.start));}
+  });
+}
+function receiptForm(){formModal({title:'Other receipt',fields:[{name:'patient',label:'Patient (optional)',type:'patient'},{name:'desc',label:'Description',required:1,ph:'Ambulance, certificate, records copy…'},{name:'amount',label:'Amount (₹)',type:'number',min:1,required:1},{name:'mode',label:'Mode',type:'select',options:MODES}],values:{mode:'Cash'},submit:'Record receipt',onSubmit:async v=>{const p=v.patient?parsePatient(v.patient):null;if(!(v.amount>0))return 'Enter an amount.';await save('receipts',{id:uid('R'),at:nowLocal(),patientId:p?p.id:'',desc:v.desc,amount:v.amount,mode:v.mode});toast('Receipt recorded — '+inr(v.amount));}});}
+function tpaForm(id){const t=M('tpa').find(x=>x.id===id);formModal({title:t?'Edit panel':'Add panel',fields:[{name:'name',label:'Name',required:1,full:1},{name:'type',label:'Type',type:'select',options:['Insurance','TPA','Corporate','Government'].map(x=>[x,x])},{name:'contact',label:'Helpline'},{name:'discount',label:'Discount on IPD (%)',type:'number',min:0}],values:t||{type:'Insurance',discount:0},onSubmit:async v=>{if(v.discount<0||v.discount>100)return 'Discount must be 0–100%.';const rec={...(t||{id:uid('T')}),...v,discount:+v.discount||0};await saveMaster('tpa',t?M('tpa').map(x=>x.id===id?rec:x):[...M('tpa'),rec]);toast('Panel saved');}});}
+function queryForm(q){formModal({title:q?'Update query':'Log query',fields:[{name:'from',label:'Caller / patient name',required:1},{name:'phone',label:'Phone'},{name:'type',label:'Type',type:'select',options:['Enquiry','Complaint','Feedback'].map(x=>[x,x])},{name:'status',label:'Status',type:'select',options:['Open','In progress','Closed'].map(x=>[x,x])},{name:'subject',label:'Subject',required:1,full:1},{name:'note',label:'Resolution / notes',type:'textarea'}],values:q||{type:'Enquiry',status:'Open'},onSubmit:async v=>{await save('queries',{...(q||{id:uid('Q'),at:nowLocal()}),...v});toast('Query saved');}});}
+function staffForm(id){const u=M('staff').find(x=>x.id===id);formModal({title:u?'Edit staff':'Add staff',fields:[{name:'name',label:'Name',required:1},{name:'role',label:'Role',type:'select',options:['Administrator','Front Desk','Doctor','Nursing In-charge','Pharmacist','Lab Technician','Accounts'].map(x=>[x,x])},{name:'email',label:'Email',type:'email'},{name:'active',label:'Status',type:'select',options:[['1','Active'],['','Inactive']]}],values:u?{...u,active:u.active?'1':''}:{role:'Front Desk',active:'1'},onSubmit:async v=>{const rec={...(u||{id:uid('U')}),...v,active:!!v.active};await saveMaster('staff',u?M('staff').map(x=>x.id===id?rec:x):[...M('staff'),rec]);toast('Staff saved');}});}
+function noticeForm(id){const n=M('notices').find(x=>x.id===id);formModal({title:n?'Edit notice':'Post notice',fields:[{name:'title',label:'Title',required:1,full:1},{name:'body',label:'Message',type:'textarea',required:1}],values:n||{},onSubmit:async v=>{const rec={...(n||{id:uid('N')}),...v,date:today()};await saveMaster('notices',n?M('notices').map(x=>x.id===id?rec:x):[rec,...M('notices')]);toast('Notice posted');}});}
+function masterForm(k,id){
+  const key={dept:'departments',tests:'tests',wards:'wards'}[k],list=M(key),pk=k==='tests'?'code':'id',cur=list.find(x=>x[pk]===id);
+  const fields=k==='dept'?[{name:'id',label:'Code',required:1},{name:'name',label:'Department',required:1},{name:'fee',label:'OPD fee (₹)',type:'number',min:0}]:k==='tests'?[{name:'code',label:'Code',required:1},{name:'name',label:'Test name',required:1},{name:'price',label:'Price (₹)',type:'number',min:0}]:[{name:'id',label:'Code',required:1},{name:'name',label:'Ward',required:1},{name:'prefix',label:'Bed prefix',required:1},{name:'count',label:'Number of beds',type:'number',min:1},{name:'rate',label:'Rate per day (₹)',type:'number',min:0}];
+  formModal({title:(cur?'Edit ':'Add ')+(k==='dept'?'department':k==='tests'?'test':'ward'),fields,values:cur||{},onSubmit:async v=>{
+    v[pk]=String(v[pk]).toUpperCase().replace(/[^A-Z0-9-]/g,'');if(!v[pk])return 'Enter a code (letters and digits).';
+    if(!cur&&list.some(x=>x[pk]===v[pk]))return 'That code is already used.';
+    if(k==='wards'&&cur&&v.count<cur.count){const occ=all('admissions').filter(a=>a.status==='Admitted'&&a.ward===cur.id);const keep=new Set(bedList().filter(b=>b.ward===cur.id).slice(0,v.count).map(b=>b.id));if(occ.some(a=>!keep.has(a.bed)))return 'Some beds being removed are occupied. Transfer those patients first.';}
+    if(cur&&v[pk]!==cur[pk])return 'Codes cannot be changed once used.';
+    const rec={...(cur||{}),...v};['fee','price','count','rate'].forEach(f=>{if(f in rec)rec[f]=+rec[f]||0;});
+    await saveMaster(key,cur?list.map(x=>x[pk]===id?rec:x):[...list,rec]);toast('Saved');}});
+}
+function showPatient(id){
+  const p=D.patients.get(id);if(!p)return;
+  const vis=all('visits').filter(v=>v.patientId===id).sort((a,b)=>b.at.localeCompare(a.at));
+  const adm=all('admissions').filter(a=>a.patientId===id).sort((a,b)=>b.admittedAt.localeCompare(a.admittedAt));
+  const labs=all('labs').filter(l=>l.patientId===id).sort((a,b)=>b.at.localeCompare(a.at));
+  const paid=ledger().filter(x=>x.pid===id).reduce((s,x)=>s+x.amount,0),cur=adm.find(a=>a.status==='Admitted');
+  openModal(p.name,`<div class="mb"><div style="display:flex;gap:12px;align-items:center">${avatar(p.name,52)}<div><b style="font-size:17px">${esc(p.name)}</b><div class="muted">${esc(p.uhid)} · EMR ${esc(p.emr)} · ${esc(p.gender)}, ${esc(p.age)} y</div></div>${cur?`<span class="tag a" style="margin-left:auto">In ${esc(cur.bed)}</span>`:''}</div>
+  <div class="kv"><div><span>Mobile</span>${esc(p.phone)}</div><div><span>Blood group</span>${esc(p.blood||'—')}</div><div><span>Payer</span>${esc(PAYER(p.payer))}</div><div><span>Address</span>${esc(p.address||'—')}</div><div><span>Registered</span>${fDT(p.registeredAt)}</div><div><span>Total paid</span>${inr(paid)}</div></div>
+  <h4 style="margin:6px 0 0">OPD visits (${vis.length})</h4>${table([{h:'Date',v:v=>fDT(v.at)},{h:'Department',v:v=>esc(DEPT(v.dept).name)},{h:'Doctor',v:v=>esc(DOC(v.doctorId).name)},{h:'Complaint',v:v=>esc(v.complaint||'')},{h:'Status',v:v=>st(v.status)}],vis.slice(0,10),'No OPD visits.')}
+  <h4 style="margin:6px 0 0">Admissions (${adm.length})</h4>${table([{h:'IP No.',v:a=>`<button class="link" data-a="adm" data-id="${a.id}">${esc(a.ipNo)}</button>`},{h:'Admitted',v:a=>fDT(a.admittedAt)},{h:'Bed',v:a=>esc(a.bed)},{h:'Diagnosis',v:a=>esc(a.diagnosis)},{h:'Status',v:a=>st(a.status)}],adm,'No admissions.')}
+  <h4 style="margin:6px 0 0">Investigations (${labs.length})</h4>${table([{h:'Date',v:l=>fDT(l.at)},{h:'Tests',v:l=>esc((l.tests||[]).join(', '))},{h:'Result',v:l=>esc(l.result||'—')},{h:'Status',v:l=>st(l.status)}],labs,'No investigations.')}</div>`,
+  {wide:1,foot:`<div class="mf" style="flex-wrap:wrap"><button class="btn" data-a="editPatient" data-id="${id}" ${ro()}>Edit</button><button class="btn" data-a="newLab" data-id="${id}" ${ro()}>Lab order</button><button class="btn" data-a="newSale" data-id="${id}" ${ro()}>Pharmacy sale</button>${cur?'':`<button class="btn" data-a="newAdmission" data-id="${id}" ${ro()}>Admit</button>`}<button class="btn pri" data-a="newVisit" data-id="${id}" ${ro()}>New OPD visit</button></div>`});
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const s=e.target.closest('[data-scrim]');if(s&&e.target===s){closeModal();return;}
+  const el=e.target.closest('[data-a]');if(!el||el.disabled)return;
+  const fn=ACT[el.dataset.a];if(!fn)return;
+  if(el.closest('#modalRoot')&&!['close','tab'].includes(el.dataset.a)&&el.dataset.a!=='goClose'&&!el.closest('form'))closeModal();
+  else if(el.closest('#modalRoot form')&&el.dataset.a!=='close')closeModal();
+  $('#gdrop').hidden=true;
+  fn(el.dataset);
+});
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#gsearch').focus();$('#gsearch').select();}
+  if(e.key==='Escape'){if($('#modalRoot').innerHTML)closeModal();$('#gdrop').hidden=true;$('#side').classList.remove('open');}
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=button][data-a]')){e.preventDefault();e.target.click();}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.q!=null){ui.q[t.dataset.q]=t.value;render();}
+});
+document.addEventListener('change',e=>{const t=e.target;if(t.dataset.set){ui[t.dataset.set]=t.value;if(ui.from>ui.to&&(t.dataset.set==='from'||t.dataset.set==='to')){ui.to=ui.from;}render();}});
+/* global search */
+const gs=$('#gsearch'),gd=$('#gdrop');let ghl=0;
+function gRes(){const q=gs.value.trim().toLowerCase();if(!q)return [];return all('patients').filter(p=>(p.name+' '+p.uhid+' '+p.emr+' '+p.phone).toLowerCase().includes(q)).slice(0,8);}
+function gRender(){const r=gRes();if(!gs.value.trim()){gd.hidden=true;return;}gd.innerHTML=r.map((p,i)=>`<button class="${i===ghl?'hl':''}" data-pid="${p.id}">${avatar(p.name,30)}<span style="flex:1;min-width:0"><b>${esc(p.name)}</b><br><small class="muted">${esc(p.uhid)} · EMR ${esc(p.emr)} · ${esc(p.phone)}</small></span>${all('admissions').some(a=>a.patientId===p.id&&a.status==='Admitted')?'<span class="tag a">IPD</span>':''}</button>`).join('')||`<div class="empty">No patient matches “${esc(gs.value)}”. <button class="link" data-a="newPatient">Register new</button></div>`;gd.hidden=false;}
+gs.addEventListener('input',()=>{ghl=0;gRender();});
+gs.addEventListener('focus',gRender);
+gs.addEventListener('keydown',e=>{const r=gRes();if(e.key==='ArrowDown'){ghl=Math.min(r.length-1,ghl+1);gRender();e.preventDefault();}if(e.key==='ArrowUp'){ghl=Math.max(0,ghl-1);gRender();e.preventDefault();}if(e.key==='Enter'&&r[ghl]){gd.hidden=true;showPatient(r[ghl].id);gs.blur();}});
+gd.addEventListener('click',e=>{const b=e.target.closest('[data-pid]');if(b){gd.hidden=true;showPatient(b.dataset.pid);}});
+document.addEventListener('click',e=>{if(!e.target.closest('.search'))gd.hidden=true;},true);
+if(location.hash){const v=location.hash.slice(1);if(V[v])ui.view=v;}
+
+/* clock */
+let lastDay=today();
+setInterval(()=>{const c=$('#clock');if(c)c.textContent=clockText();if(today()!==lastDay){lastDay=today();ui.date=lastDay;render();}},15000);
+
+/* ---------- boot ---------- */
+async function boot(){
+  let cdb=null;
+  try{if(window.claude&&window.claude.use)cdb=await window.claude.use('db');}catch(e){cdb=null;}
+  if(cdb){
+    db=cdb;mode='live';
+    try{const u=await window.claude.use('user');if(u){const c=await u.can('data.write');if(c===false)canWrite=false;}}catch(e){}
+    try{downloads=await window.claude.use('downloads');}catch(e){}
+    let first=true;
+    COLS.forEach(c=>db.collection(c).limit(1000).onSnapshot(s=>{D[c]=new Map(s.docs.map(d=>[d.id,{...d.data(),id:d.id}]));loaded.add(c);if(loaded.size===COLS.length||!first)schedule();if(loaded.size===COLS.length)first=false;},e=>{if(e&&e.code==='revoked'){canWrite=false;toast('Access to live records ended for this view.',1);}else toast('Live updates paused — '+(e&&e.message||'connection issue'),1);}));
+    setTimeout(()=>{if(first){first=false;schedule();}},6000);
+  } else {
+    mode='local';let o=null;
+    try{o=JSON.parse(localStorage.getItem(LSKEY)||'null');}catch(e){}
+    loadObj(o||awtGenerate(today()));render();
+  }
+}
+boot();
+})();
+</script>
