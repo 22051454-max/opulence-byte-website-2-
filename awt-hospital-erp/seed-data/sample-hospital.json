@@ -1,0 +1,4539 @@
+{
+ "masters": [
+  {
+   "id": "departments",
+   "items": [
+    {
+     "id": "MED",
+     "name": "Medicine",
+     "fee": 500
+    },
+    {
+     "id": "ORTH",
+     "name": "Orthopedics",
+     "fee": 600
+    },
+    {
+     "id": "PED",
+     "name": "Pediatrics",
+     "fee": 500
+    },
+    {
+     "id": "GYNA",
+     "name": "Gynecology",
+     "fee": 600
+    },
+    {
+     "id": "ENT",
+     "name": "ENT",
+     "fee": 500
+    },
+    {
+     "id": "DERM",
+     "name": "Dermatology",
+     "fee": 500
+    },
+    {
+     "id": "SURG",
+     "name": "General Surgery",
+     "fee": 700
+    },
+    {
+     "id": "CARD",
+     "name": "Cardiology",
+     "fee": 900
+    }
+   ]
+  },
+  {
+   "id": "tests",
+   "items": [
+    {
+     "code": "CBC",
+     "name": "Complete Blood Count",
+     "price": 350
+    },
+    {
+     "code": "LFT",
+     "name": "Liver Function Test",
+     "price": 750
+    },
+    {
+     "code": "KFT",
+     "name": "Kidney Function Test",
+     "price": 700
+    },
+    {
+     "code": "LIPID",
+     "name": "Lipid Profile",
+     "price": 650
+    },
+    {
+     "code": "HBA1C",
+     "name": "HbA1c",
+     "price": 550
+    },
+    {
+     "code": "TSH",
+     "name": "Thyroid Profile",
+     "price": 600
+    },
+    {
+     "code": "URINE",
+     "name": "Urine Routine",
+     "price": 200
+    },
+    {
+     "code": "XRAY",
+     "name": "X-Ray Chest PA",
+     "price": 450
+    },
+    {
+     "code": "USG",
+     "name": "USG Abdomen",
+     "price": 1200
+    },
+    {
+     "code": "ECG",
+     "name": "ECG",
+     "price": 300
+    },
+    {
+     "code": "CT",
+     "name": "CT Head (Plain)",
+     "price": 3200
+    },
+    {
+     "code": "MRI",
+     "name": "MRI Knee",
+     "price": 6500
+    },
+    {
+     "code": "DENGUE",
+     "name": "Dengue NS1",
+     "price": 800
+    }
+   ]
+  },
+  {
+   "id": "wards",
+   "items": [
+    {
+     "id": "GEN",
+     "name": "General",
+     "prefix": "B1",
+     "count": 30,
+     "rate": 1200
+    },
+    {
+     "id": "SEMI",
+     "name": "Semi Deluxe",
+     "prefix": "A2",
+     "count": 12,
+     "rate": 2500
+    },
+    {
+     "id": "DLX",
+     "name": "Deluxe",
+     "prefix": "C1",
+     "count": 10,
+     "rate": 4000
+    },
+    {
+     "id": "ICU",
+     "name": "ICU",
+     "prefix": "ICU-",
+     "count": 8,
+     "rate": 8000
+    }
+   ]
+  },
+  {
+   "id": "tpa",
+   "items": [
+    {
+     "id": "STAR",
+     "name": "Star Health Insurance",
+     "type": "Insurance",
+     "contact": "1800-425-2255",
+     "discount": 0
+    },
+    {
+     "id": "MDI",
+     "name": "MD India TPA",
+     "type": "TPA",
+     "contact": "1800-233-1166",
+     "discount": 5
+    },
+    {
+     "id": "CGHS",
+     "name": "CGHS",
+     "type": "Government",
+     "contact": "1800-208-8900",
+     "discount": 15
+    },
+    {
+     "id": "CCL",
+     "name": "Central Coalfields Ltd.",
+     "type": "Corporate",
+     "contact": "0651-2360202",
+     "discount": 10
+    },
+    {
+     "id": "AYU",
+     "name": "Ayushman Bharat PM-JAY",
+     "type": "Government",
+     "contact": "14555",
+     "discount": 20
+    }
+   ]
+  },
+  {
+   "id": "notices",
+   "items": [
+    {
+     "id": "n1",
+     "title": "Fire drill on Friday, 11:00 AM",
+     "body": "All wards to follow the evacuation plan posted at nursing stations.",
+     "date": "2026-09-22"
+    },
+    {
+     "id": "n2",
+     "title": "New MRI slots from next week",
+     "body": "Radiology extends MRI hours to 10 PM on weekdays.",
+     "date": "2026-09-20"
+    }
+   ]
+  },
+  {
+   "id": "staff",
+   "items": [
+    {
+     "id": "u1",
+     "name": "Dr. Admin User",
+     "role": "Administrator",
+     "email": "admin@awthospital.in",
+     "active": true
+    },
+    {
+     "id": "u2",
+     "name": "Ritika Sahu",
+     "role": "Front Desk",
+     "email": "reception@awthospital.in",
+     "active": true
+    },
+    {
+     "id": "u3",
+     "name": "Mohan Ekka",
+     "role": "Pharmacist",
+     "email": "pharmacy@awthospital.in",
+     "active": true
+    },
+    {
+     "id": "u4",
+     "name": "Sister Grace Kujur",
+     "role": "Nursing In-charge",
+     "email": "nursing@awthospital.in",
+     "active": true
+    },
+    {
+     "id": "u5",
+     "name": "Alok Prasad",
+     "role": "Accounts",
+     "email": "accounts@awthospital.in",
+     "active": true
+    },
+    {
+     "id": "u6",
+     "name": "Neeraj Das",
+     "role": "Lab Technician",
+     "email": "lab@awthospital.in",
+     "active": false
+    }
+   ]
+  }
+ ],
+ "doctors": [
+  {
+   "id": "D01",
+   "name": "Dr. A. K. Sinha",
+   "dept": "MED",
+   "qualification": "MBBS, DNB",
+   "phone": "9892551280",
+   "room": "OPD-101",
+   "days": "Mon, Wed, Fri",
+   "available": false
+  },
+  {
+   "id": "D02",
+   "name": "Dr. Rekha Mishra",
+   "dept": "ORTH",
+   "qualification": "MBBS, MD",
+   "phone": "9828997898",
+   "room": "OPD-102",
+   "days": "Mon, Wed, Fri",
+   "available": true
+  },
+  {
+   "id": "D03",
+   "name": "Dr. S. N. Oraon",
+   "dept": "PED",
+   "qualification": "MBBS, DM",
+   "phone": "9865390963",
+   "room": "OPD-103",
+   "days": "Mon–Fri",
+   "available": true
+  },
+  {
+   "id": "D04",
+   "name": "Dr. Pallavi Agarwal",
+   "dept": "GYNA",
+   "qualification": "MBBS, DM",
+   "phone": "9850103487",
+   "room": "OPD-104",
+   "days": "Mon–Sat",
+   "available": true
+  },
+  {
+   "id": "D05",
+   "name": "Dr. V. K. Choudhary",
+   "dept": "ENT",
+   "qualification": "MBBS, DM",
+   "phone": "9877481503",
+   "room": "OPD-105",
+   "days": "Mon, Wed, Fri",
+   "available": false
+  },
+  {
+   "id": "D06",
+   "name": "Dr. Nisha Tirkey",
+   "dept": "DERM",
+   "qualification": "MBBS, DNB",
+   "phone": "9866885479",
+   "room": "OPD-106",
+   "days": "Mon, Wed, Fri",
+   "available": true
+  },
+  {
+   "id": "D07",
+   "name": "Dr. Rahul Bhagat",
+   "dept": "SURG",
+   "qualification": "MBBS, MS",
+   "phone": "9832875069",
+   "room": "OPD-107",
+   "days": "Mon–Sat",
+   "available": true
+  },
+  {
+   "id": "D08",
+   "name": "Dr. Imran Ansari",
+   "dept": "CARD",
+   "qualification": "MBBS, DNB",
+   "phone": "9849462182",
+   "room": "OPD-108",
+   "days": "Mon–Sat",
+   "available": false
+  },
+  {
+   "id": "D09",
+   "name": "Dr. Kiran Lakra",
+   "dept": "MED",
+   "qualification": "MBBS, DGO",
+   "phone": "9859663910",
+   "room": "OPD-109",
+   "days": "Mon, Wed, Fri",
+   "available": true
+  },
+  {
+   "id": "D10",
+   "name": "Dr. P. K. Mahto",
+   "dept": "ORTH",
+   "qualification": "MBBS, DM",
+   "phone": "9866056580",
+   "room": "OPD-110",
+   "days": "Mon, Wed, Fri",
+   "available": true
+  },
+  {
+   "id": "D11",
+   "name": "Dr. Sweta Jha",
+   "dept": "PED",
+   "qualification": "MBBS, MD",
+   "phone": "9823208530",
+   "room": "OPD-111",
+   "days": "Mon–Fri",
+   "available": true
+  },
+  {
+   "id": "D12",
+   "name": "Dr. Arvind Kerketta",
+   "dept": "GYNA",
+   "qualification": "MBBS, MS",
+   "phone": "9861995898",
+   "room": "OPD-112",
+   "days": "Mon–Sat",
+   "available": true
+  }
+ ],
+ "patients": [
+  {
+   "id": "P121",
+   "uhid": "AWT-000121",
+   "emr": "210578401",
+   "name": "Amit Tiwari",
+   "gender": "Male",
+   "age": 17,
+   "phone": "9711079996",
+   "address": "Ranchi, Jharkhand",
+   "blood": "A+",
+   "payer": "SELF",
+   "registeredAt": "2026-08-20T10:22"
+  },
+  {
+   "id": "P122",
+   "uhid": "AWT-000122",
+   "emr": "210578402",
+   "name": "Ramesh Tandon",
+   "gender": "Male",
+   "age": 26,
+   "phone": "8899001574",
+   "address": "Hatia, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-27T16:50"
+  },
+  {
+   "id": "P123",
+   "uhid": "AWT-000123",
+   "emr": "210578403",
+   "name": "Manish Ekka",
+   "gender": "Male",
+   "age": 67,
+   "phone": "9884573653",
+   "address": "Ratu, Jharkhand",
+   "blood": "A+",
+   "payer": "SELF",
+   "registeredAt": "2026-08-31T08:03"
+  },
+  {
+   "id": "P124",
+   "uhid": "AWT-000124",
+   "emr": "210578404",
+   "name": "Mohit Ekka",
+   "gender": "Male",
+   "age": 54,
+   "phone": "8825214176",
+   "address": "Harmu, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-11T17:22"
+  },
+  {
+   "id": "P125",
+   "uhid": "AWT-000125",
+   "emr": "210578405",
+   "name": "Rohit Bansal",
+   "gender": "Male",
+   "age": 5,
+   "phone": "9431011985",
+   "address": "Morabadi, Jharkhand",
+   "blood": "O-",
+   "payer": "CCL",
+   "registeredAt": "2026-09-02T09:39"
+  },
+  {
+   "id": "P126",
+   "uhid": "AWT-000126",
+   "emr": "210578406",
+   "name": "Ritu Pandey",
+   "gender": "Female",
+   "age": 68,
+   "phone": "9491696116",
+   "address": "Bariatu, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-09T09:16"
+  },
+  {
+   "id": "P127",
+   "uhid": "AWT-000127",
+   "emr": "210578407",
+   "name": "Anjali Singh",
+   "gender": "Female",
+   "age": 55,
+   "phone": "8880989768",
+   "address": "Kanke, Jharkhand",
+   "blood": "O-",
+   "payer": "CGHS",
+   "registeredAt": "2026-09-10T12:51"
+  },
+  {
+   "id": "P128",
+   "uhid": "AWT-000128",
+   "emr": "210578408",
+   "name": "Ravi Ekka",
+   "gender": "Male",
+   "age": 77,
+   "phone": "9734062743",
+   "address": "Lalpur, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-08T18:14"
+  },
+  {
+   "id": "P129",
+   "uhid": "AWT-000129",
+   "emr": "210578409",
+   "name": "Sagar Sahu",
+   "gender": "Male",
+   "age": 48,
+   "phone": "9899607187",
+   "address": "Morabadi, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-23T16:57"
+  },
+  {
+   "id": "P130",
+   "uhid": "AWT-000130",
+   "emr": "210578410",
+   "name": "Birsa Lal",
+   "gender": "Male",
+   "age": 46,
+   "phone": "9785010968",
+   "address": "Harmu, Jharkhand",
+   "blood": "A-",
+   "payer": "AYU",
+   "registeredAt": "2026-09-03T14:45"
+  },
+  {
+   "id": "P131",
+   "uhid": "AWT-000131",
+   "emr": "210578411",
+   "name": "Pooja Agarwal",
+   "gender": "Female",
+   "age": 55,
+   "phone": "9469277956",
+   "address": "Khunti, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-20T12:30"
+  },
+  {
+   "id": "P132",
+   "uhid": "AWT-000132",
+   "emr": "210578412",
+   "name": "Komal Bansal",
+   "gender": "Female",
+   "age": 27,
+   "phone": "8829355378",
+   "address": "Harmu, Jharkhand",
+   "blood": "O-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-03T11:41"
+  },
+  {
+   "id": "P133",
+   "uhid": "AWT-000133",
+   "emr": "210578413",
+   "name": "Aarti Gupta",
+   "gender": "Female",
+   "age": 72,
+   "phone": "9774592946",
+   "address": "Namkum, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-09T13:49"
+  },
+  {
+   "id": "P134",
+   "uhid": "AWT-000134",
+   "emr": "210578414",
+   "name": "Vikram Ekka",
+   "gender": "Male",
+   "age": 34,
+   "phone": "9437308642",
+   "address": "Doranda, Jharkhand",
+   "blood": "B+",
+   "payer": "MDI",
+   "registeredAt": "2026-08-31T09:48"
+  },
+  {
+   "id": "P135",
+   "uhid": "AWT-000135",
+   "emr": "210578415",
+   "name": "Asha Verma",
+   "gender": "Female",
+   "age": 61,
+   "phone": "8850643845",
+   "address": "Ratu, Jharkhand",
+   "blood": "B-",
+   "payer": "MDI",
+   "registeredAt": "2026-09-04T13:29"
+  },
+  {
+   "id": "P136",
+   "uhid": "AWT-000136",
+   "emr": "210578416",
+   "name": "Pooja Lal",
+   "gender": "Female",
+   "age": 39,
+   "phone": "8841177278",
+   "address": "Ranchi, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-13T17:21"
+  },
+  {
+   "id": "P137",
+   "uhid": "AWT-000137",
+   "emr": "210578417",
+   "name": "Sanjay Ekka",
+   "gender": "Male",
+   "age": 62,
+   "phone": "9753214885",
+   "address": "Bariatu, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-20T11:42"
+  },
+  {
+   "id": "P138",
+   "uhid": "AWT-000138",
+   "emr": "210578418",
+   "name": "Sagar Das",
+   "gender": "Male",
+   "age": 54,
+   "phone": "9446950476",
+   "address": "Khunti, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-26T13:09"
+  },
+  {
+   "id": "P139",
+   "uhid": "AWT-000139",
+   "emr": "210578419",
+   "name": "Tarun Das",
+   "gender": "Male",
+   "age": 78,
+   "phone": "9444114791",
+   "address": "Morabadi, Jharkhand",
+   "blood": "AB+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-06T15:46"
+  },
+  {
+   "id": "P140",
+   "uhid": "AWT-000140",
+   "emr": "210578420",
+   "name": "Rekha Verma",
+   "gender": "Female",
+   "age": 5,
+   "phone": "9768080317",
+   "address": "Doranda, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-30T14:28"
+  },
+  {
+   "id": "P141",
+   "uhid": "AWT-000141",
+   "emr": "210578421",
+   "name": "Komal Sharma",
+   "gender": "Female",
+   "age": 24,
+   "phone": "9869221699",
+   "address": "Bariatu, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-02T10:03"
+  },
+  {
+   "id": "P142",
+   "uhid": "AWT-000142",
+   "emr": "210578422",
+   "name": "Asha Sharma",
+   "gender": "Female",
+   "age": 81,
+   "phone": "8885153436",
+   "address": "Lalpur, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-31T13:34"
+  },
+  {
+   "id": "P143",
+   "uhid": "AWT-000143",
+   "emr": "210578423",
+   "name": "Anil Lal",
+   "gender": "Male",
+   "age": 16,
+   "phone": "9860599489",
+   "address": "Ranchi, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-29T12:33"
+  },
+  {
+   "id": "P144",
+   "uhid": "AWT-000144",
+   "emr": "210578424",
+   "name": "Neha Tiwari",
+   "gender": "Female",
+   "age": 3,
+   "phone": "9878115009",
+   "address": "Lalpur, Jharkhand",
+   "blood": "O-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-14T08:35"
+  },
+  {
+   "id": "P145",
+   "uhid": "AWT-000145",
+   "emr": "210578425",
+   "name": "Sunita Mishra",
+   "gender": "Female",
+   "age": 59,
+   "phone": "9452097635",
+   "address": "Lalpur, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-09T12:09"
+  },
+  {
+   "id": "P146",
+   "uhid": "AWT-000146",
+   "emr": "210578426",
+   "name": "Deepak Sahu",
+   "gender": "Male",
+   "age": 15,
+   "phone": "8896072731",
+   "address": "Bariatu, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-11T14:27"
+  },
+  {
+   "id": "P147",
+   "uhid": "AWT-000147",
+   "emr": "210578427",
+   "name": "Nisha Kujur",
+   "gender": "Female",
+   "age": 13,
+   "phone": "9840975300",
+   "address": "Lalpur, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-19T17:37"
+  },
+  {
+   "id": "P148",
+   "uhid": "AWT-000148",
+   "emr": "210578428",
+   "name": "Priya Gupta",
+   "gender": "Female",
+   "age": 73,
+   "phone": "7011053571",
+   "address": "Hatia, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-13T17:25"
+  },
+  {
+   "id": "P149",
+   "uhid": "AWT-000149",
+   "emr": "210578429",
+   "name": "Sneha Choudhary",
+   "gender": "Female",
+   "age": 4,
+   "phone": "9717042043",
+   "address": "Ranchi, Jharkhand",
+   "blood": "O+",
+   "payer": "CGHS",
+   "registeredAt": "2026-09-04T08:49"
+  },
+  {
+   "id": "P150",
+   "uhid": "AWT-000150",
+   "emr": "210578430",
+   "name": "Asha Ekka",
+   "gender": "Female",
+   "age": 10,
+   "phone": "8836738362",
+   "address": "Lalpur, Jharkhand",
+   "blood": "O-",
+   "payer": "MDI",
+   "registeredAt": "2026-08-26T13:34"
+  },
+  {
+   "id": "P151",
+   "uhid": "AWT-000151",
+   "emr": "210578431",
+   "name": "Harsh Munda",
+   "gender": "Male",
+   "age": 77,
+   "phone": "9710830360",
+   "address": "Morabadi, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-05T13:03"
+  },
+  {
+   "id": "P152",
+   "uhid": "AWT-000152",
+   "emr": "210578432",
+   "name": "Asha Mahto",
+   "gender": "Female",
+   "age": 27,
+   "phone": "9468715711",
+   "address": "Morabadi, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-18T16:12"
+  },
+  {
+   "id": "P153",
+   "uhid": "AWT-000153",
+   "emr": "210578433",
+   "name": "Anil Mishra",
+   "gender": "Male",
+   "age": 20,
+   "phone": "7088297843",
+   "address": "Ranchi, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-10T10:07"
+  },
+  {
+   "id": "P154",
+   "uhid": "AWT-000154",
+   "emr": "210578434",
+   "name": "Akarsh Devi",
+   "gender": "Male",
+   "age": 46,
+   "phone": "9793268706",
+   "address": "Khunti, Jharkhand",
+   "blood": "B+",
+   "payer": "STAR",
+   "registeredAt": "2026-09-03T18:55"
+  },
+  {
+   "id": "P155",
+   "uhid": "AWT-000155",
+   "emr": "210578435",
+   "name": "Birsa Devi",
+   "gender": "Male",
+   "age": 45,
+   "phone": "9730614098",
+   "address": "Kanke, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-13T08:49"
+  },
+  {
+   "id": "P156",
+   "uhid": "AWT-000156",
+   "emr": "210578436",
+   "name": "Abhishek Lal",
+   "gender": "Male",
+   "age": 37,
+   "phone": "8890046011",
+   "address": "Bariatu, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-10T10:27"
+  },
+  {
+   "id": "P157",
+   "uhid": "AWT-000157",
+   "emr": "210578437",
+   "name": "Swati Verma",
+   "gender": "Female",
+   "age": 11,
+   "phone": "9888520330",
+   "address": "Ranchi, Jharkhand",
+   "blood": "AB+",
+   "payer": "STAR",
+   "registeredAt": "2026-09-21T14:41"
+  },
+  {
+   "id": "P158",
+   "uhid": "AWT-000158",
+   "emr": "210578438",
+   "name": "Priya Choudhary",
+   "gender": "Female",
+   "age": 25,
+   "phone": "8819516370",
+   "address": "Morabadi, Jharkhand",
+   "blood": "O-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-25T17:42"
+  },
+  {
+   "id": "P159",
+   "uhid": "AWT-000159",
+   "emr": "210578439",
+   "name": "Asha Kujur",
+   "gender": "Female",
+   "age": 29,
+   "phone": "8881324014",
+   "address": "Doranda, Jharkhand",
+   "blood": "B-",
+   "payer": "STAR",
+   "registeredAt": "2026-08-22T15:04"
+  },
+  {
+   "id": "P160",
+   "uhid": "AWT-000160",
+   "emr": "210578440",
+   "name": "Divya Gupta",
+   "gender": "Female",
+   "age": 62,
+   "phone": "9761489830",
+   "address": "Harmu, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-26T16:16"
+  },
+  {
+   "id": "P161",
+   "uhid": "AWT-000161",
+   "emr": "210578441",
+   "name": "Nisha Mishra",
+   "gender": "Female",
+   "age": 63,
+   "phone": "8853818894",
+   "address": "Doranda, Jharkhand",
+   "blood": "B+",
+   "payer": "MDI",
+   "registeredAt": "2026-09-06T15:52"
+  },
+  {
+   "id": "P162",
+   "uhid": "AWT-000162",
+   "emr": "210578442",
+   "name": "Aarti Mahto",
+   "gender": "Female",
+   "age": 19,
+   "phone": "9736270885",
+   "address": "Harmu, Jharkhand",
+   "blood": "O-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-06T12:45"
+  },
+  {
+   "id": "P163",
+   "uhid": "AWT-000163",
+   "emr": "210578443",
+   "name": "Birsa Das",
+   "gender": "Male",
+   "age": 25,
+   "phone": "7014549573",
+   "address": "Ormanjhi, Jharkhand",
+   "blood": "A+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-18T17:55"
+  },
+  {
+   "id": "P164",
+   "uhid": "AWT-000164",
+   "emr": "210578444",
+   "name": "Mohit Mishra",
+   "gender": "Male",
+   "age": 29,
+   "phone": "8851045737",
+   "address": "Khunti, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-08T16:49"
+  },
+  {
+   "id": "P165",
+   "uhid": "AWT-000165",
+   "emr": "210578445",
+   "name": "Nisha Munda",
+   "gender": "Female",
+   "age": 23,
+   "phone": "7052327607",
+   "address": "Khunti, Jharkhand",
+   "blood": "A-",
+   "payer": "CGHS",
+   "registeredAt": "2026-09-17T11:40"
+  },
+  {
+   "id": "P166",
+   "uhid": "AWT-000166",
+   "emr": "210578446",
+   "name": "Divya Sharma",
+   "gender": "Female",
+   "age": 58,
+   "phone": "8811533826",
+   "address": "Ranchi, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-08-29T13:02"
+  },
+  {
+   "id": "P167",
+   "uhid": "AWT-000167",
+   "emr": "210578447",
+   "name": "Abhishek Das",
+   "gender": "Male",
+   "age": 2,
+   "phone": "9781780623",
+   "address": "Lalpur, Jharkhand",
+   "blood": "A+",
+   "payer": "SELF",
+   "registeredAt": "2026-08-30T09:13"
+  },
+  {
+   "id": "P168",
+   "uhid": "AWT-000168",
+   "emr": "210578448",
+   "name": "Sagar Mahto",
+   "gender": "Male",
+   "age": 42,
+   "phone": "7018339835",
+   "address": "Doranda, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-11T11:09"
+  },
+  {
+   "id": "P169",
+   "uhid": "AWT-000169",
+   "emr": "210578449",
+   "name": "Nitin Kujur",
+   "gender": "Male",
+   "age": 4,
+   "phone": "7040921750",
+   "address": "Hatia, Jharkhand",
+   "blood": "O-",
+   "payer": "SELF",
+   "registeredAt": "2026-08-18T14:05"
+  },
+  {
+   "id": "P170",
+   "uhid": "AWT-000170",
+   "emr": "210578450",
+   "name": "Harsh Devi",
+   "gender": "Male",
+   "age": 42,
+   "phone": "9763441104",
+   "address": "Kanke, Jharkhand",
+   "blood": "AB+",
+   "payer": "CCL",
+   "registeredAt": "2026-08-26T11:58"
+  },
+  {
+   "id": "P171",
+   "uhid": "AWT-000171",
+   "emr": "210578451",
+   "name": "Aarti Yadav",
+   "gender": "Female",
+   "age": 69,
+   "phone": "8811120444",
+   "address": "Harmu, Jharkhand",
+   "blood": "B+",
+   "payer": "CCL",
+   "registeredAt": "2026-08-16T11:54"
+  },
+  {
+   "id": "P172",
+   "uhid": "AWT-000172",
+   "emr": "210578452",
+   "name": "Shreya Mishra",
+   "gender": "Female",
+   "age": 77,
+   "phone": "9828250364",
+   "address": "Harmu, Jharkhand",
+   "blood": "O-",
+   "payer": "CGHS",
+   "registeredAt": "2026-09-01T17:38"
+  },
+  {
+   "id": "P173",
+   "uhid": "AWT-000173",
+   "emr": "210578453",
+   "name": "Tarun Devi",
+   "gender": "Male",
+   "age": 30,
+   "phone": "8883094969",
+   "address": "Hatia, Jharkhand",
+   "blood": "A+",
+   "payer": "AYU",
+   "registeredAt": "2026-09-15T08:16"
+  },
+  {
+   "id": "P174",
+   "uhid": "AWT-000174",
+   "emr": "210578454",
+   "name": "Aarti Mahto",
+   "gender": "Female",
+   "age": 51,
+   "phone": "7091973371",
+   "address": "Morabadi, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-08-16T18:34"
+  },
+  {
+   "id": "P175",
+   "uhid": "AWT-000175",
+   "emr": "210578455",
+   "name": "Asha Verma",
+   "gender": "Female",
+   "age": 72,
+   "phone": "9821397008",
+   "address": "Lalpur, Jharkhand",
+   "blood": "O+",
+   "payer": "MDI",
+   "registeredAt": "2026-09-23T09:44"
+  },
+  {
+   "id": "P176",
+   "uhid": "AWT-000176",
+   "emr": "210578456",
+   "name": "Manish Oraon",
+   "gender": "Male",
+   "age": 24,
+   "phone": "8834706588",
+   "address": "Harmu, Jharkhand",
+   "blood": "O-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T09:34"
+  },
+  {
+   "id": "P177",
+   "uhid": "AWT-000177",
+   "emr": "210578457",
+   "name": "Shreya Verma",
+   "gender": "Female",
+   "age": 32,
+   "phone": "9826648887",
+   "address": "Harmu, Jharkhand",
+   "blood": "B+",
+   "payer": "MDI",
+   "registeredAt": "2026-09-23T09:56"
+  },
+  {
+   "id": "P178",
+   "uhid": "AWT-000178",
+   "emr": "210578458",
+   "name": "Nitin Ekka",
+   "gender": "Male",
+   "age": 75,
+   "phone": "9841753945",
+   "address": "Morabadi, Jharkhand",
+   "blood": "A+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T09:03"
+  },
+  {
+   "id": "P179",
+   "uhid": "AWT-000179",
+   "emr": "210578459",
+   "name": "Karan Munda",
+   "gender": "Male",
+   "age": 79,
+   "phone": "9814089534",
+   "address": "Namkum, Jharkhand",
+   "blood": "AB+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T10:27"
+  },
+  {
+   "id": "P180",
+   "uhid": "AWT-000180",
+   "emr": "210578460",
+   "name": "Arjun Choudhary",
+   "gender": "Male",
+   "age": 28,
+   "phone": "8839801584",
+   "address": "Harmu, Jharkhand",
+   "blood": "AB+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T10:48"
+  },
+  {
+   "id": "P181",
+   "uhid": "AWT-000181",
+   "emr": "210578461",
+   "name": "Akarsh Oraon",
+   "gender": "Male",
+   "age": 79,
+   "phone": "7054190788",
+   "address": "Lalpur, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T10:23"
+  },
+  {
+   "id": "P182",
+   "uhid": "AWT-000182",
+   "emr": "210578462",
+   "name": "Prakash Prasad",
+   "gender": "Male",
+   "age": 9,
+   "phone": "9864603051",
+   "address": "Lalpur, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T10:27"
+  },
+  {
+   "id": "P183",
+   "uhid": "AWT-000183",
+   "emr": "210578463",
+   "name": "Nitin Agarwal",
+   "gender": "Male",
+   "age": 22,
+   "phone": "7095959177",
+   "address": "Khunti, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T11:19"
+  },
+  {
+   "id": "P184",
+   "uhid": "AWT-000184",
+   "emr": "210578464",
+   "name": "Jyoti Mahto",
+   "gender": "Female",
+   "age": 15,
+   "phone": "7091761165",
+   "address": "Namkum, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T11:56"
+  },
+  {
+   "id": "P185",
+   "uhid": "AWT-000185",
+   "emr": "210578465",
+   "name": "Priya Prasad",
+   "gender": "Female",
+   "age": 80,
+   "phone": "8892021844",
+   "address": "Hatia, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T12:45"
+  },
+  {
+   "id": "P186",
+   "uhid": "AWT-000186",
+   "emr": "210578466",
+   "name": "Sunita Devi",
+   "gender": "Female",
+   "age": 15,
+   "phone": "8855028195",
+   "address": "Khunti, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T12:27"
+  },
+  {
+   "id": "P187",
+   "uhid": "AWT-000187",
+   "emr": "210578467",
+   "name": "Priya Oraon",
+   "gender": "Female",
+   "age": 63,
+   "phone": "9756524041",
+   "address": "Namkum, Jharkhand",
+   "blood": "AB+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T12:45"
+  },
+  {
+   "id": "P188",
+   "uhid": "AWT-000188",
+   "emr": "210578468",
+   "name": "Anjali Devi",
+   "gender": "Female",
+   "age": 26,
+   "phone": "8893426088",
+   "address": "Hatia, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T13:00"
+  },
+  {
+   "id": "P189",
+   "uhid": "AWT-000189",
+   "emr": "210578469",
+   "name": "Sunita Tiwari",
+   "gender": "Female",
+   "age": 57,
+   "phone": "9434848853",
+   "address": "Ranchi, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T13:18"
+  },
+  {
+   "id": "P190",
+   "uhid": "AWT-000190",
+   "emr": "210578470",
+   "name": "Arjun Prasad",
+   "gender": "Male",
+   "age": 41,
+   "phone": "8818024708",
+   "address": "Hatia, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T13:19"
+  },
+  {
+   "id": "P191",
+   "uhid": "AWT-000191",
+   "emr": "210578471",
+   "name": "Tarun Tandon",
+   "gender": "Male",
+   "age": 38,
+   "phone": "7086225419",
+   "address": "Hatia, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T13:52"
+  },
+  {
+   "id": "P192",
+   "uhid": "AWT-000192",
+   "emr": "210578472",
+   "name": "Ramesh Das",
+   "gender": "Male",
+   "age": 21,
+   "phone": "9750397267",
+   "address": "Khunti, Jharkhand",
+   "blood": "A+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T14:42"
+  },
+  {
+   "id": "P193",
+   "uhid": "AWT-000193",
+   "emr": "210578473",
+   "name": "Sunil Tandon",
+   "gender": "Male",
+   "age": 27,
+   "phone": "9832406812",
+   "address": "Doranda, Jharkhand",
+   "blood": "A-",
+   "payer": "STAR",
+   "registeredAt": "2026-09-23T15:35"
+  },
+  {
+   "id": "P194",
+   "uhid": "AWT-000194",
+   "emr": "210578474",
+   "name": "Shreya Munda",
+   "gender": "Female",
+   "age": 2,
+   "phone": "8889907212",
+   "address": "Lalpur, Jharkhand",
+   "blood": "B-",
+   "payer": "CGHS",
+   "registeredAt": "2026-09-23T15:45"
+  },
+  {
+   "id": "P195",
+   "uhid": "AWT-000195",
+   "emr": "210578475",
+   "name": "Manish Pandey",
+   "gender": "Male",
+   "age": 35,
+   "phone": "9461996928",
+   "address": "Ratu, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T15:21"
+  },
+  {
+   "id": "P196",
+   "uhid": "AWT-000196",
+   "emr": "210578476",
+   "name": "Vikram Sahu",
+   "gender": "Male",
+   "age": 49,
+   "phone": "8831367485",
+   "address": "Morabadi, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T16:12"
+  },
+  {
+   "id": "P197",
+   "uhid": "AWT-000197",
+   "emr": "210578477",
+   "name": "Gaurav Ekka",
+   "gender": "Male",
+   "age": 23,
+   "phone": "7029611754",
+   "address": "Ranchi, Jharkhand",
+   "blood": "O-",
+   "payer": "AYU",
+   "registeredAt": "2026-09-23T16:09"
+  },
+  {
+   "id": "P198",
+   "uhid": "AWT-000198",
+   "emr": "210578478",
+   "name": "Sagar Oraon",
+   "gender": "Male",
+   "age": 77,
+   "phone": "9422044287",
+   "address": "Namkum, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T16:03"
+  },
+  {
+   "id": "P199",
+   "uhid": "AWT-000199",
+   "emr": "210578479",
+   "name": "Priya Tiwari",
+   "gender": "Female",
+   "age": 69,
+   "phone": "7065474412",
+   "address": "Morabadi, Jharkhand",
+   "blood": "O+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-23T16:49"
+  },
+  {
+   "id": "P200",
+   "uhid": "AWT-000200",
+   "emr": "210578480",
+   "name": "Pallavi Singh",
+   "gender": "Female",
+   "age": 68,
+   "phone": "7036476954",
+   "address": "Lalpur, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T09:12"
+  },
+  {
+   "id": "P201",
+   "uhid": "AWT-000201",
+   "emr": "210578481",
+   "name": "Akarsh Lal",
+   "gender": "Male",
+   "age": 44,
+   "phone": "7071750212",
+   "address": "Bariatu, Jharkhand",
+   "blood": "B+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T09:05"
+  },
+  {
+   "id": "P202",
+   "uhid": "AWT-000202",
+   "emr": "210578482",
+   "name": "Pallavi Oraon",
+   "gender": "Female",
+   "age": 24,
+   "phone": "9857566082",
+   "address": "Hatia, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T10:55"
+  },
+  {
+   "id": "P203",
+   "uhid": "AWT-000203",
+   "emr": "210578483",
+   "name": "Ravi Kujur",
+   "gender": "Male",
+   "age": 62,
+   "phone": "8880757510",
+   "address": "Harmu, Jharkhand",
+   "blood": "AB+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T11:20"
+  },
+  {
+   "id": "P204",
+   "uhid": "AWT-000204",
+   "emr": "210578484",
+   "name": "Sunil Devi",
+   "gender": "Male",
+   "age": 79,
+   "phone": "7077126722",
+   "address": "Namkum, Jharkhand",
+   "blood": "AB+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T11:09"
+  },
+  {
+   "id": "P205",
+   "uhid": "AWT-000205",
+   "emr": "210578485",
+   "name": "Anjali Sharma",
+   "gender": "Female",
+   "age": 12,
+   "phone": "9446922967",
+   "address": "Namkum, Jharkhand",
+   "blood": "B-",
+   "payer": "CGHS",
+   "registeredAt": "2026-09-22T12:36"
+  },
+  {
+   "id": "P206",
+   "uhid": "AWT-000206",
+   "emr": "210578486",
+   "name": "Karan Singh",
+   "gender": "Male",
+   "age": 38,
+   "phone": "8818987857",
+   "address": "Ranchi, Jharkhand",
+   "blood": "O-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T13:48"
+  },
+  {
+   "id": "P207",
+   "uhid": "AWT-000207",
+   "emr": "210578487",
+   "name": "Pallavi Yadav",
+   "gender": "Female",
+   "age": 22,
+   "phone": "7014210563",
+   "address": "Ranchi, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T13:08"
+  },
+  {
+   "id": "P208",
+   "uhid": "AWT-000208",
+   "emr": "210578488",
+   "name": "Aarti Agarwal",
+   "gender": "Female",
+   "age": 40,
+   "phone": "9771887083",
+   "address": "Kanke, Jharkhand",
+   "blood": "O+",
+   "payer": "STAR",
+   "registeredAt": "2026-09-22T13:18"
+  },
+  {
+   "id": "P209",
+   "uhid": "AWT-000209",
+   "emr": "210578489",
+   "name": "Amit Choudhary",
+   "gender": "Male",
+   "age": 72,
+   "phone": "7089277150",
+   "address": "Hatia, Jharkhand",
+   "blood": "A-",
+   "payer": "STAR",
+   "registeredAt": "2026-09-22T14:07"
+  },
+  {
+   "id": "P210",
+   "uhid": "AWT-000210",
+   "emr": "210578490",
+   "name": "Vikram Das",
+   "gender": "Male",
+   "age": 19,
+   "phone": "9768108770",
+   "address": "Ratu, Jharkhand",
+   "blood": "A-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T14:38"
+  },
+  {
+   "id": "P211",
+   "uhid": "AWT-000211",
+   "emr": "210578491",
+   "name": "Asha Sahu",
+   "gender": "Female",
+   "age": 59,
+   "phone": "7055387568",
+   "address": "Kanke, Jharkhand",
+   "blood": "AB+",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T15:34"
+  },
+  {
+   "id": "P212",
+   "uhid": "AWT-000212",
+   "emr": "210578492",
+   "name": "Aarti Pandey",
+   "gender": "Female",
+   "age": 2,
+   "phone": "9793779538",
+   "address": "Doranda, Jharkhand",
+   "blood": "B-",
+   "payer": "SELF",
+   "registeredAt": "2026-09-22T16:23"
+  },
+  {
+   "id": "P213",
+   "uhid": "AWT-000213",
+   "emr": "210578493",
+   "name": "Karan Sinha",
+   "gender": "Male",
+   "age": 59,
+   "phone": "8848613671",
+   "address": "Ranchi, Jharkhand",
+   "blood": "A-",
+   "payer": "AYU",
+   "registeredAt": "2026-09-22T16:13"
+  }
+ ],
+ "admissions": [
+  {
+   "id": "A401",
+   "ipNo": "IP-2026-0401",
+   "patientId": "P121",
+   "doctorId": "D06",
+   "dept": "DERM",
+   "bed": "B101",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-16T09:44",
+   "diagnosis": "Pneumonia",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-16T09:44",
+     "amount": 15000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A402",
+   "ipNo": "IP-2026-0402",
+   "patientId": "P122",
+   "doctorId": "D07",
+   "dept": "SURG",
+   "bed": "B102",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-15T17:27",
+   "diagnosis": "Post-op observation",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-15T17:27",
+     "amount": 15000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T10:41",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A403",
+   "ipNo": "IP-2026-0403",
+   "patientId": "P123",
+   "doctorId": "D07",
+   "dept": "SURG",
+   "bed": "B103",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-20T10:45",
+   "diagnosis": "Acute gastroenteritis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-20T10:45",
+     "amount": 5000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A404",
+   "ipNo": "IP-2026-0404",
+   "patientId": "P124",
+   "doctorId": "D01",
+   "dept": "MED",
+   "bed": "B104",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-17T14:41",
+   "diagnosis": "Fracture — left femur",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-17T14:41",
+     "amount": 15000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A405",
+   "ipNo": "IP-2026-0405",
+   "patientId": "P125",
+   "doctorId": "D12",
+   "dept": "GYNA",
+   "bed": "B106",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-18T14:26",
+   "diagnosis": "Diabetic ketoacidosis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-18T14:26",
+     "amount": 15000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T08:10",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A406",
+   "ipNo": "IP-2026-0406",
+   "patientId": "P126",
+   "doctorId": "D08",
+   "dept": "CARD",
+   "bed": "B107",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-22T12:47",
+   "diagnosis": "COPD exacerbation",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-22T12:47",
+     "amount": 5000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A407",
+   "ipNo": "IP-2026-0407",
+   "patientId": "P127",
+   "doctorId": "D04",
+   "dept": "GYNA",
+   "bed": "B108",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-14T10:59",
+   "diagnosis": "Pneumonia",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-14T10:59",
+     "amount": 15000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T10:16",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A408",
+   "ipNo": "IP-2026-0408",
+   "patientId": "P128",
+   "doctorId": "D01",
+   "dept": "MED",
+   "bed": "B109",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-18T15:23",
+   "diagnosis": "COPD exacerbation",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-18T15:23",
+     "amount": 25000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T08:02",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A409",
+   "ipNo": "IP-2026-0409",
+   "patientId": "P129",
+   "doctorId": "D09",
+   "dept": "MED",
+   "bed": "B110",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-20T17:31",
+   "diagnosis": "Diabetic ketoacidosis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-20T17:31",
+     "amount": 10000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T09:03",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A410",
+   "ipNo": "IP-2026-0410",
+   "patientId": "P130",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B112",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-18T08:26",
+   "diagnosis": "Appendicitis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-18T08:26",
+     "amount": 15000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T09:33",
+     "amount": 5000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A411",
+   "ipNo": "IP-2026-0411",
+   "patientId": "P131",
+   "doctorId": "D07",
+   "dept": "SURG",
+   "bed": "B113",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-23T08:49",
+   "diagnosis": "Fracture — left femur",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-23T08:49",
+     "amount": 5000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A412",
+   "ipNo": "IP-2026-0412",
+   "patientId": "P132",
+   "doctorId": "D01",
+   "dept": "MED",
+   "bed": "B116",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-14T21:50",
+   "diagnosis": "Normal delivery",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-14T21:50",
+     "amount": 15000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T10:01",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A413",
+   "ipNo": "IP-2026-0413",
+   "patientId": "P133",
+   "doctorId": "D12",
+   "dept": "GYNA",
+   "bed": "B118",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-16T08:48",
+   "diagnosis": "Appendicitis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-16T08:48",
+     "amount": 25000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A414",
+   "ipNo": "IP-2026-0414",
+   "patientId": "P134",
+   "doctorId": "D06",
+   "dept": "DERM",
+   "bed": "B120",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-15T07:33",
+   "diagnosis": "Diabetic ketoacidosis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-15T07:33",
+     "amount": 20000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A415",
+   "ipNo": "IP-2026-0415",
+   "patientId": "P135",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B121",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-14T17:23",
+   "diagnosis": "Normal delivery",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-14T17:23",
+     "amount": 20000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T08:53",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A416",
+   "ipNo": "IP-2026-0416",
+   "patientId": "P136",
+   "doctorId": "D07",
+   "dept": "SURG",
+   "bed": "B122",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-20T15:49",
+   "diagnosis": "Appendicitis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-20T15:49",
+     "amount": 15000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A417",
+   "ipNo": "IP-2026-0417",
+   "patientId": "P137",
+   "doctorId": "D10",
+   "dept": "ORTH",
+   "bed": "B123",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-20T14:33",
+   "diagnosis": "Hypertension crisis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-20T14:33",
+     "amount": 10000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A418",
+   "ipNo": "IP-2026-0418",
+   "patientId": "P138",
+   "doctorId": "D06",
+   "dept": "DERM",
+   "bed": "B125",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-19T13:05",
+   "diagnosis": "Hypertension crisis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-19T13:05",
+     "amount": 5000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T09:20",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A419",
+   "ipNo": "IP-2026-0419",
+   "patientId": "P139",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B126",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-20T14:42",
+   "diagnosis": "Fracture — left femur",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-20T14:42",
+     "amount": 15000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A420",
+   "ipNo": "IP-2026-0420",
+   "patientId": "P140",
+   "doctorId": "D12",
+   "dept": "GYNA",
+   "bed": "B127",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-17T16:06",
+   "diagnosis": "Diabetic ketoacidosis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-17T16:06",
+     "amount": 15000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A421",
+   "ipNo": "IP-2026-0421",
+   "patientId": "P141",
+   "doctorId": "D03",
+   "dept": "PED",
+   "bed": "B128",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-22T17:41",
+   "diagnosis": "Viral fever",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-22T17:41",
+     "amount": 5000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A422",
+   "ipNo": "IP-2026-0422",
+   "patientId": "P142",
+   "doctorId": "D07",
+   "dept": "SURG",
+   "bed": "B129",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-14T08:45",
+   "diagnosis": "Typhoid fever",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-14T08:45",
+     "amount": 10000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A423",
+   "ipNo": "IP-2026-0423",
+   "patientId": "P143",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B130",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-21T13:29",
+   "diagnosis": "Pneumonia",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-21T13:29",
+     "amount": 20000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A424",
+   "ipNo": "IP-2026-0424",
+   "patientId": "P144",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "A201",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-17T16:57",
+   "diagnosis": "Fracture — left femur",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-17T16:57",
+     "amount": 10000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T09:02",
+     "amount": 3000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A425",
+   "ipNo": "IP-2026-0425",
+   "patientId": "P145",
+   "doctorId": "D02",
+   "dept": "ORTH",
+   "bed": "A203",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-20T07:19",
+   "diagnosis": "Typhoid fever",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-20T07:19",
+     "amount": 20000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T08:15",
+     "amount": 8000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A426",
+   "ipNo": "IP-2026-0426",
+   "patientId": "P146",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "A204",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-19T10:40",
+   "diagnosis": "Hypertension crisis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-19T10:40",
+     "amount": 20000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A427",
+   "ipNo": "IP-2026-0427",
+   "patientId": "P147",
+   "doctorId": "D08",
+   "dept": "CARD",
+   "bed": "A205",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-23T10:37",
+   "diagnosis": "Fracture — left femur",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-23T10:37",
+     "amount": 5000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A428",
+   "ipNo": "IP-2026-0428",
+   "patientId": "P148",
+   "doctorId": "D12",
+   "dept": "GYNA",
+   "bed": "A206",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-23T08:40",
+   "diagnosis": "Acute gastroenteritis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-23T08:40",
+     "amount": 15000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A429",
+   "ipNo": "IP-2026-0429",
+   "patientId": "P149",
+   "doctorId": "D03",
+   "dept": "PED",
+   "bed": "A207",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-21T08:45",
+   "diagnosis": "Dengue fever",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-21T08:45",
+     "amount": 25000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A430",
+   "ipNo": "IP-2026-0430",
+   "patientId": "P150",
+   "doctorId": "D03",
+   "dept": "PED",
+   "bed": "A208",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-15T08:03",
+   "diagnosis": "Pneumonia",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-15T08:03",
+     "amount": 10000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T10:03",
+     "amount": 5000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A431",
+   "ipNo": "IP-2026-0431",
+   "patientId": "P151",
+   "doctorId": "D09",
+   "dept": "MED",
+   "bed": "A210",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-22T07:41",
+   "diagnosis": "Diabetic ketoacidosis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-22T07:41",
+     "amount": 25000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A432",
+   "ipNo": "IP-2026-0432",
+   "patientId": "P152",
+   "doctorId": "D09",
+   "dept": "MED",
+   "bed": "A211",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-22T19:41",
+   "diagnosis": "Typhoid fever",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-22T19:41",
+     "amount": 25000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A433",
+   "ipNo": "IP-2026-0433",
+   "patientId": "P153",
+   "doctorId": "D02",
+   "dept": "ORTH",
+   "bed": "C101",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-19T09:19",
+   "diagnosis": "Viral fever",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-19T09:19",
+     "amount": 5000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T10:12",
+     "amount": 8000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A434",
+   "ipNo": "IP-2026-0434",
+   "patientId": "P154",
+   "doctorId": "D06",
+   "dept": "DERM",
+   "bed": "C102",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-22T17:16",
+   "diagnosis": "Hypertension crisis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-22T17:16",
+     "amount": 25000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A435",
+   "ipNo": "IP-2026-0435",
+   "patientId": "P155",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "C103",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-14T17:53",
+   "diagnosis": "Pneumonia",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-14T17:53",
+     "amount": 10000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A436",
+   "ipNo": "IP-2026-0436",
+   "patientId": "P156",
+   "doctorId": "D01",
+   "dept": "MED",
+   "bed": "C104",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-23T10:47",
+   "diagnosis": "Appendicitis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-23T10:47",
+     "amount": 25000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A437",
+   "ipNo": "IP-2026-0437",
+   "patientId": "P157",
+   "doctorId": "D12",
+   "dept": "GYNA",
+   "bed": "C105",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-23T08:34",
+   "diagnosis": "COPD exacerbation",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-23T08:34",
+     "amount": 10000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A438",
+   "ipNo": "IP-2026-0438",
+   "patientId": "P158",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "C106",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-23T08:59",
+   "diagnosis": "Appendicitis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-23T08:59",
+     "amount": 10000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A439",
+   "ipNo": "IP-2026-0439",
+   "patientId": "P159",
+   "doctorId": "D08",
+   "dept": "CARD",
+   "bed": "C107",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-18T13:51",
+   "diagnosis": "Typhoid fever",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-18T13:51",
+     "amount": 5000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A440",
+   "ipNo": "IP-2026-0440",
+   "patientId": "P160",
+   "doctorId": "D10",
+   "dept": "ORTH",
+   "bed": "C108",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-14T15:05",
+   "diagnosis": "Appendicitis",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-14T15:05",
+     "amount": 5000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A441",
+   "ipNo": "IP-2026-0441",
+   "patientId": "P161",
+   "doctorId": "D07",
+   "dept": "SURG",
+   "bed": "C109",
+   "ward": "DLX",
+   "rate": 4000,
+   "admittedAt": "2026-09-17T21:57",
+   "diagnosis": "Fracture — left femur",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-17T21:57",
+     "amount": 15000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T08:23",
+     "amount": 8000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A442",
+   "ipNo": "IP-2026-0442",
+   "patientId": "P162",
+   "doctorId": "D08",
+   "dept": "CARD",
+   "bed": "ICU-1",
+   "ward": "ICU",
+   "rate": 8000,
+   "admittedAt": "2026-09-22T18:11",
+   "diagnosis": "Normal delivery",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-22T18:11",
+     "amount": 5000,
+     "mode": "UPI",
+     "note": "Admission deposit"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A443",
+   "ipNo": "IP-2026-0443",
+   "patientId": "P163",
+   "doctorId": "D08",
+   "dept": "CARD",
+   "bed": "ICU-2",
+   "ward": "ICU",
+   "rate": 8000,
+   "admittedAt": "2026-09-20T20:21",
+   "diagnosis": "Dengue fever",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-20T20:21",
+     "amount": 15000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T10:08",
+     "amount": 8000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A444",
+   "ipNo": "IP-2026-0444",
+   "patientId": "P164",
+   "doctorId": "D11",
+   "dept": "PED",
+   "bed": "ICU-3",
+   "ward": "ICU",
+   "rate": 8000,
+   "admittedAt": "2026-09-20T14:02",
+   "diagnosis": "COPD exacerbation",
+   "status": "Admitted",
+   "payments": [
+    {
+     "at": "2026-09-20T14:02",
+     "amount": 10000,
+     "mode": "Card",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T08:56",
+     "amount": 8000,
+     "mode": "UPI",
+     "note": "Interim payment"
+    }
+   ],
+   "charges": []
+  },
+  {
+   "id": "A445",
+   "ipNo": "IP-2026-0445",
+   "patientId": "P165",
+   "doctorId": "D09",
+   "dept": "MED",
+   "bed": "B105",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-20T19:45",
+   "dischargedAt": "2026-09-23T08:14",
+   "diagnosis": "Fracture — right radius",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-20T19:45",
+     "amount": 10000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T08:05",
+     "amount": 2600,
+     "mode": "Cash",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-20T19:45",
+     "desc": "Procedures & consumables",
+     "amount": 9000
+    }
+   ]
+  },
+  {
+   "id": "A446",
+   "ipNo": "IP-2026-0446",
+   "patientId": "P166",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B111",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-20T20:08",
+   "dischargedAt": "2026-09-23T09:31",
+   "diagnosis": "Fracture — right radius",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-20T20:08",
+     "amount": 12600,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T09:05",
+     "amount": 0,
+     "mode": "Cash",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-20T20:08",
+     "desc": "Procedures & consumables",
+     "amount": 9000
+    }
+   ]
+  },
+  {
+   "id": "A447",
+   "ipNo": "IP-2026-0447",
+   "patientId": "P167",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B114",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-19T11:17",
+   "dischargedAt": "2026-09-23T10:07",
+   "diagnosis": "Viral fever",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-19T11:17",
+     "amount": 10000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T10:05",
+     "amount": 3800,
+     "mode": "Card",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-19T11:17",
+     "desc": "Procedures & consumables",
+     "amount": 9000
+    }
+   ]
+  },
+  {
+   "id": "A448",
+   "ipNo": "IP-2026-0448",
+   "patientId": "P168",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B115",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-21T20:07",
+   "dischargedAt": "2026-09-23T11:06",
+   "diagnosis": "Fracture — right radius",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-21T20:07",
+     "amount": 5400,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T11:05",
+     "amount": 0,
+     "mode": "Card",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-21T20:07",
+     "desc": "Procedures & consumables",
+     "amount": 3000
+    }
+   ]
+  },
+  {
+   "id": "A449",
+   "ipNo": "IP-2026-0449",
+   "patientId": "P169",
+   "doctorId": "D11",
+   "dept": "PED",
+   "bed": "B117",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-21T17:53",
+   "dischargedAt": "2026-09-23T12:32",
+   "diagnosis": "Viral fever",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-21T17:53",
+     "amount": 9400,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T12:05",
+     "amount": 0,
+     "mode": "UPI",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-21T17:53",
+     "desc": "Procedures & consumables",
+     "amount": 7000
+    }
+   ]
+  },
+  {
+   "id": "A450",
+   "ipNo": "IP-2026-0450",
+   "patientId": "P170",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B119",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-18T20:02",
+   "dischargedAt": "2026-09-23T13:02",
+   "diagnosis": "Viral fever",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-18T20:02",
+     "amount": 13000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-23T13:05",
+     "amount": 0,
+     "mode": "Cash",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-18T20:02",
+     "desc": "Procedures & consumables",
+     "amount": 7000
+    }
+   ]
+  },
+  {
+   "id": "A451",
+   "ipNo": "IP-2026-0451",
+   "patientId": "P171",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "B124",
+   "ward": "GEN",
+   "rate": 1200,
+   "admittedAt": "2026-09-16T12:21",
+   "dischargedAt": "2026-09-21T14:38",
+   "diagnosis": "Cholecystitis",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-16T12:21",
+     "amount": 15000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-21T14:05",
+     "amount": 6000,
+     "mode": "Cash",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-16T12:21",
+     "desc": "Procedures & consumables",
+     "amount": 15000
+    }
+   ]
+  },
+  {
+   "id": "A452",
+   "ipNo": "IP-2026-0452",
+   "patientId": "P172",
+   "doctorId": "D09",
+   "dept": "MED",
+   "bed": "A202",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-16T14:08",
+   "dischargedAt": "2026-09-20T15:34",
+   "diagnosis": "Cholecystitis",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-16T14:08",
+     "amount": 15000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-20T15:05",
+     "amount": 0,
+     "mode": "Cash",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-16T14:08",
+     "desc": "Procedures & consumables",
+     "amount": 5000
+    }
+   ]
+  },
+  {
+   "id": "A453",
+   "ipNo": "IP-2026-0453",
+   "patientId": "P173",
+   "doctorId": "D07",
+   "dept": "SURG",
+   "bed": "A209",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-17T17:05",
+   "dischargedAt": "2026-09-20T16:24",
+   "diagnosis": "Fracture — right radius",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-17T17:05",
+     "amount": 10000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-20T16:05",
+     "amount": 7500,
+     "mode": "UPI",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-17T17:05",
+     "desc": "Procedures & consumables",
+     "amount": 10000
+    }
+   ]
+  },
+  {
+   "id": "A454",
+   "ipNo": "IP-2026-0454",
+   "patientId": "P174",
+   "doctorId": "D05",
+   "dept": "ENT",
+   "bed": "A212",
+   "ward": "SEMI",
+   "rate": 2500,
+   "admittedAt": "2026-09-17T14:02",
+   "dischargedAt": "2026-09-19T17:39",
+   "diagnosis": "Fracture — right radius",
+   "status": "Discharged",
+   "payments": [
+    {
+     "at": "2026-09-17T14:02",
+     "amount": 19000,
+     "mode": "Cash",
+     "note": "Admission deposit"
+    },
+    {
+     "at": "2026-09-19T17:05",
+     "amount": 0,
+     "mode": "Card",
+     "note": "Final settlement"
+    }
+   ],
+   "charges": [
+    {
+     "at": "2026-09-17T14:02",
+     "desc": "Procedures & consumables",
+     "amount": 14000
+    }
+   ]
+  }
+ ],
+ "beds": [
+  {
+   "id": "ICU-5",
+   "status": "Maintenance",
+   "note": "AC repair"
+  },
+  {
+   "id": "ICU-7",
+   "status": "Blocked",
+   "note": "Reserved for scheduled surgery"
+  }
+ ],
+ "visits": [
+  {
+   "id": "V20260923001",
+   "token": 1,
+   "patientId": "P175",
+   "dept": "DERM",
+   "doctorId": "D06",
+   "at": "2026-09-23T09:44",
+   "fee": 500,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260923002",
+   "token": 2,
+   "patientId": "P176",
+   "dept": "MED",
+   "doctorId": "D09",
+   "at": "2026-09-23T09:34",
+   "fee": 500,
+   "mode": "Cash",
+   "status": "Completed",
+   "complaint": "Headache"
+  },
+  {
+   "id": "V20260923003",
+   "token": 3,
+   "patientId": "P177",
+   "dept": "ENT",
+   "doctorId": "D05",
+   "at": "2026-09-23T09:56",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Fever and body ache"
+  },
+  {
+   "id": "V20260923004",
+   "token": 4,
+   "patientId": "P178",
+   "dept": "MED",
+   "doctorId": "D01",
+   "at": "2026-09-23T09:03",
+   "fee": 500,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Fever and body ache"
+  },
+  {
+   "id": "V20260923005",
+   "token": 5,
+   "patientId": "P179",
+   "dept": "CARD",
+   "doctorId": "D08",
+   "at": "2026-09-23T10:27",
+   "fee": 900,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Headache"
+  },
+  {
+   "id": "V20260923006",
+   "token": 6,
+   "patientId": "P180",
+   "dept": "SURG",
+   "doctorId": "D07",
+   "at": "2026-09-23T10:48",
+   "fee": 700,
+   "mode": "Cash",
+   "status": "Completed",
+   "complaint": "Routine check-up"
+  },
+  {
+   "id": "V20260923007",
+   "token": 7,
+   "patientId": "P181",
+   "dept": "MED",
+   "doctorId": "D09",
+   "at": "2026-09-23T10:23",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260923008",
+   "token": 8,
+   "patientId": "P182",
+   "dept": "CARD",
+   "doctorId": "D08",
+   "at": "2026-09-23T10:27",
+   "fee": 900,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Routine check-up"
+  },
+  {
+   "id": "V20260923009",
+   "token": 9,
+   "patientId": "P172",
+   "dept": "PED",
+   "doctorId": "D03",
+   "at": "2026-09-23T11:24",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Headache"
+  },
+  {
+   "id": "V20260923010",
+   "token": 10,
+   "patientId": "P183",
+   "dept": "PED",
+   "doctorId": "D03",
+   "at": "2026-09-23T11:19",
+   "fee": 500,
+   "mode": "Cash",
+   "status": "Completed",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260923011",
+   "token": 11,
+   "patientId": "P184",
+   "dept": "ENT",
+   "doctorId": "D05",
+   "at": "2026-09-23T11:56",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Abdominal pain"
+  },
+  {
+   "id": "V20260923012",
+   "token": 12,
+   "patientId": "P146",
+   "dept": "PED",
+   "doctorId": "D11",
+   "at": "2026-09-23T11:00",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Headache"
+  },
+  {
+   "id": "V20260923013",
+   "token": 13,
+   "patientId": "P185",
+   "dept": "ORTH",
+   "doctorId": "D10",
+   "at": "2026-09-23T12:45",
+   "fee": 600,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260923014",
+   "token": 14,
+   "patientId": "P186",
+   "dept": "ORTH",
+   "doctorId": "D10",
+   "at": "2026-09-23T12:27",
+   "fee": 600,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Cough since 5 days"
+  },
+  {
+   "id": "V20260923015",
+   "token": 15,
+   "patientId": "P187",
+   "dept": "PED",
+   "doctorId": "D03",
+   "at": "2026-09-23T12:45",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Cough since 5 days"
+  },
+  {
+   "id": "V20260923016",
+   "token": 16,
+   "patientId": "P163",
+   "dept": "MED",
+   "doctorId": "D09",
+   "at": "2026-09-23T12:16",
+   "fee": 500,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Abdominal pain"
+  },
+  {
+   "id": "V20260923017",
+   "token": 17,
+   "patientId": "P188",
+   "dept": "MED",
+   "doctorId": "D09",
+   "at": "2026-09-23T13:00",
+   "fee": 500,
+   "mode": "Cash",
+   "status": "Completed",
+   "complaint": "Knee pain"
+  },
+  {
+   "id": "V20260923018",
+   "token": 18,
+   "patientId": "P189",
+   "dept": "ENT",
+   "doctorId": "D05",
+   "at": "2026-09-23T13:18",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Abdominal pain"
+  },
+  {
+   "id": "V20260923019",
+   "token": 19,
+   "patientId": "P190",
+   "dept": "MED",
+   "doctorId": "D01",
+   "at": "2026-09-23T13:19",
+   "fee": 500,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Headache"
+  },
+  {
+   "id": "V20260923020",
+   "token": 20,
+   "patientId": "P191",
+   "dept": "ORTH",
+   "doctorId": "D02",
+   "at": "2026-09-23T13:52",
+   "fee": 600,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Abdominal pain"
+  },
+  {
+   "id": "V20260923021",
+   "token": 21,
+   "patientId": "P148",
+   "dept": "DERM",
+   "doctorId": "D06",
+   "at": "2026-09-23T14:11",
+   "fee": 500,
+   "mode": "Card",
+   "status": "In consultation",
+   "complaint": "Fever and body ache"
+  },
+  {
+   "id": "V20260923022",
+   "token": 22,
+   "patientId": "P150",
+   "dept": "MED",
+   "doctorId": "D01",
+   "at": "2026-09-23T14:55",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "In consultation",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260923023",
+   "token": 23,
+   "patientId": "P185",
+   "dept": "CARD",
+   "doctorId": "D08",
+   "at": "2026-09-23T14:25",
+   "fee": 900,
+   "mode": "Card",
+   "status": "In consultation",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260923024",
+   "token": 24,
+   "patientId": "P192",
+   "dept": "ORTH",
+   "doctorId": "D10",
+   "at": "2026-09-23T14:42",
+   "fee": 600,
+   "mode": "UPI",
+   "status": "In consultation",
+   "complaint": "Routine check-up"
+  },
+  {
+   "id": "V20260923025",
+   "token": 25,
+   "patientId": "P193",
+   "dept": "PED",
+   "doctorId": "D03",
+   "at": "2026-09-23T15:35",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Waiting",
+   "complaint": "Skin rash"
+  },
+  {
+   "id": "V20260923026",
+   "token": 26,
+   "patientId": "P194",
+   "dept": "DERM",
+   "doctorId": "D06",
+   "at": "2026-09-23T15:45",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Waiting",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260923027",
+   "token": 27,
+   "patientId": "P195",
+   "dept": "CARD",
+   "doctorId": "D08",
+   "at": "2026-09-23T15:21",
+   "fee": 900,
+   "mode": "UPI",
+   "status": "Waiting",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260923028",
+   "token": 28,
+   "patientId": "P151",
+   "dept": "MED",
+   "doctorId": "D01",
+   "at": "2026-09-23T15:07",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Waiting",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260923029",
+   "token": 29,
+   "patientId": "P196",
+   "dept": "ORTH",
+   "doctorId": "D10",
+   "at": "2026-09-23T16:12",
+   "fee": 600,
+   "mode": "UPI",
+   "status": "Waiting",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260923030",
+   "token": 30,
+   "patientId": "P197",
+   "dept": "ORTH",
+   "doctorId": "D02",
+   "at": "2026-09-23T16:09",
+   "fee": 600,
+   "mode": "UPI",
+   "status": "Waiting",
+   "complaint": "Abdominal pain"
+  },
+  {
+   "id": "V20260923031",
+   "token": 31,
+   "patientId": "P198",
+   "dept": "CARD",
+   "doctorId": "D08",
+   "at": "2026-09-23T16:03",
+   "fee": 900,
+   "mode": "UPI",
+   "status": "Waiting",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260923032",
+   "token": 32,
+   "patientId": "P199",
+   "dept": "MED",
+   "doctorId": "D01",
+   "at": "2026-09-23T16:49",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Waiting",
+   "complaint": "Headache"
+  },
+  {
+   "id": "V20260922001",
+   "token": 1,
+   "patientId": "P147",
+   "dept": "ENT",
+   "doctorId": "D05",
+   "at": "2026-09-22T09:31",
+   "fee": 500,
+   "mode": "Cash",
+   "status": "Completed",
+   "complaint": "Fever and body ache"
+  },
+  {
+   "id": "V20260922002",
+   "token": 2,
+   "patientId": "P200",
+   "dept": "DERM",
+   "doctorId": "D06",
+   "at": "2026-09-22T09:12",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260922003",
+   "token": 3,
+   "patientId": "P201",
+   "dept": "SURG",
+   "doctorId": "D07",
+   "at": "2026-09-22T09:05",
+   "fee": 700,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Fever and body ache"
+  },
+  {
+   "id": "V20260922004",
+   "token": 4,
+   "patientId": "P202",
+   "dept": "GYNA",
+   "doctorId": "D12",
+   "at": "2026-09-22T10:55",
+   "fee": 600,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260922005",
+   "token": 5,
+   "patientId": "P155",
+   "dept": "DERM",
+   "doctorId": "D06",
+   "at": "2026-09-22T10:43",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Knee pain"
+  },
+  {
+   "id": "V20260922006",
+   "token": 6,
+   "patientId": "P203",
+   "dept": "SURG",
+   "doctorId": "D07",
+   "at": "2026-09-22T11:20",
+   "fee": 700,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260922007",
+   "token": 7,
+   "patientId": "P204",
+   "dept": "PED",
+   "doctorId": "D03",
+   "at": "2026-09-22T11:09",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Cough since 5 days"
+  },
+  {
+   "id": "V20260922008",
+   "token": 8,
+   "patientId": "P205",
+   "dept": "DERM",
+   "doctorId": "D06",
+   "at": "2026-09-22T12:36",
+   "fee": 500,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260922009",
+   "token": 9,
+   "patientId": "P204",
+   "dept": "SURG",
+   "doctorId": "D07",
+   "at": "2026-09-22T12:09",
+   "fee": 700,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260922010",
+   "token": 10,
+   "patientId": "P206",
+   "dept": "ORTH",
+   "doctorId": "D02",
+   "at": "2026-09-22T13:48",
+   "fee": 600,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Cough since 5 days"
+  },
+  {
+   "id": "V20260922011",
+   "token": 11,
+   "patientId": "P207",
+   "dept": "ENT",
+   "doctorId": "D05",
+   "at": "2026-09-22T13:08",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Routine check-up"
+  },
+  {
+   "id": "V20260922012",
+   "token": 12,
+   "patientId": "P208",
+   "dept": "PED",
+   "doctorId": "D11",
+   "at": "2026-09-22T13:18",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Abdominal pain"
+  },
+  {
+   "id": "V20260922013",
+   "token": 13,
+   "patientId": "P209",
+   "dept": "MED",
+   "doctorId": "D09",
+   "at": "2026-09-22T14:07",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Knee pain"
+  },
+  {
+   "id": "V20260922014",
+   "token": 14,
+   "patientId": "P210",
+   "dept": "MED",
+   "doctorId": "D01",
+   "at": "2026-09-22T14:38",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Ear pain"
+  },
+  {
+   "id": "V20260922015",
+   "token": 15,
+   "patientId": "P211",
+   "dept": "PED",
+   "doctorId": "D03",
+   "at": "2026-09-22T15:34",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Skin rash"
+  },
+  {
+   "id": "V20260922016",
+   "token": 16,
+   "patientId": "P177",
+   "dept": "PED",
+   "doctorId": "D11",
+   "at": "2026-09-22T15:44",
+   "fee": 500,
+   "mode": "UPI",
+   "status": "Completed",
+   "complaint": "Follow-up"
+  },
+  {
+   "id": "V20260922017",
+   "token": 17,
+   "patientId": "P212",
+   "dept": "GYNA",
+   "doctorId": "D12",
+   "at": "2026-09-22T16:23",
+   "fee": 600,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Knee pain"
+  },
+  {
+   "id": "V20260922018",
+   "token": 18,
+   "patientId": "P213",
+   "dept": "PED",
+   "doctorId": "D03",
+   "at": "2026-09-22T16:13",
+   "fee": 500,
+   "mode": "Card",
+   "status": "Completed",
+   "complaint": "Abdominal pain"
+  }
+ ],
+ "pharmacy": [
+  {
+   "id": "M001",
+   "name": "Paracetamol 650mg",
+   "form": "Tablet",
+   "price": 2.1,
+   "stock": 313,
+   "reorder": 50,
+   "batch": "B2483",
+   "expiry": "2028-04-23"
+  },
+  {
+   "id": "M002",
+   "name": "Amoxicillin 500mg",
+   "form": "Capsule",
+   "price": 8.5,
+   "stock": 703,
+   "reorder": 50,
+   "batch": "B2490",
+   "expiry": "2028-06-28"
+  },
+  {
+   "id": "M003",
+   "name": "Pantoprazole 40mg",
+   "form": "Tablet",
+   "price": 6,
+   "stock": 603,
+   "reorder": 50,
+   "batch": "B2488",
+   "expiry": "2028-02-03"
+  },
+  {
+   "id": "M004",
+   "name": "Azithromycin 500mg",
+   "form": "Tablet",
+   "price": 22,
+   "stock": 15,
+   "reorder": 50,
+   "batch": "B2494",
+   "expiry": "2028-08-15"
+  },
+  {
+   "id": "M005",
+   "name": "Cetirizine 10mg",
+   "form": "Tablet",
+   "price": 1.8,
+   "stock": 522,
+   "reorder": 50,
+   "batch": "B2401",
+   "expiry": "2028-03-21"
+  },
+  {
+   "id": "M006",
+   "name": "Metformin 500mg",
+   "form": "Tablet",
+   "price": 3.2,
+   "stock": 634,
+   "reorder": 50,
+   "batch": "B2475",
+   "expiry": "2028-04-21"
+  },
+  {
+   "id": "M007",
+   "name": "Amlodipine 5mg",
+   "form": "Tablet",
+   "price": 2.9,
+   "stock": 314,
+   "reorder": 50,
+   "batch": "B2423",
+   "expiry": "2026-11-23"
+  },
+  {
+   "id": "M008",
+   "name": "ORS Sachet",
+   "form": "Sachet",
+   "price": 21,
+   "stock": 203,
+   "reorder": 50,
+   "batch": "B2431",
+   "expiry": "2027-11-09"
+  },
+  {
+   "id": "M009",
+   "name": "Ceftriaxone 1g Inj",
+   "form": "Vial",
+   "price": 58,
+   "stock": 344,
+   "reorder": 50,
+   "batch": "B2429",
+   "expiry": "2028-08-16"
+  },
+  {
+   "id": "M010",
+   "name": "Normal Saline 500ml",
+   "form": "Bottle",
+   "price": 32,
+   "stock": 309,
+   "reorder": 50,
+   "batch": "B2476",
+   "expiry": "2027-03-13"
+  },
+  {
+   "id": "M011",
+   "name": "Diclofenac Gel 30g",
+   "form": "Tube",
+   "price": 96,
+   "stock": 9,
+   "reorder": 50,
+   "batch": "B2436",
+   "expiry": "2027-04-20"
+  },
+  {
+   "id": "M012",
+   "name": "Insulin Glargine",
+   "form": "Pen",
+   "price": 690,
+   "stock": 406,
+   "reorder": 50,
+   "batch": "B2483",
+   "expiry": "2028-04-03"
+  },
+  {
+   "id": "M013",
+   "name": "Ondansetron 4mg",
+   "form": "Tablet",
+   "price": 5.5,
+   "stock": 229,
+   "reorder": 50,
+   "batch": "B2490",
+   "expiry": "2028-03-12"
+  },
+  {
+   "id": "M014",
+   "name": "Cough Syrup 100ml",
+   "form": "Bottle",
+   "price": 88,
+   "stock": 525,
+   "reorder": 50,
+   "batch": "B2437",
+   "expiry": "2027-09-11"
+  },
+  {
+   "id": "M015",
+   "name": "Vitamin D3 60K",
+   "form": "Capsule",
+   "price": 32,
+   "stock": 347,
+   "reorder": 50,
+   "batch": "B2488",
+   "expiry": "2028-05-24"
+  },
+  {
+   "id": "M016",
+   "name": "Ranitidine 150mg",
+   "form": "Tablet",
+   "price": 1.5,
+   "stock": 291,
+   "reorder": 50,
+   "batch": "B2474",
+   "expiry": "2027-01-11"
+  },
+  {
+   "id": "M017",
+   "name": "Salbutamol Inhaler",
+   "form": "Inhaler",
+   "price": 145,
+   "stock": 341,
+   "reorder": 50,
+   "batch": "B2443",
+   "expiry": "2028-06-24"
+  },
+  {
+   "id": "M018",
+   "name": "Ibuprofen 400mg",
+   "form": "Tablet",
+   "price": 2.4,
+   "stock": 8,
+   "reorder": 50,
+   "batch": "B2456",
+   "expiry": "2027-09-08"
+  }
+ ],
+ "sales": [
+  {
+   "id": "S20260923001",
+   "at": "2026-09-23T17:32",
+   "patientId": "P145",
+   "lines": [
+    {
+     "itemId": "M004",
+     "name": "Azithromycin 500mg",
+     "qty": 14,
+     "price": 22
+    }
+   ],
+   "amount": 308,
+   "mode": "UPI"
+  },
+  {
+   "id": "S20260923002",
+   "at": "2026-09-23T12:41",
+   "patientId": "P148",
+   "lines": [
+    {
+     "itemId": "M005",
+     "name": "Cetirizine 10mg",
+     "qty": 10,
+     "price": 1.8
+    },
+    {
+     "itemId": "M014",
+     "name": "Cough Syrup 100ml",
+     "qty": 12,
+     "price": 88
+    },
+    {
+     "itemId": "M015",
+     "name": "Vitamin D3 60K",
+     "qty": 18,
+     "price": 32
+    }
+   ],
+   "amount": 1650,
+   "mode": "UPI"
+  },
+  {
+   "id": "S20260923003",
+   "at": "2026-09-23T18:03",
+   "patientId": "P157",
+   "lines": [
+    {
+     "itemId": "M017",
+     "name": "Salbutamol Inhaler",
+     "qty": 3,
+     "price": 145
+    },
+    {
+     "itemId": "M005",
+     "name": "Cetirizine 10mg",
+     "qty": 19,
+     "price": 1.8
+    }
+   ],
+   "amount": 469,
+   "mode": "Cash"
+  },
+  {
+   "id": "S20260923004",
+   "at": "2026-09-23T18:24",
+   "patientId": "P213",
+   "lines": [
+    {
+     "itemId": "M008",
+     "name": "ORS Sachet",
+     "qty": 17,
+     "price": 21
+    },
+    {
+     "itemId": "M008",
+     "name": "ORS Sachet",
+     "qty": 11,
+     "price": 21
+    },
+    {
+     "itemId": "M008",
+     "name": "ORS Sachet",
+     "qty": 4,
+     "price": 21
+    }
+   ],
+   "amount": 672,
+   "mode": "UPI"
+  },
+  {
+   "id": "S20260923005",
+   "at": "2026-09-23T18:32",
+   "patientId": "P200",
+   "lines": [
+    {
+     "itemId": "M011",
+     "name": "Diclofenac Gel 30g",
+     "qty": 7,
+     "price": 96
+    },
+    {
+     "itemId": "M005",
+     "name": "Cetirizine 10mg",
+     "qty": 11,
+     "price": 1.8
+    }
+   ],
+   "amount": 692,
+   "mode": "Cash"
+  },
+  {
+   "id": "S20260923006",
+   "at": "2026-09-23T10:56",
+   "patientId": "P162",
+   "lines": [
+    {
+     "itemId": "M010",
+     "name": "Normal Saline 500ml",
+     "qty": 12,
+     "price": 32
+    }
+   ],
+   "amount": 384,
+   "mode": "UPI"
+  },
+  {
+   "id": "S20260923007",
+   "at": "2026-09-23T10:27",
+   "patientId": "P123",
+   "lines": [
+    {
+     "itemId": "M008",
+     "name": "ORS Sachet",
+     "qty": 7,
+     "price": 21
+    },
+    {
+     "itemId": "M011",
+     "name": "Diclofenac Gel 30g",
+     "qty": 17,
+     "price": 96
+    }
+   ],
+   "amount": 1779,
+   "mode": "UPI"
+  },
+  {
+   "id": "S20260922008",
+   "at": "2026-09-22T14:54",
+   "patientId": "P180",
+   "lines": [
+    {
+     "itemId": "M005",
+     "name": "Cetirizine 10mg",
+     "qty": 10,
+     "price": 1.8
+    }
+   ],
+   "amount": 18,
+   "mode": "Cash"
+  },
+  {
+   "id": "S20260922009",
+   "at": "2026-09-22T11:36",
+   "patientId": "P190",
+   "lines": [
+    {
+     "itemId": "M014",
+     "name": "Cough Syrup 100ml",
+     "qty": 5,
+     "price": 88
+    }
+   ],
+   "amount": 440,
+   "mode": "UPI"
+  },
+  {
+   "id": "S20260922010",
+   "at": "2026-09-22T09:34",
+   "patientId": "P190",
+   "lines": [
+    {
+     "itemId": "M018",
+     "name": "Ibuprofen 400mg",
+     "qty": 10,
+     "price": 2.4
+    },
+    {
+     "itemId": "M002",
+     "name": "Amoxicillin 500mg",
+     "qty": 5,
+     "price": 8.5
+    }
+   ],
+   "amount": 67,
+   "mode": "Cash"
+  }
+ ],
+ "labs": [
+  {
+   "id": "L20260923001",
+   "at": "2026-09-23T15:56",
+   "patientId": "P161",
+   "doctorId": "D10",
+   "tests": [
+    "KFT"
+   ],
+   "amount": 700,
+   "status": "Pending",
+   "result": "",
+   "mode": "UPI"
+  },
+  {
+   "id": "L20260923002",
+   "at": "2026-09-23T16:22",
+   "patientId": "P210",
+   "doctorId": "D03",
+   "tests": [
+    "LIPID"
+   ],
+   "amount": 650,
+   "status": "Sample collected",
+   "result": "",
+   "mode": "Cash"
+  },
+  {
+   "id": "L20260923003",
+   "at": "2026-09-23T15:17",
+   "patientId": "P165",
+   "doctorId": "D02",
+   "tests": [
+    "XRAY"
+   ],
+   "amount": 450,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "UPI"
+  },
+  {
+   "id": "L20260923004",
+   "at": "2026-09-23T17:31",
+   "patientId": "P155",
+   "doctorId": "D11",
+   "tests": [
+    "XRAY"
+   ],
+   "amount": 450,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "UPI"
+  },
+  {
+   "id": "L20260923005",
+   "at": "2026-09-23T11:15",
+   "patientId": "P177",
+   "doctorId": "D03",
+   "tests": [
+    "XRAY",
+    "CBC"
+   ],
+   "amount": 800,
+   "status": "Sample collected",
+   "result": "",
+   "mode": "UPI"
+  },
+  {
+   "id": "L20260923006",
+   "at": "2026-09-23T12:53",
+   "patientId": "P161",
+   "doctorId": "D04",
+   "tests": [
+    "CT"
+   ],
+   "amount": 3200,
+   "status": "Sample collected",
+   "result": "",
+   "mode": "UPI"
+  },
+  {
+   "id": "L20260923007",
+   "at": "2026-09-23T14:36",
+   "patientId": "P125",
+   "doctorId": "D10",
+   "tests": [
+    "LIPID"
+   ],
+   "amount": 650,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "Cash"
+  },
+  {
+   "id": "L20260923008",
+   "at": "2026-09-23T12:57",
+   "patientId": "P147",
+   "doctorId": "D02",
+   "tests": [
+    "CBC"
+   ],
+   "amount": 350,
+   "status": "Sample collected",
+   "result": "",
+   "mode": "Card"
+  },
+  {
+   "id": "L20260923009",
+   "at": "2026-09-23T10:43",
+   "patientId": "P137",
+   "doctorId": "D03",
+   "tests": [
+    "XRAY"
+   ],
+   "amount": 450,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "Cash"
+  },
+  {
+   "id": "L20260923010",
+   "at": "2026-09-23T14:15",
+   "patientId": "P150",
+   "doctorId": "D09",
+   "tests": [
+    "USG",
+    "LFT"
+   ],
+   "amount": 1950,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "Card"
+  },
+  {
+   "id": "L20260923011",
+   "at": "2026-09-23T13:49",
+   "patientId": "P160",
+   "doctorId": "D01",
+   "tests": [
+    "USG",
+    "KFT"
+   ],
+   "amount": 1900,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "Card"
+  },
+  {
+   "id": "L20260922012",
+   "at": "2026-09-22T12:41",
+   "patientId": "P143",
+   "doctorId": "D01",
+   "tests": [
+    "CBC"
+   ],
+   "amount": 350,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "UPI"
+  },
+  {
+   "id": "L20260922013",
+   "at": "2026-09-22T10:52",
+   "patientId": "P195",
+   "doctorId": "D09",
+   "tests": [
+    "KFT",
+    "CBC"
+   ],
+   "amount": 1050,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "UPI"
+  },
+  {
+   "id": "L20260922014",
+   "at": "2026-09-22T15:00",
+   "patientId": "P181",
+   "doctorId": "D08",
+   "tests": [
+    "HBA1C",
+    "DENGUE"
+   ],
+   "amount": 1350,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "Cash"
+  },
+  {
+   "id": "L20260922015",
+   "at": "2026-09-22T10:33",
+   "patientId": "P152",
+   "doctorId": "D10",
+   "tests": [
+    "KFT",
+    "MRI"
+   ],
+   "amount": 7200,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "Card"
+  },
+  {
+   "id": "L20260922016",
+   "at": "2026-09-22T14:57",
+   "patientId": "P205",
+   "doctorId": "D11",
+   "tests": [
+    "XRAY"
+   ],
+   "amount": 450,
+   "status": "Reported",
+   "result": "Within normal limits.",
+   "mode": "Card"
+  }
+ ],
+ "ot": [
+  {
+   "id": "OT001",
+   "patientId": "P128",
+   "surgeonId": "D07",
+   "procedure": "Appendectomy",
+   "theatre": "OT-3",
+   "start": "2026-09-23T09:00",
+   "duration": 180,
+   "anaesthesia": "Local",
+   "status": "Completed"
+  },
+  {
+   "id": "OT002",
+   "patientId": "P145",
+   "surgeonId": "D02",
+   "procedure": "ORIF — femur",
+   "theatre": "OT-1",
+   "start": "2026-09-23T11:00",
+   "duration": 90,
+   "anaesthesia": "Spinal",
+   "status": "In progress"
+  },
+  {
+   "id": "OT003",
+   "patientId": "P141",
+   "surgeonId": "D07",
+   "procedure": "ORIF — femur",
+   "theatre": "OT-1",
+   "start": "2026-09-23T13:00",
+   "duration": 90,
+   "anaesthesia": "Spinal",
+   "status": "Scheduled"
+  },
+  {
+   "id": "OT004",
+   "patientId": "P172",
+   "surgeonId": "D12",
+   "procedure": "ORIF — femur",
+   "theatre": "OT-3",
+   "start": "2026-09-24T15:00",
+   "duration": 180,
+   "anaesthesia": "General",
+   "status": "Scheduled"
+  },
+  {
+   "id": "OT005",
+   "patientId": "P169",
+   "surgeonId": "D06",
+   "procedure": "Total knee replacement",
+   "theatre": "OT-1",
+   "start": "2026-09-24T09:00",
+   "duration": 180,
+   "anaesthesia": "Local",
+   "status": "Scheduled"
+  },
+  {
+   "id": "OT006",
+   "patientId": "P144",
+   "surgeonId": "D03",
+   "procedure": "Tonsillectomy",
+   "theatre": "OT-1",
+   "start": "2026-09-25T11:00",
+   "duration": 90,
+   "anaesthesia": "Spinal",
+   "status": "Scheduled"
+  }
+ ],
+ "inventory": [
+  {
+   "id": "I001",
+   "name": "Surgical gloves (box)",
+   "category": "Consumables",
+   "stock": 120,
+   "reorder": 40,
+   "unit": "units",
+   "location": "Central store"
+  },
+  {
+   "id": "I002",
+   "name": "N95 masks",
+   "category": "Consumables",
+   "stock": 35,
+   "reorder": 50,
+   "unit": "units",
+   "location": "Ward store"
+  },
+  {
+   "id": "I003",
+   "name": "IV cannula 20G",
+   "category": "Consumables",
+   "stock": 400,
+   "reorder": 100,
+   "unit": "units",
+   "location": "Central store"
+  },
+  {
+   "id": "I004",
+   "name": "Bed sheets",
+   "category": "Linen",
+   "stock": 260,
+   "reorder": 80,
+   "unit": "units",
+   "location": "OT store"
+  },
+  {
+   "id": "I005",
+   "name": "Syringes 5ml",
+   "category": "Consumables",
+   "stock": 900,
+   "reorder": 200,
+   "unit": "units",
+   "location": "Ward store"
+  },
+  {
+   "id": "I006",
+   "name": "Oxygen cylinder (D-type)",
+   "category": "Medical gas",
+   "stock": 14,
+   "reorder": 10,
+   "unit": "units",
+   "location": "Central store"
+  },
+  {
+   "id": "I007",
+   "name": "Printer paper A4 (ream)",
+   "category": "Stationery",
+   "stock": 22,
+   "reorder": 10,
+   "unit": "units",
+   "location": "Ward store"
+  },
+  {
+   "id": "I008",
+   "name": "Hand sanitizer 500ml",
+   "category": "Consumables",
+   "stock": 8,
+   "reorder": 30,
+   "unit": "units",
+   "location": "OT store"
+  },
+  {
+   "id": "I009",
+   "name": "Cotton roll 500g",
+   "category": "Consumables",
+   "stock": 60,
+   "reorder": 25,
+   "unit": "units",
+   "location": "Central store"
+  },
+  {
+   "id": "I010",
+   "name": "Patient gowns",
+   "category": "Linen",
+   "stock": 140,
+   "reorder": 60,
+   "unit": "units",
+   "location": "OT store"
+  },
+  {
+   "id": "I011",
+   "name": "Glucometer strips",
+   "category": "Diagnostics",
+   "stock": 18,
+   "reorder": 25,
+   "unit": "units",
+   "location": "Central store"
+  },
+  {
+   "id": "I012",
+   "name": "Urine bags",
+   "category": "Consumables",
+   "stock": 210,
+   "reorder": 60,
+   "unit": "units",
+   "location": "Central store"
+  }
+ ],
+ "assets": [
+  {
+   "id": "AS001",
+   "name": "Ventilator — Hamilton C3",
+   "location": "ICU",
+   "status": "Working",
+   "purchased": "2023-03-15",
+   "nextService": "2026-12-25",
+   "value": 1750000
+  },
+  {
+   "id": "AS002",
+   "name": "Defibrillator",
+   "location": "Emergency",
+   "status": "Working",
+   "purchased": "2024-10-08",
+   "nextService": "2026-10-27",
+   "value": 400000
+  },
+  {
+   "id": "AS003",
+   "name": "X-Ray machine 500mA",
+   "location": "Radiology",
+   "status": "Working",
+   "purchased": "2024-02-05",
+   "nextService": "2026-10-29",
+   "value": 700000
+  },
+  {
+   "id": "AS004",
+   "name": "Ultrasound — Mindray DC-70",
+   "location": "Radiology",
+   "status": "Under service",
+   "purchased": "2025-06-23",
+   "nextService": "2026-10-03",
+   "value": 1850000
+  },
+  {
+   "id": "AS005",
+   "name": "Patient monitor (x6)",
+   "location": "ICU",
+   "status": "Working",
+   "purchased": "2023-03-05",
+   "nextService": "2026-11-26",
+   "value": 850000
+  },
+  {
+   "id": "AS006",
+   "name": "Autoclave 100L",
+   "location": "CSSD",
+   "status": "Working",
+   "purchased": "2025-07-06",
+   "nextService": "2026-12-27",
+   "value": 100000
+  },
+  {
+   "id": "AS007",
+   "name": "Ambulance JH01-AB-2201",
+   "location": "Transport",
+   "status": "Working",
+   "purchased": "2026-02-26",
+   "nextService": "2026-11-26",
+   "value": 950000
+  },
+  {
+   "id": "AS008",
+   "name": "DG set 250kVA",
+   "location": "Facilities",
+   "status": "Working",
+   "purchased": "2023-07-19",
+   "nextService": "2027-01-19",
+   "value": 500000
+  }
+ ],
+ "queries": [
+  {
+   "id": "Q001",
+   "subject": "Room rent for Deluxe ward?",
+   "type": "Enquiry",
+   "status": "Closed",
+   "from": "Vikram Yadav",
+   "phone": "9892466720",
+   "at": "2026-09-22T15:33",
+   "note": ""
+  },
+  {
+   "id": "Q002",
+   "subject": "Delay in discharge summary",
+   "type": "Complaint",
+   "status": "Open",
+   "from": "Mohit Ekka",
+   "phone": "9841729824",
+   "at": "2026-09-19T17:59",
+   "note": ""
+  },
+  {
+   "id": "Q003",
+   "subject": "Is cardiology OPD open on Sunday?",
+   "type": "Enquiry",
+   "status": "Closed",
+   "from": "Arjun Tiwari",
+   "phone": "9896104083",
+   "at": "2026-09-22T12:50",
+   "note": ""
+  },
+  {
+   "id": "Q004",
+   "subject": "Billing discrepancy — pharmacy",
+   "type": "Complaint",
+   "status": "In progress",
+   "from": "Sanjay Das",
+   "phone": "9884108372",
+   "at": "2026-09-19T18:02",
+   "note": ""
+  },
+  {
+   "id": "Q005",
+   "subject": "Ambulance availability at night",
+   "type": "Enquiry",
+   "status": "Open",
+   "from": "Sanjay Yadav",
+   "phone": "9874019855",
+   "at": "2026-09-19T09:33",
+   "note": ""
+  }
+ ],
+ "receipts": [
+  {
+   "id": "R20260923001",
+   "at": "2026-09-23T10:05",
+   "patientId": "P139",
+   "desc": "Medical certificate",
+   "amount": 300,
+   "mode": "Cash"
+  },
+  {
+   "id": "R20260923002",
+   "at": "2026-09-23T11:40",
+   "patientId": "P202",
+   "desc": "Ambulance (local)",
+   "amount": 650,
+   "mode": "UPI"
+  }
+ ]
+}
