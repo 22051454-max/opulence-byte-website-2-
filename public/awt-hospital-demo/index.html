@@ -28,7 +28,9 @@
   --shadow:0 1px 2px rgba(0,0,0,.3); color-scheme:dark;}
 *{box-sizing:border-box}
 html,body{height:100%}
-body{background:var(--bg);color:var(--text);font:14px/1.45 Figtree,"Segoe UI",system-ui,sans-serif;margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font:14px/1.45 Figtree,"Segoe UI",system-ui,sans-serif;margin:0;min-width:0;overflow-x:hidden}
+body.menu-open{overflow:hidden}
 button,input,select,textarea{font:inherit;color:inherit}
 .num,td,.kpi b{font-variant-numeric:tabular-nums}
 a{color:var(--accent)}
@@ -195,10 +197,31 @@ tbody tr:hover{background:var(--surface-2)}
   .side{position:fixed;left:0;top:0;bottom:0;width:250px;z-index:90;transform:translateX(-105%);transition:transform .2s;padding-top:calc(18px + env(safe-area-inset-top,0px))}
   .side.open{transform:none;box-shadow:0 0 0 100vmax rgba(8,20,40,.45)}
   .tbtn.burger{display:inline-flex}
-  .main{padding-inline:16px}
+  .main{padding-inline:clamp(10px,4vw,16px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .top{gap:6px;padding-inline:8px}
+  .tbtn{padding-inline:6px}
+  .me{padding-left:4px}
   .me .nm,.tbtn .lbl{display:none}
 }
-@media (max-width:640px){.charts,.lists{grid-template-columns:1fr}.fg{grid-template-columns:1fr}.search kbd{display:none}.search input{padding-right:10px}.lines .ln{grid-template-columns:1fr 60px 70px 28px}}
+@media (max-width:640px){
+  .charts,.lists{grid-template-columns:1fr}
+  .fg{grid-template-columns:1fr}
+  .search kbd{display:none}
+  .search input{padding-right:10px}
+  .lines .ln{grid-template-columns:1fr 60px 70px 28px}
+  .scrim{padding:8px}
+  .modal{max-height:calc(100dvh - 16px);border-radius:12px}
+  .mh,.mb,.mf{padding-inline:12px}
+  .mf{justify-content:stretch;flex-wrap:wrap}
+  .mf .btn{flex:1 1 auto;justify-content:center}
+  .foot{padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:380px){
+  .top{padding-inline:5px}
+  .tbtn[data-a="help"],.tbtn[data-a="go"]{display:none}
+  .lines .ln{grid-template-columns:1fr 54px 62px 28px;gap:4px}
+  .card,.hello{padding-inline:12px}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -808,10 +831,10 @@ const vacantBeds=()=>bedStates().filter(b=>b.state==='vac').map(b=>[b.id,b.id+' 
 function nextPatientIds(){let mu=0,me=210578400;all('patients').forEach(p=>{const n=+String(p.uhid).replace(/\D/g,'');if(n>mu)mu=n;if(+p.emr>me)me=+p.emr;});return {uhid:'AWT-'+String(mu+1).padStart(6,'0'),emr:String(me+1)};}
 
 const ACT={
-  go:d=>{ui.view=d.v;$('#side').classList.remove('open');render();window.scrollTo(0,0);},
+  go:d=>{ui.view=d.v;$('#side').classList.remove('open');document.body.classList.remove('menu-open');render();window.scrollTo(0,0);},
   tabgo:d=>{ui.tab[d.k]=d.t;ACT.go(d);},
   tab:d=>{ui.tab[d.k]=d.v;render();},
-  menu:()=>$('#side').classList.toggle('open'),
+  menu:()=>{const open=$('#side').classList.toggle('open');document.body.classList.toggle('menu-open',open);},
   close:closeModal,
   focusSearch:()=>{$('#gsearch').focus();},
   sample:()=>confirmBox('Load sample data','This writes a complete sample hospital (patients, OPD, IPD, pharmacy, lab and more) dated around today. Existing records with the same IDs are replaced.','Load sample data',loadSample),
@@ -1002,7 +1025,7 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('keydown',e=>{
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#gsearch').focus();$('#gsearch').select();}
-  if(e.key==='Escape'){if($('#modalRoot').innerHTML)closeModal();$('#gdrop').hidden=true;$('#side').classList.remove('open');}
+  if(e.key==='Escape'){if($('#modalRoot').innerHTML)closeModal();$('#gdrop').hidden=true;$('#side').classList.remove('open');document.body.classList.remove('menu-open');}
   if((e.key==='Enter'||e.key===' ')&&e.target.matches('[role=button][data-a]')){e.preventDefault();e.target.click();}
 });
 document.addEventListener('input',e=>{
