@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AWT Hospital ERP: End-to-End Workflow</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f7faf9;--panel:#fff;--ink:#12302f;--mute:#5a7170;--line:#d5e3e0;--acc:#0b6b63;--tint:#e3f1ee;--dec:#b7791f;--dect:#fbf1dc}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a19;--panel:#132523;--ink:#e2efed;--mute:#9bb3b0;--line:#25403d;--acc:#4fc3b5;--tint:#173330;--dec:#e6b656;--dect:#3a2f14}}
+:root[data-theme="dark"]{--bg:#0d1a19;--panel:#132523;--ink:#e2efed;--mute:#9bb3b0;--line:#25403d;--acc:#4fc3b5;--tint:#173330;--dec:#e6b656;--dect:#3a2f14}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+.wrap{display:flex;max-width:1180px;margin:0 auto}
+nav{width:250px;flex:none;position:sticky;top:env(safe-area-inset-top,0px);align-self:flex-start;max-height:100vh;overflow:auto;padding:28px 16px;font-size:14px}
+nav b{display:block;margin:16px 0 4px;color:var(--mute);font-weight:600;font-size:13px}
+nav a{display:block;color:var(--ink);text-decoration:none;padding:3px 8px;border-radius:6px}
+nav a:hover,nav a:focus-visible{background:var(--tint);outline:none}
+main{flex:1;min-width:0;padding:32px 24px 80px}
+h1,h2,h3{font-family:Newsreader,Georgia,serif;font-weight:600;line-height:1.2}
+h1{font-size:clamp(2rem,5vw,3.2rem);margin:0 0 12px;max-width:16em}
+.lead{max-width:44em;color:var(--mute);font-size:1.05rem}
+.part{font-size:1.7rem;margin:64px 0 8px;padding-top:16px;border-top:2px solid var(--acc)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;margin:16px 0}
+.card h3{margin:0 0 4px;font-size:1.3rem}
+.why{margin:0 0 14px;color:var(--mute);max-width:52em}
+.flow{display:flex;flex-wrap:wrap;gap:8px 4px;align-items:center;margin:0;padding:0;list-style:none}
+.flow li{background:var(--tint);border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:14px}
+.flow li.d{background:var(--dect);border-color:var(--dec);color:var(--ink);border-style:dashed}
+.flow li+li:before{content:"›";color:var(--acc);margin-right:6px;font-weight:600;margin-left:-6px}
+.flow li{position:relative}
+.note{margin:14px 0 0;font-size:14px;border-left:3px solid var(--acc);padding-left:12px;color:var(--ink)}
+.note span{color:var(--mute)}
+.legend{font-size:14px;color:var(--mute);margin-top:20px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:24px}
+.stats div{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:14px}
+.stats b{display:block;font-family:Newsreader,serif;font-size:1.4rem;color:var(--acc)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mute);font-weight:600}
+@media (max-width:820px){nav{display:none}main{padding:24px 16px 64px}}
+@media print{nav{display:none}.card{break-inside:avoid}}
+</style></head><body>
+<div class="wrap">
+<nav id="nav" aria-label="Workflow sections"></nav>
+<main>
+<h1>AWT Hospital ERP: one connected patient journey</h1>
+<p class="lead">This document walks through every workflow in the AWT Hospital ERP, from hospital setup to discharge, billing, security and backup. Each workflow shows the steps in order, why it matters, and the controls built in. Items marked as additions extend the original scope.</p>
+<div class="stats"><div><b>7</b>parts</div><div><b>30</b>workflows</div><div><b>1</b>central database</div><div><b>1</b>patient record (EMR)</div></div>
+<p class="legend"><i style="background:var(--tint);border:1px solid var(--line)"></i>Step &nbsp; <i style="background:var(--dect);border:1px dashed var(--dec)"></i>Decision or approval point</p>
+<div id="out"></div>
+
+<h2 class="part" id="p-arch">Architecture at a glance</h2>
+<div class="tbl"><table>
+<tr><th>Layer</th><th>Modules</th><th>Role</th></tr>
+<tr><td>Patient care</td><td>Reception, OPD, IPD, EMR, Doctors, Nursing, Blood Bank</td><td>Everything that touches the patient</td></tr>
+<tr><td>Operations</td><td>Pharmacy, Inventory, Laboratory, Radiology, OT, Wards, Assets, Housekeeping</td><td>Keeps services stocked, staffed and available</td></tr>
+<tr><td>Finance</td><td>Billing, Collections, Refunds, Corporate, TPA</td><td>Charges, payments and settlements</td></tr>
+<tr><td>Core</td><td>Central PostgreSQL database, security, audit</td><td>Single source of truth</td></tr>
+<tr><td>Insight</td><td>Reports, analytics, AI assistance, management dashboard</td><td>Decisions from live data</td></tr>
+<tr><td>Protection</td><td>Encrypted local and cloud backup</td><td>Continuity if a server fails</td></tr>
+</table></div>
+<div class="card"><p style="margin:0"><b>In one sentence:</b> AWT Hospital ERP connects the complete patient journey (registration, consultation, diagnostics, pharmacy, admission, treatment, billing and discharge) with hospital operations, inventory, finance, administration, reporting, security and AI-assisted insight in one centralized system.</p></div>
+</main></div>
+<script>
+// ["#","Part"] starts a part. Others: [id,title,purpose,"step>step>?decision",note]
+const D=[
+["#","Part 1. Foundation"],
+["setup","Master setup","Configures the hospital once so every other module works from the same rules.","Hospital profile>Departments>Doctors and consultants>Wards and beds>Services and packages>Pharmacy products>Investigation tests>OT configuration>Inventory and assets>Corporate and TPA>Users and permissions>Rates, tax and billing masters","Owner: system administrator. Rate and tax changes are dated, so old bills never change."],
+["sec","Login, roles and security","Every action is tied to a verified person and a permission.","Login>Authentication>Role check>Permission check>Module access>Action>Audit log","Example: a billing user can create a bill, may edit it within limits, and needs approval for a refund. Every step is logged. <span>Addition: session timeout, password rules and optional two-factor sign-in.</span>"],
+["#","Part 2. Front office"],
+["reg","Patient registration","One profile per patient, found first and created only if new, to avoid duplicates.","Patient arrives>Reception>Search existing patient>?Found?>Retrieve EMR (yes) or New registration (no)>Patient profile>EMR / Patient ID>ABHA details>Patient category>Department and doctor","The profile holds demographics, contact, ABHA, visits, investigations, prescriptions, pharmacy, admissions, billing, documents and discharge history. <span>Addition: duplicate-match warning on name, phone and date of birth; photo and ID capture.</span>"],
+["abdm","ABHA / ABDM linking (addition)","Supports India's digital health records with patient consent.","Enter or create ABHA>Verify by OTP>Link to EMR>?Patient consent>Share or fetch records>Consent log","Records are shared only with the patient's consent, and each consent is stored."],
+["appt","Appointment","Reserves a doctor's time and collects the consultation fee up front.","Select department>Select doctor>Select date and time>Register appointment>Registration or consultation fee>Receipt>Confirmation>Patient waits>Consultation","Walk-ins skip the booking steps and join the queue. <span>Addition: SMS or WhatsApp reminders, rescheduling and cancellation rules.</span>"],
+["er","Emergency / casualty (addition)","Emergency patients are treated first and registered fully afterwards.","Arrival>Triage>Quick registration (temporary ID)>Emergency treatment>?Admit or discharge>Full registration>Merge to permanent EMR>IPD admission or ER discharge","Medico-legal cases are flagged. Charges go to the same central account."],
+["#","Part 3. Clinical care"],
+["opd","OPD (outpatient) visit","Takes a patient from queue to billing in one traceable flow.","Registration>OPD queue>Doctor consultation>Clinical notes>Diagnosis>Prescription>?Investigation needed?>Lab or radiology request (yes)>Report>Pharmacy or procedure>OPD billing>Payment>Receipt>Follow-up","Results return to the doctor inside the EMR, so the patient does not carry paper."],
+["adm","IPD admission","Moves a patient from decision to bed with the right payer and rates applied.","Admission decision>Patient verification>Admission registration>Patient type>Cash, corporate or TPA>Package or rate>Ward selection>Bed availability>Bed allocation>Admitted>Nursing and doctor care","Advance deposit can be collected here. Consent forms are captured."],
+["bed","Bed management","Live view of every bed so allocation is fast and accurate.","Select ward>Check available beds>Select bed>Allocate>Status: Occupied>Patient linked to bed","On discharge: Bed released>Status: Cleaning>Housekeeping>Status: Vacant. <span>Addition: bed transfer between wards with automatic rate change.</span>"],
+["ipd","IPD clinical care","Daily treatment, orders and charges flow into the patient's account.","Doctor assignment>Nursing assessment>Doctor visit>Clinical notes>Medication>Pharmacy request>Investigation request>Procedure or nursing activity>Monitoring>Daily charges>Daily billing","Doctor visits and nursing entries are time-stamped."],
+["nurse","Nursing","Structured bedside work with a clear handover.","Patient assigned>Assessment>Vitals and observations>Doctor orders>Medication administration>Procedures>Investigation and pharmacy requests>Activity log>Shift handover","<span>Addition: medication rounds with the five rights check, and alerts for overdue doses or abnormal vitals.</span>"],
+["ot","Operation theatre (OT)","Plans, records and bills each surgery.","Surgery decision>OT request>Procedure selection>?OT room free?>OT booking>Surgeon and anaesthetist>Pre-op checklist>Consent>Procedure>Materials and equipment>Anaesthesia>Post-op notes>OT summary>Billing>Return to IPD","Implants and consumables are linked to patient charges and stock."],
+["blood","Blood bank (addition)","Tracks blood units from donation to transfusion.","Donor registration>Screening>Collection>Testing>Storage by group and expiry>Request from ward or OT>Cross-match>Issue>Transfusion record>Billing","Expiring units raise alerts. Every unit can be traced to a patient."],
+["#","Part 4. Diagnostics and pharmacy"],
+["lab","Laboratory","Every sample is tracked and every result is verified before release.","Investigation request>Registration>Test selection>Sample collection>Sample ID and barcode>Processing>Result entry>Technician verification>Authorized approval>Final report>EMR updated>Doctor reviews","Critical values raise an alert to the doctor."],
+["rad","Radiology","Scheduled scans with a verified report.","Request>Registration>Scheduling>Scan or procedure>Report entry>Verification>Approval>Final report>EMR","Images can be linked from PACS if AWT uses one."],
+["phopd","Pharmacy: sales","Correct medicine, correct batch, correct stock.","Prescription>Pharmacy request>Patient verification>Search or barcode>Batch selection>Stock check>Expiry check>Quantity>Discount and tax>Bill>Payment>Receipt>Stock deducted>Transaction recorded","Near-expiry batches are sold first. <span>Addition: drug interaction and allergy warnings.</span>"],
+["phipd","Pharmacy: IPD issue","Ward medicine is charged straight to the patient account.","Prescription>Nursing or department request>Pharmacy verification>Stock check>Issue>Patient account charged>Inventory deducted>Transaction recorded","Unused returned medicine is credited back."],
+["phbuy","Pharmacy: purchase","Stock enters only through a recorded order and receipt.","Vendor>Purchase order>Goods received>GRN>Batch and expiry entry>Purchase bill>Stock updated>Payment or payable","Rate and quantity are checked against the order."],
+["phret","Pharmacy: returns","Returns are tied to the original sale.","Original sale>Return request>Product and batch check>Return quantity>Stock adjustment>Refund or credit note>Audit entry","Refunds above a set value need approval."],
+["#","Part 5. Operations"],
+["inv","Inventory and stores","Departments request, stores issue, purchases fill gaps.","Department indent>Approval>Store verification>?Stock available?>Issue stock (yes) or Purchase and GRN (no)>Department receives>Consumption>Inventory updated","Minimum-stock alerts trigger purchase requests."],
+["asset","Assets","Follows each asset from purchase to disposal.","Purchase>Registration>Asset ID>Department allocation>Usage>Maintenance>Transfer>Repair>Retirement or disposal","<span>Addition: scheduled maintenance and calibration reminders.</span>"],
+["hk","Housekeeping (addition)","Turns beds and rooms around quickly.","Discharge>Cleaning task raised>Assigned>Cleaned>Supervisor check>Bed vacant","Turnaround time appears on the dashboard."],
+["#","Part 6. Billing and finance"],
+["tpa","Corporate / TPA","Manages insurer approval and settlement.","Registration>Corporate or TPA selected>Policy and member details>Cashless request>?Authorization>Approved services or package>Treatment>Charges accumulate>Final bill>Submission>Approved amount>Patient payable>Settlement","Enhancement requests are raised when charges exceed the approved limit. <span>Addition: claim status tracking and rejection follow-up.</span>"],
+["bill","IPD billing","Every charge lands in one account.","Bed>Doctor>Investigation>Pharmacy>Procedures>OT>Equipment>Nursing>Other services>Central IPD account>Discount or package>TPA adjustment>Tax>Advance adjustment>Outstanding>Final bill","Running totals are visible during the stay, so there are no surprises at discharge."],
+["final","Final bill","One consolidated, verified bill.","Charge consolidation>Package adjustment>Discount>Tax>Advance adjustment>TPA adjustment>Patient payable>Payment>Final bill>Receipt","Discounts follow a defined approval limit."],
+["pay","Payment","Every rupee is recorded and reconciled.","Bill generated>Payment>Mode: cash, card, UPI, bank or credit>Verification>Receipt>Transaction ledger>Collection report","Split payments across modes are supported."],
+["ref","Refunds and cancellations (addition)","Controlled, approved, and always auditable.","Request>Reason>?Approval by authorized role>Reverse charge or stock>Refund or credit note>Ledger update>Audit log","Approval level depends on the amount."],
+["dis","Discharge","Clears clinical, financial and bed tasks before the patient leaves.","Doctor initiates>Discharge planning>Investigations complete>Pharmacy and service reconciliation>Final bill>Advance adjustment>TPA processing>Final payment>Bill verification>Discharge summary>Doctor approval>Discharge>Bed released>EMR updated>Follow-up","<span>Addition: variants for discharge against medical advice (LAMA), referral or transfer, and death, each with its own documents.</span>"],
+["#","Part 7. Management and safety"],
+["dash","Daily management dashboard","Live view for administrators.","Reception, OPD, IPD, Pharmacy, Lab, Radiology, OT, Inventory, Billing and TPA>Central database>Management dashboard","Shows occupancy, admissions, discharges, OPD volume, pharmacy activity, investigations, OT activity, collections, outstanding, inventory and department performance."],
+["eod","End of day","Closes the books each day.","Department transactions>Daily verification>Cashier collection>Card and UPI reconciliation>Pharmacy reconciliation>Billing reconciliation>Inventory transactions>Department reports>Dashboard>Daily closing","Closed days are locked. Changes need approval."],
+["bak","Backup and recovery","Protects hospital data from loss.","AWT ERP>PostgreSQL database>WAL backup>Scheduled backup>Encryption>Local storage>Cloud backup>Verification>Status dashboard","Failure path: Local server failure>Restore latest backup>Database recovery>ERP restored. <span>Addition: agree recovery time and recovery point targets with AWT.</span>"],
+["#","The complete patient journey"],
+["journey","From arrival to follow-up","The single path that ties everything together.","Patient>Registration>Appointment>OPD>Pharmacy, investigation or admission>IPD (ward, OT, pharmacy)>IPD billing>Corporate or TPA>Final bill>Payment>Discharge>Discharge summary>Follow-up>EMR","From OPD a patient may go to pharmacy only, investigation only, or admission. All paths return to the same EMR."]
+];
+const out=document.getElementById('out'),nav=document.getElementById('nav');let n=0,h='',nv='';
+for(const r of D){
+ if(r[0]==='#'){const id='p'+(n++);h+=`<h2 class="part" id="${id}">${r[1]}</h2>`;nv+=`<b>${r[1]}</b>`;continue}
+ const steps=r[3].split('>').map(s=>s.startsWith('?')?`<li class="d">${s.slice(1)}</li>`:`<li>${s}</li>`).join('');
+ h+=`<section class="card" id="${r[0]}"><h3>${r[1]}</h3><p class="why">${r[2]}</p><ol class="flow">${steps}</ol><p class="note">${r[4]}</p></section>`;
+ nv+=`<a href="#${r[0]}">${r[1]}</a>`;
+}
+out.innerHTML=h;nav.innerHTML=nv+'<b>Reference</b><a href="#p-arch">Architecture</a>';
+</script></body></html>
