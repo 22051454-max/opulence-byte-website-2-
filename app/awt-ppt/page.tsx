@@ -4,40 +4,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-// Filenames are timestamp-ordered, which matches the original slide sequence.
-const slides = [
-  'Screenshot 2026-09-25 at 2.14.49 AM.png',
-  'Screenshot 2026-09-25 at 2.15.27 AM.png',
-  'Screenshot 2026-09-25 at 2.15.34 AM.png',
-  'Screenshot 2026-09-25 at 2.15.44 AM.png',
-  'Screenshot 2026-09-25 at 2.15.53 AM.png',
-  'Screenshot 2026-09-25 at 2.16.09 AM.png',
-  'Screenshot 2026-09-25 at 2.16.17 AM.png',
-  'Screenshot 2026-09-25 at 2.16.27 AM.png',
-  'Screenshot 2026-09-25 at 2.16.34 AM.png',
-  'Screenshot 2026-09-25 at 2.16.43 AM.png',
-  'Screenshot 2026-09-25 at 2.16.50 AM.png',
-  'Screenshot 2026-09-25 at 2.16.58 AM.png',
-  'Screenshot 2026-09-25 at 2.17.05 AM.png',
-  'Screenshot 2026-09-25 at 2.17.12 AM.png',
-  'Screenshot 2026-09-25 at 2.17.20 AM.png',
-  'Screenshot 2026-09-25 at 2.17.26 AM.png',
-  'Screenshot 2026-09-25 at 2.17.33 AM.png',
-  'Screenshot 2026-09-25 at 2.17.41 AM.png',
-  'Screenshot 2026-09-25 at 2.17.48 AM.png',
-  'Screenshot 2026-09-25 at 2.17.55 AM.png',
-  'Screenshot 2026-09-25 at 2.18.02 AM.png',
-  'Screenshot 2026-09-25 at 2.18.09 AM.png',
-  'Screenshot 2026-09-25 at 2.18.16 AM.png',
-  'Screenshot 2026-09-25 at 2.18.26 AM.png',
-  'Screenshot 2026-09-25 at 2.18.34 AM.png',
-  'Screenshot 2026-09-25 at 2.18.41 AM.png',
-  'Screenshot 2026-09-25 at 2.18.50 AM.png',
-  'Screenshot 2026-09-25 at 2.18.58 AM.png',
-  'Screenshot 2026-09-25 at 2.19.05 AM.png',
-  'Screenshot 2026-09-25 at 2.19.13 AM.png',
-  'Screenshot 2026-09-25 at 2.19.20 AM.png',
-].map((name, i) => ({ index: i, src: `/ppt_photos/${encodeURIComponent(name)}` }))
+// Files were renamed to slide-01..slide-31 (serial order) to avoid unicode spaces in original screenshot names breaking URLs.
+const SLIDE_COUNT = 31
+const slides = Array.from({ length: SLIDE_COUNT }, (_, i) => ({
+  index: i,
+  src: `/ppt_photos/slide-${String(i + 1).padStart(2, '0')}.png`,
+}))
 
 export default function AwtPptPage() {
   const [current, setCurrent] = useState(0)
