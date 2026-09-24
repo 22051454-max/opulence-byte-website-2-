@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 const sections = [
   {
     number: '01',
@@ -79,8 +81,15 @@ export default function AwtWorkflowPage() {
     <main className="min-h-screen bg-[#f4f8f7] px-5 py-10 text-[#12302f] sm:px-8 lg:px-12">
       <div className="mx-auto max-w-6xl">
         <header className="border-b-2 border-[#0b6b63] pb-8">
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[#0b6b63]">AWT Hospital ERP</p>
-          <h1 className="mt-3 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">End-to-end workflow</h1>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[#0b6b63]">AWT Hospital ERP</p>
+              <h1 className="mt-3 max-w-3xl font-serif text-4xl leading-tight sm:text-5xl">End-to-end workflow</h1>
+            </div>
+            <Link href="/awt-ppt" className="border border-[#0b6b63] px-4 py-2 text-sm font-semibold text-[#0b6b63] hover:bg-[#e3f1ee]">
+              View presentation →
+            </Link>
+          </div>
           <p className="mt-4 max-w-3xl text-lg leading-8 text-[#486562]">One connected patient journey: registration, consultation, diagnostics, pharmacy, admission, treatment, billing, discharge, follow-up and the operational controls around it.</p>
           <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
             {['7 workflow areas', '30 operational flows', '1 central EMR', 'Full audit trail'].map((stat) => <div className="border border-[#c8dcd8] bg-white px-4 py-3 text-sm font-semibold" key={stat}>{stat}</div>)}
