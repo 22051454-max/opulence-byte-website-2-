@@ -2,6 +2,7 @@
 
 import { ArrowUpRight, Check, CheckCircle2, LoaderCircle, LogIn } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { QUOTE_FEE_USD } from '@/lib/products'
 import { Avatar, useSession } from './session'
@@ -21,6 +22,7 @@ function loadRazorpay() {
 
 export function QuotePanel({ slug, name }: { slug: string; name: string }) {
   const { user, loading } = useSession()
+  const router = useRouter()
   const [busy, setBusy] = useState(false)
   const [status, setStatus] = useState<{ type: 'error' | 'success'; text: string } | null>(null)
   const done = status?.type === 'success'
@@ -50,9 +52,13 @@ export function QuotePanel({ slug, name }: { slug: string; name: string }) {
         handler: async (result: RazorpayResult) => {
           const verify = await fetch('/api/quote/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(result) })
           const outcome = await verify.json()
-          setStatus(verify.ok
-            ? { type: 'success', text: `Payment received. Your ${name} quote request is with our team, and we’ll email ${order.email} within one business day.` }
-            : { type: 'error', text: outcome.error || 'We could not verify this payment. Please contact hello@opulencebyte.com.' })
+          if (verify.ok) {
+            setStatus({ type: 'success', text: 'Payment received. Taking you to your confirmation…' })
+            const params = new URLSearchParams({ order: result.razorpay_order_id, payment: result.razorpay_payment_id, signature: result.razorpay_signature })
+            router.push(`/thank-you?${params}`)
+            return
+          }
+          setStatus({ type: 'error', text: outcome.error || 'We could not verify this payment. Please contact hello@opulencebyte.com.' })
           setBusy(false)
         },
         modal: { ondismiss: () => { setBusy(false); setStatus({ type: 'error', text: 'Payment cancelled. Nothing was charged.' }) } },
@@ -71,7 +77,7 @@ export function QuotePanel({ slug, name }: { slug: string; name: string }) {
       <ul>
         <li><Check size={15} /> Pricing tailored to your users and modules</li>
         <li><Check size={15} /> A live demo call with our team</li>
-        <li><Check size={15} /> Reply by email within one business day</li>
+        <li><Check size={15} /> Quotation by email within 24 hours</li>
       </ul>
       {loading ? (
         <div className="btn btn-ghost btn-block" aria-busy="true"><LoaderCircle size={17} className="spin" /></div>
