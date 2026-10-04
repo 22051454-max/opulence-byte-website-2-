@@ -1,94 +1,180 @@
-'use client'
+import { ArrowRight, ArrowUpRight, BrainCircuit, Cloud, Gamepad2, HeartPulse, Hotel, Mail, MapPin, Phone, ShieldCheck, Sparkles, Zap } from 'lucide-react'
+import Link from 'next/link'
+import { ByteGame } from '@/components/byte-game'
+import { ContactForm } from '@/components/contact-form'
+import { Counter } from '@/components/counter'
+import { Icon } from '@/components/icon'
+import { ProductCard } from '@/components/product-card'
+import { SiteFooter } from '@/components/site-footer'
+import { SiteHeader } from '@/components/site-header'
+import { Typewriter } from '@/components/typewriter'
+import { products, QUOTE_FEE_USD } from '@/lib/products'
+import { services } from '@/lib/services'
 
-import { useEffect, useState } from 'react'
-import {
-  ArrowUpRight,
-  ChevronRight,
-  Menu,
-  MessageCircle,
-  Moon,
-  MoveRight,
-  Plus,
-  Send,
-  Sparkles,
-  Sun,
-  X,
-} from 'lucide-react'
+const featured = ['hospital-erp', 'hotel-erp', 'school-erp', 'crm', 'hrms', 'ai-assistant']
+const marquee = ['Hospital ERP', 'Hotel ERP', 'AI Agents', 'School ERP', 'E-commerce', 'Mobile Apps', 'CRM', 'Cloud & DevOps', 'HRMS', 'UI/UX Design']
 
-const logoUrl = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-09-05%20at%208.15.56%20PM%20%281%29-PKptryF3mzcb814JoyTynLSp553p8q.jpeg'
-
-const services = [
-  { number: '01', title: 'Websites', text: 'High-performance websites engineered for clarity, speed, and measurable growth.', tags: ['Next.js', 'React', 'CMS'] },
-  { number: '02', title: 'Apps & MVPs', text: 'Human-centered mobile products that turn complex workflows into simple habits.', tags: ['iOS', 'Android', 'Product'] },
-  { number: '03', title: 'Automation', text: 'Thoughtful systems that remove repetitive work and help ambitious teams move faster.', tags: ['Workflows', 'Integrations', 'AI'] },
-  { number: '04', title: 'Cloud & AI', text: 'Intelligent infrastructure that gives ambitious teams a durable advantage.', tags: ['AI', 'Cloud', 'Automation'] },
-]
-
-function LogoIntro({ onComplete }: { onComplete: () => void }) {
-  const [progress, setProgress] = useState(0)
-  useEffect(() => {
-    const start = window.setTimeout(() => setProgress(100), 120)
-    const finish = window.setTimeout(onComplete, 2400)
-    return () => { window.clearTimeout(start); window.clearTimeout(finish) }
-  }, [onComplete])
+export default function Home() {
   return (
-    <div className={`logo-intro ${progress === 100 ? 'logo-intro--leaving' : ''}`} aria-label="Loading Opulence Byte">
-      <div className="intro-grid" />
-      <div className="intro-orbit"><span /></div>
-      <div className="intro-mark">
-        <img src={logoUrl} alt="Opulence Byte" />
-        <div className="intro-scan" />
-      </div>
-      <div className="intro-meta"><span>OPULENCE BYTE</span><span>SYS / INITIALIZING</span></div>
-      <div className="intro-progress"><span style={{ width: `${progress}%` }} /></div>
+    <div className="page">
+      <SiteHeader />
+      <main id="main">
+        {/* Hero */}
+        <section className="hero">
+          <div className="shell hero-grid">
+            <div>
+              <span className="eyebrow" data-reveal><Sparkles size={13} /> Software · SaaS · AI</span>
+              <h1 data-reveal style={{ '--d': 1 } as React.CSSProperties}>
+                We build<br /><Typewriter words={['what matters.', 'hospital ERPs.', 'hotel systems.', 'AI agents.', 'your next app.']} />
+              </h1>
+              <p className="hero-lede" data-reveal style={{ '--d': 2 } as React.CSSProperties}>
+                Opulence Byte designs and engineers websites, apps, AI agents and {products.length} ready-to-deploy SaaS products for hospitals, hotels, schools and growing businesses.
+              </p>
+              <div className="hero-actions" data-reveal style={{ '--d': 3 } as React.CSSProperties}>
+                <Link href="/products" className="btn btn-primary">Explore products <ArrowRight size={17} /></Link>
+                <Link href="/#contact" className="btn btn-ghost">Start a project <ArrowUpRight size={17} /></Link>
+              </div>
+              <div className="hero-trust" data-reveal style={{ '--d': 4 } as React.CSSProperties}>
+                <span><ShieldCheck size={16} /> Secure OAuth sign-in</span>
+                <span><Zap size={16} /> ${QUOTE_FEE_USD} tailored quotes</span>
+                <span><BrainCircuit size={16} /> Claude-powered AI</span>
+              </div>
+            </div>
+            <div className="orbit-stage" data-reveal="zoom" aria-hidden="true">
+              <div className="orbit-ring r1"><span className="node"><HeartPulse size={18} /></span><span className="node n2"><Hotel size={18} /></span></div>
+              <div className="orbit-ring r2"><span className="node"><Cloud size={18} /></span></div>
+              <div className="orbit-ring r3"><span className="node"><BrainCircuit size={18} /></span></div>
+              <div className="orbit-core"><img src="/mark.svg" alt="" /></div>
+              <div className="float-card f1"><span className="dot" /><div>MediCore ERP<small>Live at AWT Hospital</small></div></div>
+              <div className="float-card f2"><Sparkles size={16} color="#22d3ee" /><div>Byte AI<small>Online 24/7</small></div></div>
+            </div>
+          </div>
+        </section>
+
+        <div className="marquee" aria-hidden="true">
+          <div className="marquee-track">
+            {[...marquee, ...marquee].map((item, i) => <span key={i}>{item}</span>)}
+          </div>
+        </div>
+
+        {/* Services */}
+        <section className="section" id="services">
+          <div className="shell">
+            <div className="section-head">
+              <span className="eyebrow" data-reveal>01 / What we do</span>
+              <h2 data-reveal>Every layer of your <span className="gradient-text">digital business.</span></h2>
+              <p data-reveal>Strategy, design, engineering and growth in one team, so ideas ship faster and keep improving after launch.</p>
+            </div>
+            <div className="services-grid">
+              {services.map((service, i) => (
+                <article key={service.title} className="card tilt card-glow service-card" data-reveal style={{ '--d': i % 4 } as React.CSSProperties}>
+                  <span className="num">{service.number}</span>
+                  <span className="service-icon"><Icon name={service.icon} size={22} /></span>
+                  <h3>{service.title}</h3>
+                  <p>{service.text}</p>
+                  <div className="tags">{service.tags.map((t) => <span key={t}>{t}</span>)}</div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Products */}
+        <section className="section" id="products" style={{ paddingTop: 0 }}>
+          <div className="shell">
+            <div className="section-head">
+              <span className="eyebrow" data-reveal>02 / Products</span>
+              <h2 data-reveal>Ready-made SaaS, <span className="gradient-text">tailored to you.</span></h2>
+              <p data-reveal>Deploy proven software in weeks, not months. Sign in, pick a product and get a tailored quote for ${QUOTE_FEE_USD}.</p>
+            </div>
+            <div className="product-grid">
+              {featured.map((slug, i) => {
+                const product = products.find((p) => p.slug === slug)!
+                return <ProductCard key={slug} product={product} index={i} />
+              })}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }} data-reveal>
+              <Link href="/products" className="btn btn-ghost">See all {products.length} products <ArrowRight size={17} /></Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Approach */}
+        <section className="section" id="about">
+          <div className="shell split">
+            <div>
+              <span className="eyebrow" data-reveal>03 / Our approach</span>
+              <h2 className="big-quote" data-reveal>Less noise. <span className="gradient-text">More signal.</span> The best digital work starts with a better question.</h2>
+            </div>
+            <div className="principles">
+              {[
+                ['01', 'Get curious.', 'We ask the questions others skip, then turn insight into direction.'],
+                ['02', 'Make it clear.', 'Every screen earns its place. Every interaction earns attention.'],
+                ['03', 'Ship with intent.', 'Beautiful is the baseline. We build for the world after launch, with support that stays.'],
+              ].map(([n, title, text], i) => (
+                <div className="card principle" key={n} data-reveal="right" style={{ '--d': i } as React.CSSProperties}>
+                  <b>{n}</b>
+                  <div><h3>{title}</h3><p>{text}</p></div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="shell stats" style={{ marginTop: 70 }}>
+            <div className="card stat" data-reveal><Counter to={products.length} /><span>SaaS products ready to deploy</span></div>
+            <div className="card stat" data-reveal style={{ '--d': 1 } as React.CSSProperties}><Counter to={services.length} /><span>service lines under one roof</span></div>
+            <div className="card stat" data-reveal style={{ '--d': 2 } as React.CSSProperties}><Counter to={24} suffix="/7" /><span>AI assistant on every page</span></div>
+            <div className="card stat" data-reveal style={{ '--d': 3 } as React.CSSProperties}><Counter to={QUOTE_FEE_USD} suffix=" USD" /><span>to get a tailored quote</span></div>
+          </div>
+        </section>
+
+        {/* Game */}
+        <section className="section game-section" id="play">
+          <div className="shell split">
+            <div>
+              <span className="eyebrow" data-reveal><Gamepad2 size={13} /> 04 / Take a break</span>
+              <div className="section-head" style={{ marginBottom: 0, marginTop: 18 }}>
+                <h2 data-reveal>Play <span className="gradient-text">Byte Catcher.</span></h2>
+                <p data-reveal>A tiny game for a quick break: catch the bytes and dodge the bugs. Your best score is saved on this device.</p>
+              </div>
+              <div className="game-legend" data-reveal>
+                <div><i style={{ background: '#2d7cf6', color: '#fff' }}>1</i> Byte: +10 points, chain them for combos</div>
+                <div><i style={{ background: '#f43f5e', color: '#fff' }}>✕</i> Bug: costs a life</div>
+                <div><i style={{ background: '#facc15', color: '#000' }}>★</i> Star: +1 life and +50 points</div>
+              </div>
+              <Link href="/play" className="link-arrow" style={{ marginTop: 24 }} data-reveal>Open full screen <ArrowRight size={15} /></Link>
+            </div>
+            <div data-reveal="zoom"><ByteGame /></div>
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section className="section" id="contact">
+          <div className="shell contact-grid">
+            <div>
+              <span className="eyebrow" data-reveal>05 / Let’s talk</span>
+              <div className="section-head" style={{ marginTop: 18, marginBottom: 0 }}>
+                <h2 data-reveal>Let’s make <span className="gradient-text">something</span> matter.</h2>
+                <p data-reveal>Tell us what you’re building. We reply within one business day with next steps.</p>
+              </div>
+              <div className="contact-info">
+                <a className="card tilt" href="mailto:hello@opulencebyte.com" data-reveal="left"><Mail size={20} /><div><small>Email</small>hello@opulencebyte.com</div></a>
+                <a className="card tilt" href="tel:+918757924410" data-reveal="left" style={{ '--d': 1 } as React.CSSProperties}><Phone size={20} /><div><small>Phone</small>+91 87579 24410</div></a>
+                <div className="card" data-reveal="left" style={{ '--d': 2 } as React.CSSProperties}><MapPin size={20} /><div><small>Studios</small>Ranchi · Jamshedpur, Jharkhand, India</div></div>
+              </div>
+            </div>
+            <ContactForm />
+          </div>
+        </section>
+
+        <section className="shell" style={{ paddingBottom: 40 }}>
+          <div className="card cta-band" data-reveal="zoom">
+            <h2>Ready to see your software <span className="gradient-text">in action?</span></h2>
+            <p>Browse {products.length} SaaS products, sign in with Google or GitHub and get a tailored quote for ${QUOTE_FEE_USD}.</p>
+            <Link href="/products" className="btn btn-primary">Visit the store <ArrowRight size={17} /></Link>
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
     </div>
-  )
-}
-
-function Chatbot() {
-  const [open, setOpen] = useState(false)
-  const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState(['Hi. I’m Byte, your digital strategy guide. What are you building?'])
-  const send = () => {
-    if (!message.trim()) return
-    setMessages((current) => [...current, message.trim(), 'Great direction. Tell us a little more and we’ll map the right next step.'])
-    setMessage('')
-  }
-  return (
-    <div className="chat-wrap">
-      {open && <div className="chat-panel" role="dialog" aria-label="Chat with Byte">
-        <div className="chat-head"><div><span className="status-dot" /> Byte is online</div><button aria-label="Close chat" onClick={() => setOpen(false)}><X size={16} /></button></div>
-        <div className="chat-messages">{messages.map((item, i) => <p className={i % 2 ? 'chat-user' : 'chat-bot'} key={`${item}-${i}`}>{item}</p>)}</div>
-        <div className="chat-input"><input value={message} onChange={(event) => setMessage(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter' && !event.nativeEvent.isComposing && event.keyCode !== 229) send() }} placeholder="Ask Byte anything..." aria-label="Message Byte" /><button onClick={send} aria-label="Send message"><Send size={15} /></button></div>
-      </div>}
-      <button className="chat-trigger" onClick={() => setOpen(!open)} aria-label="Open chat with Byte"><MessageCircle size={19} /><span>Chat with Byte</span></button>
-    </div>
-  )
-}
-
-export default function Page() {
-  const [intro, setIntro] = useState(true)
-  const [menu, setMenu] = useState(false)
-  const [dark, setDark] = useState(true)
-  const [cursor, setCursor] = useState({ x: -100, y: -100 })
-  useEffect(() => {
-    const move = (event: MouseEvent) => setCursor({ x: event.clientX, y: event.clientY })
-    window.addEventListener('mousemove', move)
-    return () => window.removeEventListener('mousemove', move)
-  }, [])
-  return (
-    <main className={dark ? 'site dark' : 'site light'}>
-      {intro && <LogoIntro onComplete={() => setIntro(false)} />}
-      <div className="cursor" style={{ transform: `translate(${cursor.x}px, ${cursor.y}px)` }} />
-      <header className="nav shell"><a className="brand" href="#top"><span className="brand-symbol">OB</span><span>OPULENCE<br /><b>BYTE</b></span></a><nav className={menu ? 'nav-links nav-links--open' : 'nav-links'}><a href="#services" onClick={() => setMenu(false)}>Services</a><a href="#approach" onClick={() => setMenu(false)}>Approach</a><a href="#about" onClick={() => setMenu(false)}>About</a><a href="#contact" onClick={() => setMenu(false)}>Contact</a><a href="/donate" onClick={() => setMenu(false)}>Donate</a></nav><div className="nav-actions"><button className="icon-button" onClick={() => setDark(!dark)} aria-label="Toggle theme">{dark ? <Sun size={17} /> : <Moon size={17} />}</button><a className="nav-cta" href="#contact">Start a project <ArrowUpRight size={15} /></a><button className="menu-button" onClick={() => setMenu(!menu)} aria-label="Toggle menu">{menu ? <X /> : <Menu />}</button></div></header>
-      <section className="hero shell" id="top"><div className="hero-copy"><p className="eyebrow"><Sparkles size={14} /> DIGITAL CRAFT / 2024</p><h1>Build what<br /><em>matters.</em></h1><p className="hero-text">We design and engineer digital experiences for companies ready to move with intention — from the first sharp idea to the last pixel.</p><div className="hero-actions"><a className="button button-primary" href="#contact">Let’s make an impact <MoveRight size={16} /></a><a className="text-link" href="#services">Explore capabilities <ChevronRight size={15} /></a></div></div><div className="hero-visual"><div className="hero-orbit orbit-one" /><div className="hero-orbit orbit-two" /><div className="visual-label label-top">OP / 001 <span>FORM FOLLOWS PURPOSE</span></div><div className="visual-core"><img src={logoUrl} alt="Opulence Byte company logo" /><span>EST. 2024 / INDIA</span></div><div className="visual-label label-bottom">SCROLL TO DISCOVER <span className="line" /></div></div></section>
-      <section className="ticker"><div>STRATEGY <span>✦</span> DESIGN <span>✦</span> TECHNOLOGY <span>✦</span> GROWTH <span>✦</span> STRATEGY <span>✦</span> DESIGN <span>✦</span> TECHNOLOGY <span>✦</span></div></section>
-      <section className="services shell" id="services"><div className="section-intro"><p className="eyebrow">01 / WHAT WE DO</p><h2>Digital, with a point of view.</h2><p>Good work looks good. Great work changes how people feel, think, and act. We bring strategy, design, and technology into one sharp, collaborative team.</p></div><div className="service-list">{services.map((service) => <article className="service-card" key={service.number}><div className="service-top"><span>{service.number}</span><ArrowUpRight size={19} /></div><h3>{service.title}</h3><p>{service.text}</p><div className="service-tags">{service.tags.map((tag) => <span key={tag}>{tag}</span>)}</div></article>)}</div></section>
-      <section className="approach shell" id="approach"><div className="approach-heading"><p className="eyebrow">02 / OUR APPROACH</p><h2>Less noise.<br /><span>More signal.</span></h2></div><div className="approach-content"><p className="big-copy">We believe the best digital work starts before the screen. It starts with a better question.</p><div className="principles"><div><span>01</span><p><b>Get curious.</b><br />We ask the questions others skip, then turn insight into direction.</p></div><div><span>02</span><p><b>Make it clear.</b><br />Every choice earns its place. Every interaction earns attention.</p></div><div><span>03</span><p><b>Ship with intent.</b><br />Beautiful is a baseline. We build for the world after launch.</p></div></div></div></section>
-      <section className="numbers shell" id="about"><div><strong>12</strong><span>brands launched</span></div><div><strong>4.9</strong><span>average partner rating</span></div><div><strong>∞</strong><span>ways to make it better</span></div></section>
-      <section className="contact shell" id="contact"><div><p className="eyebrow">03 / HAVE A GOOD ONE?</p><h2>Let’s make<br /><em>something</em> matter.</h2><div className="company-details"><strong>OPULENCE BYTE PRIVATE LIMITED</strong><span>Ranchi · Jamshedpur, Jharkhand, India</span><a href="https://www.opulencebyte.com" target="_blank" rel="noreferrer">www.opulencebyte.com</a><a href="tel:+918757924410">+91 8757924410</a></div></div><a className="contact-circle" href="mailto:hello@opulencebyte.com">Start a conversation <ArrowUpRight size={24} /></a></section>
-      <footer className="footer shell"><a className="brand" href="#top"><span className="brand-symbol">OB</span><span>OPULENCE<br /><b>BYTE</b></span></a><p>Digital experiences for<br />the relentlessly curious.</p><div><strong>OPULENCE BYTE PRIVATE LIMITED</strong><span>Ranchi · Jamshedpur, Jharkhand, India</span><a href="https://www.opulencebyte.com" target="_blank" rel="noreferrer">www.opulencebyte.com</a><a href="tel:+918757924410">+91 8757924410</a><span>© 2024 Opulence Byte</span></div></footer>
-      <Chatbot />
-    </main>
   )
 }

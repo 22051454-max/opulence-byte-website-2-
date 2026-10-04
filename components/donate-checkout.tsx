@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react'
 
 type RazorpayResult = { razorpay_order_id: string; razorpay_payment_id: string; razorpay_signature: string }
-declare global { interface Window { Razorpay?: new (options: Record<string, unknown>) => { open: () => void } } }
 
 const presets = [500, 1000, 2500, 5000]
 
@@ -58,5 +57,24 @@ export function DonateCheckout() {
     } catch (error) { setBusy(false); setStatus({ type: 'error', text: error instanceof Error ? error.message : 'Something went wrong. Please try again.' }) }
   }
 
-  return <div className="donate-card"><div className="donate-card-top"><div><p className="eyebrow">MAKE A CONTRIBUTION</p><h2>Choose your<br /><span>signal.</span></h2></div><span className="donate-card-code">INR / SECURE</span></div><div className="amount-grid">{presets.map((preset) => <button className={selectedAmount === preset && !custom ? 'amount-option amount-option--active' : 'amount-option'} key={preset} onClick={() => { setAmount(preset); setCustom('') }}>₹{preset.toLocaleString('en-IN')}</button>)}</div><label className="custom-amount"><span>Or enter a custom amount</span><span className="rupee-input"><b>₹</b><input inputMode="numeric" value={custom} onChange={(event) => setCustom(event.target.value.replace(/[^0-9]/g, ''))} placeholder="1,000" aria-label="Custom donation amount" /></span></label><div className="donate-total"><span>Total contribution</span><strong>₹{Number.isFinite(selectedAmount) ? selectedAmount.toLocaleString('en-IN') : '0'}</strong></div><button className="donate-submit" onClick={donate} disabled={busy || status?.type === 'success'}>{busy ? <><LoaderCircle size={17} className="spin" /> Opening secure checkout</> : status?.type === 'success' ? <><Check size={17} /> Contribution received</> : <>Continue to payment <ArrowUpRight size={17} /></>}</button>{status && <p className={`donate-status donate-status--${status.type}`} role="status">{status.text}</p>}<p className="donate-fineprint">Payments are processed securely by Razorpay. By continuing, you agree to the payment provider&apos;s terms.</p></div>
+  return (
+    <div className="card donate-card" data-reveal="right">
+      <span className="eyebrow">Make a contribution</span>
+      <h2>Choose your amount</h2>
+      <div className="amount-grid">
+        {presets.map((preset) => (
+          <button className={selectedAmount === preset && !custom ? 'amount-option amount-option--active' : 'amount-option'} key={preset} onClick={() => { setAmount(preset); setCustom('') }}>₹{preset.toLocaleString('en-IN')}</button>
+        ))}
+      </div>
+      <label className="field">Or enter a custom amount (₹)
+        <input inputMode="numeric" value={custom} onChange={(event) => setCustom(event.target.value.replace(/[^0-9]/g, ''))} placeholder="1,000" aria-label="Custom donation amount" />
+      </label>
+      <div className="donate-total"><span>Total contribution</span><strong>₹{Number.isFinite(selectedAmount) ? selectedAmount.toLocaleString('en-IN') : '0'}</strong></div>
+      <button className="btn btn-primary btn-block" onClick={donate} disabled={busy || status?.type === 'success'}>
+        {busy ? <><LoaderCircle size={17} className="spin" /> Opening secure checkout</> : status?.type === 'success' ? <><Check size={17} /> Contribution received</> : <>Continue to payment <ArrowUpRight size={17} /></>}
+      </button>
+      {status && <p className={`form-status ${status.type}`} role="status">{status.text}</p>}
+      <p className="fineprint">Payments are processed securely by Razorpay. By continuing, you agree to the payment provider&apos;s terms.</p>
+    </div>
+  )
 }
