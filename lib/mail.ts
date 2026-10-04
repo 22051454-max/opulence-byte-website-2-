@@ -1,5 +1,11 @@
 const INBOX = process.env.LEADS_INBOX || 'hello@opulencebyte.com'
 
+/** First name for a greeting, or 'there' when only an email address is known. */
+export function firstName(name?: string) {
+  const first = name?.trim().split(/\s+/)[0]
+  return first && !first.includes('@') ? first : 'there'
+}
+
 function escape(value: string) {
   return value.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!)
 }
@@ -46,7 +52,6 @@ export async function sendPaymentConfirmation(to: string, details: { name: strin
     console.info(`[customer mail] ${subject}`, { to, ...details })
     return { delivered: false }
   }
-  const from = process.env.CUSTOMER_MAIL_FROM || 'Opulence Byte <contact@opulencebyte.com>'
   const paragraphs = paymentConfirmationTemplate.paragraphs.map((p) => `<p style="margin:0 0 16px">${escape(fill(p))}</p>`).join('')
   const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#0f172a;max-width:560px">
 ${paragraphs}
@@ -58,6 +63,13 @@ ${paragraphs}
 <p style="margin:0">${escape(paymentConfirmationTemplate.signature)}<br><a href="https://www.opulencebyte.com" style="color:#2d7cf6">opulencebyte.com</a></p>
 </div>`
   const text = `${paymentConfirmationTemplate.paragraphs.map(fill).join('\n\n')}\n\nProduct: ${details.product}\nAmount paid: ${details.amount}\nPayment ID: ${details.paymentId}\n\n${paymentConfirmationTemplate.signature}`
+  return sendCustomerMail(to, subject, html, text)
+}
+
+const CUSTOMER_FROM = () => process.env.CUSTOMER_MAIL_FROM || 'Opulence Byte <contact@opulencebyte.com>'
+
+async function sendCustomerMail(to: string, subject: string, html: string, text: string) {
+  const from = CUSTOMER_FROM()
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
@@ -65,4 +77,36 @@ ${paragraphs}
   })
   if (!response.ok) console.error('[customer mail] email failed', response.status, await response.text())
   return { delivered: response.ok }
+}
+
+/**
+ * Welcome email sent every time someone signs in. Edit the wording here; {name} is filled in.
+ */
+export const signInTemplate = {
+  subject: 'Thank you for signing in to Opulence Byte',
+  paragraphs: [
+    'Hello {name},',
+    'Thank you for signing in to Opulence Byte.',
+    'Select a product from our store, or tell us more about what you need and our team will get back to you.',
+  ],
+  signature: 'Opulence Byte Pvt Ltd',
+}
+
+export async function sendSignInEmail(to: string, name: string) {
+  const fill = (text: string) => text.replace(/\{name\}/g, name)
+  const subject = fill(signInTemplate.subject)
+  if (!process.env.RESEND_API_KEY) {
+    console.info(`[customer mail] ${subject}`, { to })
+    return { delivered: false }
+  }
+  const site = 'https://www.opulencebyte.com'
+  const button = (href: string, label: string, primary: boolean) =>
+    `<a href="${href}" style="display:inline-block;margin:0 8px 8px 0;padding:11px 20px;border-radius:999px;text-decoration:none;font-weight:bold;${primary ? 'background:#2d7cf6;color:#ffffff' : 'border:1px solid #2d7cf6;color:#2d7cf6'}">${label}</a>`
+  const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#0f172a;max-width:560px">
+${signInTemplate.paragraphs.map((p) => `<p style="margin:0 0 16px">${escape(fill(p))}</p>`).join('')}
+<p style="margin:0 0 20px">${button(`${site}/products`, 'Select a product', true)}${button(`${site}/#contact`, 'Tell us more', false)}</p>
+<p style="margin:0">${escape(signInTemplate.signature)}<br><a href="${site}" style="color:#2d7cf6">opulencebyte.com</a></p>
+</div>`
+  const text = `${signInTemplate.paragraphs.map(fill).join('\n\n')}\n\nSelect a product: ${site}/products\nTell us more: ${site}/#contact\n\n${signInTemplate.signature}`
+  return sendCustomerMail(to, subject, html, text)
 }

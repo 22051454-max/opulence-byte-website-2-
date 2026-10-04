@@ -1,12 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
-import { notifyLead, sendPaymentConfirmation } from '@/lib/mail'
+import { firstName, notifyLead, sendPaymentConfirmation } from '@/lib/mail'
 import { fetchOrder, verifySignature } from '@/lib/razorpay'
-
-function firstName(name?: string) {
-  const first = name?.trim().split(/\s+/)[0]
-  return first && !first.includes('@') ? first : 'there'
-}
 
 export async function POST(request: Request) {
   const user = await getSession()
