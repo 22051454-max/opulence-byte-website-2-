@@ -1,5 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
+import { siteUrl } from './site'
 
 export type SessionUser = { email: string; name: string; image?: string; provider: Provider }
 export type Provider = 'google' | 'github'
@@ -92,5 +93,5 @@ export function safeNext(value: string | null | undefined) {
 }
 
 export function siteOrigin(request: Request) {
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || new URL(request.url).origin
+  return process.env.NEXT_PUBLIC_SITE_URL ? siteUrl() : new URL(request.url).origin
 }

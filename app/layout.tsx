@@ -7,16 +7,16 @@ import { Intro } from '@/components/intro'
 import { SessionProvider } from '@/components/session'
 import { themeScript } from '@/components/theme-toggle'
 import { products } from '@/lib/products'
+import { siteUrl } from '@/lib/site'
 import './globals.css'
 
 const body = DM_Sans({ subsets: ['latin'], variable: '--font-body', display: 'swap' })
 const display = Space_Grotesk({ subsets: ['latin'], variable: '--font-display', display: 'swap' })
 const code = Space_Mono({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-code', display: 'swap' })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.opulencebyte.com'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteUrl()),
   title: { default: 'Opulence Byte | Software, SaaS & AI for ambitious businesses', template: '%s | Opulence Byte' },
   description: 'Opulence Byte builds websites, apps, AI agents and ready-to-deploy SaaS: hospital ERP, hotel ERP, school ERP, CRM, HRMS and more.',
   applicationName: 'Opulence Byte',

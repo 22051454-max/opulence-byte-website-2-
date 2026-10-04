@@ -1,7 +1,8 @@
 import type { MetadataRoute } from 'next'
 import { products } from '@/lib/products'
+import { siteUrl } from '@/lib/site'
 
-const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.opulencebyte.com'
+const base = siteUrl()
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
