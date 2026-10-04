@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getSession } from '@/lib/auth'
 import { getProduct, QUOTE_FEE_USD } from '@/lib/products'
-import { createOrder, razorpayConfigured } from '@/lib/razorpay'
+import { createOrder, razorpayConfigured, razorpayKeyId } from '@/lib/razorpay'
 
 export async function POST(request: Request) {
   const user = await getSession()
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
         details: typeof details === 'string' ? details.slice(0, 240) : '',
       },
     })
-    return NextResponse.json({ orderId: order.id, amount: order.amount, currency: order.currency, keyId: process.env.RAZORPAY_KEY_ID, email: user.email, name: user.name })
+    return NextResponse.json({ orderId: order.id, amount: order.amount, currency: order.currency, keyId: razorpayKeyId(), email: user.email, name: user.name })
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : 'Invalid quote request.' }, { status: 502 })
   }

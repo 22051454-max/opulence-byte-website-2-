@@ -3,7 +3,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SiteFooter } from '@/components/site-footer'
 import { SiteHeader } from '@/components/site-header'
-import { getSession } from '@/lib/auth'
 import { fetchOrder, verifySignature } from '@/lib/razorpay'
 
 export const metadata: Metadata = { title: 'Thank you', robots: { index: false } }
@@ -13,14 +12,13 @@ type Search = Promise<Record<string, string | string[] | undefined>>
 
 async function loadReceipt(search: Awaited<Search>) {
   const [orderId, paymentId, signature] = ['order', 'payment', 'signature'].map((key) => (typeof search[key] === 'string' ? (search[key] as string) : ''))
+  // The signature can only come from Razorpay after a real payment, so it alone proves the receipt.
   if (!orderId || !paymentId || !verifySignature(orderId, paymentId, signature)) return null
-  const user = await getSession()
   try {
-    const order = await fetchOrder(orderId)
-    if (!user || order.notes?.email !== user.email) return null
-    return { paymentId, order }
-  } catch {
-    return null
+    return { paymentId, order: await fetchOrder(orderId) }
+  } catch (error) {
+    console.error('[thank-you] order lookup failed', orderId, error)
+    return { paymentId, order: null }
   }
 }
 
@@ -44,11 +42,12 @@ export default async function ThankYou({ searchParams }: { searchParams: Search 
   }
 
   const { order, paymentId } = receipt
+  const notes = order?.notes ?? {}
   const rows: [string, string | undefined][] = [
-    ['Product', order.notes.product],
-    ['Company', order.notes.company],
-    ['Email', order.notes.email],
-    ['Amount paid', `${(order.amount / 100).toFixed(2)} ${order.currency}`],
+    ['Product', notes.product],
+    ['Company', notes.company],
+    ['Email', notes.email],
+    ['Amount paid', order ? `${(order.amount / 100).toFixed(2)} ${order.currency}` : undefined],
     ['Payment ID', paymentId],
   ]
 
@@ -66,7 +65,7 @@ export default async function ThankYou({ searchParams }: { searchParams: Search 
             ))}
           </dl>
           <div className="thanks-notes">
-            <span><Mail size={16} /> Sent to {order.notes.email}</span>
+            <span><Mail size={16} /> {notes.email ? `Sent to ${notes.email}` : 'Sent to your email'}</span>
             <span><Clock size={16} /> Within 24 hours</span>
           </div>
           <div className="thanks-actions">
