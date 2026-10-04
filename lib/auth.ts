@@ -92,6 +92,16 @@ export function safeNext(value: string | null | undefined) {
   return value
 }
 
+/**
+ * Origin the visitor is actually on, so the OAuth redirect URI and the state cookie
+ * always match the domain they started from (www vs apex vs *.vercel.app).
+ */
 export function siteOrigin(request: Request) {
-  return process.env.NEXT_PUBLIC_SITE_URL ? siteUrl() : new URL(request.url).origin
+  const forwardedHost = request.headers.get('x-forwarded-host')?.split(',')[0]?.trim()
+  const host = forwardedHost || request.headers.get('host')
+  if (host) {
+    const proto = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim() || new URL(request.url).protocol.replace(':', '')
+    return `${proto}://${host}`
+  }
+  return new URL(request.url).origin || siteUrl()
 }
