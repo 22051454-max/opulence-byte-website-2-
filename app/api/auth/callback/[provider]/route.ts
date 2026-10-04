@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { after, NextResponse } from 'next/server'
+import { firstName, sendSignInEmail } from '@/lib/mail'
 import {
   SESSION_COOKIE,
   STATE_COOKIE,
@@ -72,6 +73,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ prov
   try {
     const token = await exchangeCode(provider, code, `${origin}/api/auth/callback/${provider}`)
     const user = await fetchUser(provider, token)
+    // Send the welcome email after the redirect so sign-in is never slowed down or blocked by it.
+    after(() => sendSignInEmail(user.email, firstName(user.name)).catch((error) => console.error('[sign-in mail]', error)))
     const response = NextResponse.redirect(`${origin}${safeNext(saved.next)}`)
     response.cookies.set(SESSION_COOKIE, await createSessionToken(user), sessionCookieOptions)
     response.cookies.delete(STATE_COOKIE)
