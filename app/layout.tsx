@@ -50,6 +50,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-theme="dark" className={`${body.variable} ${display.variable} ${code.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* Google AdSense site verification */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1014908022725289" crossOrigin="anonymous" />
       </head>
       <body>
         <a className="skip-link" href="#main">Skip to content</a>
