@@ -38,6 +38,7 @@ export function DonateCheckout() {
       if (!orderResponse.ok) throw new Error(order.error || 'Unable to create payment order.')
       const Razorpay = window.Razorpay
       if (!Razorpay) throw new Error('Checkout is unavailable right now.')
+      let paid = false
       new Razorpay({
         key: order.keyId,
         amount: order.amount,
@@ -47,12 +48,15 @@ export function DonateCheckout() {
         order_id: order.orderId,
         theme: { color: '#2d7cf6' },
         handler: async (response: RazorpayResult) => {
-          const verifyResponse = await fetch('/api/verify-payment', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(response) })
-          const verification = await verifyResponse.json()
-          setStatus(verifyResponse.ok ? { type: 'success', text: 'Thank you. Your support has been received.' } : { type: 'error', text: verification.error || 'We could not verify this payment.' })
+          paid = true
+          const verifyResponse = await fetch('/api/verify-payment', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(response) }).catch(() => null)
+          const verification = await verifyResponse?.json().catch(() => ({})) ?? {}
+          setStatus(verifyResponse?.ok || !verifyResponse
+            ? { type: 'success', text: `Thank you. Your support has been received (payment ${response.razorpay_payment_id}).` }
+            : { type: 'error', text: verification.error || 'We could not verify this payment.' })
           setBusy(false)
         },
-        modal: { ondismiss: () => { setBusy(false); setStatus({ type: 'error', text: 'Payment cancelled. No amount was charged.' }) } },
+        modal: { ondismiss: () => { if (paid) return; setBusy(false); setStatus({ type: 'error', text: 'Payment cancelled. No amount was charged.' }) } },
       }).open()
     } catch (error) { setBusy(false); setStatus({ type: 'error', text: error instanceof Error ? error.message : 'Something went wrong. Please try again.' }) }
   }

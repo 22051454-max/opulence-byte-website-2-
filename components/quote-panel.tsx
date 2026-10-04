@@ -40,6 +40,7 @@ export function QuotePanel({ slug, name }: { slug: string; name: string }) {
       const order = await response.json()
       if (!response.ok) throw new Error(order.error)
       const Razorpay = window.Razorpay!
+      let paid = false
       new Razorpay({
         key: order.keyId,
         amount: order.amount,
@@ -50,18 +51,22 @@ export function QuotePanel({ slug, name }: { slug: string; name: string }) {
         prefill: { email: order.email, name: order.name, contact: data.phone },
         theme: { color: '#2d7cf6' },
         handler: async (result: RazorpayResult) => {
-          const verify = await fetch('/api/quote/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(result) })
-          const outcome = await verify.json()
-          if (verify.ok) {
-            setStatus({ type: 'success', text: 'Payment received. Taking you to your confirmation…' })
-            const params = new URLSearchParams({ order: result.razorpay_order_id, payment: result.razorpay_payment_id, signature: result.razorpay_signature })
-            router.push(`/thank-you?${params}`)
-            return
-          }
-          setStatus({ type: 'error', text: outcome.error || 'We could not verify this payment. Please contact hello@opulencebyte.com.' })
-          setBusy(false)
+          // Razorpay only calls this after a successful payment. Record the request, then always
+          // go to the thank-you page, which checks the payment signature again on the server.
+          paid = true
+          setStatus({ type: 'success', text: 'Payment received. Confirming your order…' })
+          await fetch('/api/quote/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(result) })
+            .catch((error) => console.error('Quote verification request failed', error))
+          const params = new URLSearchParams({ order: result.razorpay_order_id, payment: result.razorpay_payment_id, signature: result.razorpay_signature })
+          router.push(`/thank-you?${params}`)
         },
-        modal: { ondismiss: () => { setBusy(false); setStatus({ type: 'error', text: 'Payment cancelled. Nothing was charged.' }) } },
+        modal: {
+          ondismiss: () => {
+            if (paid) return
+            setBusy(false)
+            setStatus({ type: 'error', text: 'Payment cancelled. Nothing was charged.' })
+          },
+        },
       }).open()
     } catch (error) {
       setBusy(false)

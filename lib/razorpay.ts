@@ -1,11 +1,16 @@
 import { createHmac, timingSafeEqual } from 'node:crypto'
 
+// Trimmed because keys pasted into a dashboard often carry a stray space or newline,
+// which would break both the API login and the payment signature check.
+export const razorpayKeyId = () => process.env.RAZORPAY_KEY_ID?.trim() || ''
+const keySecret = () => process.env.RAZORPAY_KEY_SECRET?.trim() || ''
+
 export function razorpayConfigured() {
-  return Boolean(process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET)
+  return Boolean(razorpayKeyId() && keySecret())
 }
 
 function authHeader() {
-  return `Basic ${Buffer.from(`${process.env.RAZORPAY_KEY_ID}:${process.env.RAZORPAY_KEY_SECRET}`).toString('base64')}`
+  return `Basic ${Buffer.from(`${razorpayKeyId()}:${keySecret()}`).toString('base64')}`
 }
 
 export async function createOrder(body: { amount: number; currency: string; receipt: string; notes: Record<string, string> }) {
@@ -21,12 +26,12 @@ export async function createOrder(body: { amount: number; currency: string; rece
 
 export async function fetchOrder(orderId: string) {
   const response = await fetch(`https://api.razorpay.com/v1/orders/${encodeURIComponent(orderId)}`, { headers: { Authorization: authHeader() } })
-  if (!response.ok) throw new Error('Order not found.')
+  if (!response.ok) throw new Error(`Order lookup failed (${response.status})`)
   return (await response.json()) as { id: string; amount: number; currency: string; notes: Record<string, string> }
 }
 
 export function verifySignature(orderId: string, paymentId: string, signature: string) {
-  if (!process.env.RAZORPAY_KEY_SECRET || typeof signature !== 'string') return false
-  const expected = createHmac('sha256', process.env.RAZORPAY_KEY_SECRET).update(`${orderId}|${paymentId}`).digest('hex')
+  if (!keySecret() || typeof orderId !== 'string' || typeof paymentId !== 'string' || typeof signature !== 'string') return false
+  const expected = createHmac('sha256', keySecret()).update(`${orderId}|${paymentId}`).digest('hex')
   return expected.length === signature.length && timingSafeEqual(Buffer.from(expected), Buffer.from(signature))
 }
