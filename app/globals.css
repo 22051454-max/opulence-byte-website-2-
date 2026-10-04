@@ -473,3 +473,22 @@ h1, h2, h3, h4 { font-family: var(--font-display), var(--font-body), sans-serif;
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   [data-reveal] { opacity: 1; transform: none; }
 }
+
+/* Thank-you page */
+.thanks { min-height: 72vh; display: grid; place-items: center; padding-block: 120px 60px; }
+.thanks-card { width: min(640px, 100%); text-align: center; padding: clamp(28px, 5vw, 48px); display: grid; gap: 18px; justify-items: center; }
+.thanks-card h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; }
+.thanks-card p { color: var(--muted); font-size: 17px; }
+.thanks-card a:not(.btn) { color: var(--brand); }
+.thanks-badge { width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; color: var(--success); background: color-mix(in srgb, var(--success) 14%, transparent); animation: thanks-pop .7s cubic-bezier(.2, 1.4, .4, 1) both; }
+.thanks-lede { max-width: 46ch; }
+.thanks-receipt { width: 100%; display: grid; gap: 0; text-align: left; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin: 0; }
+.thanks-receipt div { display: flex; justify-content: space-between; gap: 16px; padding: 12px 16px; }
+.thanks-receipt div + div { border-top: 1px solid var(--border); }
+.thanks-receipt dt { color: var(--muted); font-size: 14px; }
+.thanks-receipt dd { margin: 0; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+.thanks-notes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; color: var(--muted); font-size: 14px; }
+.thanks-notes span { display: inline-flex; align-items: center; gap: 6px; }
+.thanks-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 6px; }
+@keyframes thanks-pop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .thanks-badge { animation: none; } }
