@@ -12,6 +12,7 @@ Company site and SaaS store for Opulence Byte Private Limited. Next.js 16 (App R
 | `/play` | Byte Catcher game, full size |
 | `/donate` | Razorpay donations (INR) |
 | `/awt-hospital-demo`, `/awt-workflow`, `/awt-ppt` | AWT Hospital ERP demo, workflow and deck |
+| `/awt-final` | AWT Hospital HMS, the full app. Static files in `public/awt-final`; it runs entirely in the visitor's browser and keeps its data there |
 
 The Byte chat assistant on every page calls Claude through `/api/chat`.
 
@@ -28,6 +29,9 @@ See `.env.example`. On Vercel add them under Project → Settings → Environmen
 
 - **OAuth redirect URIs**: `https://<domain>/api/auth/callback/google` and `https://<domain>/api/auth/callback/github`.
 - **Razorpay**: the $5 quote is charged in USD, which requires International Payments on the Razorpay account.
+
+## Updating AWT Hospital HMS (`/awt-final`)
+`public/awt-final` is the standalone build of the AWT Hospital HMS project (React client plus the Express server code compiled for the browser, with SQLite in WebAssembly). To update it, run `npm run build:standalone` in that project's `client` folder and copy `client/dist-standalone/` over `public/awt-final/`.
 
 ## Adding a product
 Add an entry to `products` in `lib/products.ts`. The store, product page, sitemap, footer and AI assistant pick it up automatically.
