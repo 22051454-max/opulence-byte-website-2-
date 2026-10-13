@@ -1,11 +1,15 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 /** Brand intro, shown once per browser session. */
 export function Intro() {
+  const pathname = usePathname()
   const [state, setState] = useState<'hidden' | 'showing' | 'leaving'>('hidden')
   useEffect(() => {
+    // SM Imperial Hospital ERP has its own intro.
+    if (pathname.startsWith('/awt-final')) return
     let seen = false
     try { seen = sessionStorage.getItem('ob-intro') === '1'; sessionStorage.setItem('ob-intro', '1') } catch { seen = true }
     if (seen || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return

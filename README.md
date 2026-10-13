@@ -12,7 +12,7 @@ Company site and SaaS store for Opulence Byte Private Limited. Next.js 16 (App R
 | `/play` | Byte Catcher game, full size |
 | `/donate` | Razorpay donations (INR) |
 | `/awt-hospital-demo`, `/awt-workflow`, `/awt-ppt` | AWT Hospital ERP demo, workflow and deck |
-| `/awt-final` | AWT Hospital HMS, the full app. Static files in `public/awt-final`; it runs entirely in the visitor's browser and keeps its data there |
+| `/awt-final` | SM Imperial Hospital ERP, a role-based hospital ERP built in `app/awt-final`. It runs entirely in the visitor's browser and keeps its data in localStorage |
 
 The Byte chat assistant on every page calls Claude through `/api/chat`.
 
@@ -30,8 +30,8 @@ See `.env.example`. On Vercel add them under Project → Settings → Environmen
 - **OAuth redirect URIs**: `https://<domain>/api/auth/callback/google` and `https://<domain>/api/auth/callback/github`.
 - **Razorpay**: the $5 quote is charged in USD, which requires International Payments on the Razorpay account.
 
-## Updating AWT Hospital HMS (`/awt-final`)
-`public/awt-final` is the standalone build of the AWT Hospital HMS project (React client plus the Express server code compiled for the browser, with SQLite in WebAssembly). To update it, run `npm run build:standalone` in that project's `client` folder and copy `client/dist-standalone/` over `public/awt-final/`.
+## SM Imperial Hospital ERP (`/awt-final`)
+The ERP lives in `app/awt-final/erp`. `core/` holds types, master data, RBAC and the storage layer; `services/` holds one module per domain service (patients, OPD, emergency, IPD, OT, nursing, diagnostics, pharmacy, billing and TPA, security, identity), each owning its own localStorage collections and talking to others over an in-process event bus; `ui/` and `modules/` hold the screens. Swap the `StorageAdapter` in `core/store.ts` for an HTTP client to move data to a real backend. Demo logins are listed on the login screen (password `sm@123`); Admin → System can reset the demo data.
 
 ## Adding a product
 Add an entry to `products` in `lib/products.ts`. The store, product page, sitemap, footer and AI assistant pick it up automatically.

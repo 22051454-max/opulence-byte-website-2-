@@ -6,8 +6,11 @@ import { useEffect } from 'react'
 /** Global motion layer: scroll reveal, scroll progress, pointer spotlight and card tilt/glow. */
 export function Effects() {
   const pathname = usePathname()
+  // The hospital ERP at /awt-final is a full-screen app with its own motion; keep the site effects off there.
+  const off = pathname.startsWith('/awt-final')
 
   useEffect(() => {
+    if (off) return
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const io = new IntersectionObserver((entries) => {
       for (const entry of entries) {
@@ -19,9 +22,10 @@ export function Effects() {
     const mo = new MutationObserver(observe)
     mo.observe(document.body, { childList: true, subtree: true })
     return () => { io.disconnect(); mo.disconnect() }
-  }, [pathname])
+  }, [pathname, off])
 
   useEffect(() => {
+    if (off) return
     const root = document.documentElement
     let frame = 0
     const onScroll = () => {
@@ -59,8 +63,9 @@ export function Effects() {
       window.removeEventListener('pointermove', onMove)
       document.removeEventListener('pointerout', onLeave)
     }
-  }, [])
+  }, [off])
 
+  if (off) return null
   return (
     <>
       <div className="progress-bar" aria-hidden="true" />
